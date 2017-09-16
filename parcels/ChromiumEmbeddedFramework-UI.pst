@@ -1,18 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<!-- 
-Name: ChromiumEmbeddedFramework-UI
-Notice: Licensed under the MIT license
-
-Copyright (c) 2017 Holger Kleinsorgen
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-Comment: Chromium Embedded Framework (CEF) for VisualWorks.
+<!-- Chromium Embedded Framework (CEF) for VisualWorks.
 Displays a browser inside a VW view.
 
 See 
@@ -27,23 +16,10 @@ Open an examle app with:
 Based on CEF 3.3112.1659.gfef43e0 (2017-09-06)
 
 Contact: h . kleinsorgen - at - gmail . com
+Github repo: https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
 
-Licensed under the MIT license (see Copyright)
-DevelopmentPrerequisites: #(#(#any 'ChromiumEmbeddedFramework-Base' ''))
-KSignature: #('definedClasses' 16 'definedClassesHash' 20756352041 'extendedClasses' 2 'extendedClassesHash' 228269851)
-KSignatureV2: #('definedClasses' 16 'definedClassesHash' 916998915262710391338275912155603339465865689928 'extendedClasses' 2 'extendedClassesHash' 849294146091889771366534880515470931888282031258)
-PackageName: ChromiumEmbeddedFramework-UI
-Parcel: #('ChromiumEmbeddedFramework-UI')
-ParcelDirectory: e:\develop\git\cef\parcels\ChromiumEmbeddedFramework-UI
-PrerequisiteDescriptions: #(#(#name 'ChromiumEmbeddedFramework-Base' #componentType #package))
-PrerequisiteParcels: #(#('ChromiumEmbeddedFramework-Base' ''))
-Version: 0.1.24
-Date: 2:53:15 PM September 16, 2017
- -->
-<time-stamp>From VisualWorks®, 8.1.1 of 10. März 2016 on 16. September 2017 at 14:53:15</time-stamp>
+Licensed under the MIT license (see Copyright) -->
 
-
-<do-it>(Dialog confirm: 'You are filing-in a Parcel source file!\\While this is possible it will not have\the same effect as loading the parcel.\None of the Parcel''s prerequisites will\be loaded and none of its load actions\will be performed.\\Are you sure you want to file-in?' withCRs) ifFalse: [self error: 'Parcel file-in abandoned.  Choose terminate or close.']</do-it>
 
 <class>
 <name>Base</name>
@@ -499,7 +475,7 @@ Date: 2:53:15 PM September 16, 2017
 
 <body package="ChromiumEmbeddedFramework-UI">mainApp	^ MainApp current</body>
 
-<body package="ChromiumEmbeddedFramework-UI">osLib	osLib isNil 		ifTrue: [ osLib := OSSystemSupport concreteClass new ].	^ osLib</body>
+<body package="ChromiumEmbeddedFramework-UI">osLib	osLib isNil 		ifTrue: [ osLib := WinSupportLib new ].	^ osLib</body>
 
 <body package="ChromiumEmbeddedFramework-UI">register	self isVolatile 		ifTrue: 		[	self isVolatile: false.			self fakeRefCount: self cefObject		].	self class registry registerValueOf: [ self ].</body>
 </methods>
@@ -787,7 +763,7 @@ Date: 2:53:15 PM September 16, 2017
 
 <body package="ChromiumEmbeddedFramework-UI">mainWindow	^ self areaPart topComponent</body>
 
-<body package="ChromiumEmbeddedFramework-UI">restoreFocus	" CEF got the keyboard focus, let's take it back "	| win |	win := self mainWindow.	[	self osLib cefSetFocus: 0;			cefSetFocus: win windowHandle	] uiEventFor: win.</body>
+<body package="ChromiumEmbeddedFramework-UI">restoreFocus	" CEF got the keyboard focus, let's take it back "	| win |	win := self mainWindow.	[	self osLib setFocus: 0;			setFocus: win windowHandle	] uiEventFor: win.</body>
 </methods>
 
 <methods>
@@ -885,7 +861,7 @@ Date: 2:53:15 PM September 16, 2017
 
 <body package="ChromiumEmbeddedFramework-UI">mainWindow	^ self client mainWindow</body>
 
-<body package="ChromiumEmbeddedFramework-UI">resizeBrowser	| rectangle |	rectangle := self browserRectangle.	self osLib 		cefSetWindowPos: self browserWindowHandle		insertAfter: nil		x: rectangle left		y: rectangle top		cx: rectangle width		cy: rectangle height		flags: self lib SWP_ASYNCWINDOWPOS + self lib SWP_NOREDRAW + self lib SWP_NOACTIVATE 				+ self lib SWP_NOMOVE + self lib SWP_NOZORDER.	self host notifyMoveOrResizeStarted.	</body>
+<body package="ChromiumEmbeddedFramework-UI">resizeBrowser	| rectangle |	rectangle := self browserRectangle.	self osLib 		setWindowPos: self browserWindowHandle		insertAfter: nil		x: rectangle left		y: rectangle top		cx: rectangle width		cy: rectangle height		flags: self lib SWP_ASYNCWINDOWPOS + self lib SWP_NOREDRAW + self lib SWP_NOACTIVATE 				+ self lib SWP_NOMOVE + self lib SWP_NOZORDER.	self host notifyMoveOrResizeStarted.	</body>
 </methods>
 
 <methods>
@@ -893,7 +869,7 @@ Date: 2:53:15 PM September 16, 2017
 
 <body package="ChromiumEmbeddedFramework-UI">doStart	" done by the client "</body>
 
-<body package="ChromiumEmbeddedFramework-UI">doStop	self isAlive		ifTrue: [ self host tryCloseBrowser ].	self browserWindowHandle ifNotNil: 		[: handle |			self osLib cefDestroyWindow: handle.			self removeExternalAt: #browserWindowHandle		].</body>
+<body package="ChromiumEmbeddedFramework-UI">doStop	self isAlive		ifTrue: [ self host tryCloseBrowser ].	self browserWindowHandle ifNotNil: 		[: handle |			self osLib destroyWindow: handle.			self removeExternalAt: #browserWindowHandle		].</body>
 </methods>
 
 <methods>
@@ -1077,7 +1053,7 @@ Date: 2:53:15 PM September 16, 2017
 <methods>
 <class-id>CEF.MainApp</class-id> <category>factory</category>
 
-<body package="ChromiumEmbeddedFramework-UI">createMainArgs	| mainArgs hinstance |	hinstance := self osLib cefGetHInstance.	hinstance isValid 		ifFalse: [ self error: 'Could not get HINSTANCE' ].	mainArgs := self lib cef_main_args_t malloc.	mainArgs memberAt: #instance put: hinstance.	^ mainArgs</body>
+<body package="ChromiumEmbeddedFramework-UI">createMainArgs	| mainArgs hinstance |	hinstance := self osLib getHInstance.	hinstance isValid 		ifFalse: [ self error: 'Could not get HINSTANCE' ].	mainArgs := self lib cef_main_args_t malloc.	mainArgs memberAt: #instance put: hinstance.	^ mainArgs</body>
 
 <body package="ChromiumEmbeddedFramework-UI">createSettings	| settings level |	settings := Settings onNewObject.	settings singleProcess: true.	settings multiThreadedMessageLoop: true.	settings noSandbox: true.	settings externalMessagePump: true.	settings multiThreadedMessageLoop: true.	settings userAgent: 'VW Chromium'.	self logFilename 		ifNotNil: [: filename | settings logFile: filename asFilename asAbsoluteFilename asString ].	level := self debug 			ifTrue: [ #'LOGSEVERITY_VERBOSE' ]			ifFalse: [ #'LOGSEVERITY_DEFAULT' ].	settings logSeverity: level.	^ settings</body>
 </methods>

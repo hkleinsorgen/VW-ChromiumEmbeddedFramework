@@ -1,23 +1,21 @@
 <?xml version="1.0"?>
 
 <st-source>
-<!-- 
-Name: ChromiumEmbeddedFramework-Tests
-DevelopmentPrerequisites: #(#(#any 'ChromiumEmbeddedFramework-Base' '') #(#any 'SUnitToo' '') #(#any 'ChromiumEmbeddedFramework-UI' ''))
-KSignature: #('definedClasses' 3 'definedClassesHash' 2095862932 'extendedClasses' 0 'extendedClassesHash' 0)
-KSignatureV2: #('definedClasses' 3 'definedClassesHash' 27951786798439927967400108952252602154975496301 'extendedClasses' 0 'extendedClassesHash' 1245845410931227995499360226027473197403882391305)
-PackageName: ChromiumEmbeddedFramework-Tests
-Parcel: #('ChromiumEmbeddedFramework-Tests')
-ParcelDirectory: e:\develop\git\cef\parcels\ChromiumEmbeddedFramework-Tests
-PrerequisiteDescriptions: #(#(#name 'ChromiumEmbeddedFramework-Base' #componentType #package) #(#name 'SUnitToo' #componentType #package) #(#name 'ChromiumEmbeddedFramework-UI' #componentType #package))
-PrerequisiteParcels: #(#('ChromiumEmbeddedFramework-Base' '') #('SUnitToo' '') #('ChromiumEmbeddedFramework-UI' ''))
-Version: 0.1.5
-Date: 2:53:05 PM September 16, 2017
- -->
-<time-stamp>From VisualWorks®, 8.1.1 of 10. März 2016 on 16. September 2017 at 14:53:05</time-stamp>
+<!-- Chromium Embedded Framework (CEF) for VisualWorks.
 
+See 
+https://bitbucket.org/chromiumembedded/cef
 
-<do-it>(Dialog confirm: 'You are filing-in a Parcel source file!\\While this is possible it will not have\the same effect as loading the parcel.\None of the Parcel''s prerequisites will\be loaded and none of its load actions\will be performed.\\Are you sure you want to file-in?' withCRs) ifFalse: [self error: 'Parcel file-in abandoned.  Choose terminate or close.']</do-it>
+Still at an very early stage. 
+Windows only.
+
+Based on CEF 3.3112.1659.gfef43e0 (2017-09-06)
+
+Contact: h . kleinsorgen - at - gmail . com
+Github repo: https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
+
+Licensed under the MIT license (see Copyright) -->
+
 
 <class>
 <name>MessageLoopTest</name>

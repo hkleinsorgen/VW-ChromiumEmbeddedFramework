@@ -1,18 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<!-- 
-Name: ChromiumEmbeddedFramework-Base
-Notice: Licensed under the MIT license
-
-Copyright (c) 2017 Holger Kleinsorgen
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-Comment: Chromium Embedded Framework (CEF) for VisualWorks.
+<!-- Chromium Embedded Framework (CEF) for VisualWorks.
 Base package containing the library and some base extensions.
 
 See 
@@ -24,23 +13,10 @@ Windows only.
 Based on CEF 3.3112.1659.gfef43e0 (2017-09-06)
 
 Contact: h . kleinsorgen - at - gmail . com
+Github repo: https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
 
-Licensed under the MIT license (see Copyright)
-DevelopmentPrerequisites: #(#(#any 'ExternalInterfaceBashing' '') #(#any 'DLLCC' ''))
-KSignature: #('definedClasses' 1 'definedClassesHash' 74454231050 'extendedClasses' 14 'extendedClassesHash' 4231070110)
-KSignatureV2: #('definedClasses' 1 'definedClassesHash' 66634394766601591088516005686375011569720097767 'extendedClasses' 14 'extendedClassesHash' 1170063511041380387315990253139361142675030823089)
-PackageName: ChromiumEmbeddedFramework-Base
-Parcel: #('ChromiumEmbeddedFramework-Base')
-ParcelDirectory: e:\develop\git\cef\parcels\ChromiumEmbeddedFramework-Base
-PrerequisiteDescriptions: #(#(#name 'ExternalInterfaceBashing' #componentType #package) #(#name 'DLLCC' #componentType #package))
-PrerequisiteParcels: #(#('ExternalInterfaceBashing' '') #('DLLCC' ''))
-Version: 0.1.30
-Date: 2:52:57 PM September 16, 2017
- -->
-<time-stamp>From VisualWorks®, 8.1.1 of 10. März 2016 on 16. September 2017 at 14:52:57</time-stamp>
+Licensed under the MIT license (see Copyright) -->
 
-
-<do-it>(Dialog confirm: 'You are filing-in a Parcel source file!\\While this is possible it will not have\the same effect as loading the parcel.\None of the Parcel''s prerequisites will\be loaded and none of its load actions\will be performed.\\Are you sure you want to file-in?' withCRs) ifFalse: [self error: 'Parcel file-in abandoned.  Choose terminate or close.']</do-it>
 
 <name-space>
 <name>CEF</name>
@@ -56,6 +32,29 @@ Date: 2:52:57 PM September 16, 2017
 <package>ChromiumEmbeddedFramework-Base</package>
 </attributes>
 </name-space>
+
+<class>
+<name>WinSupportLib</name>
+<environment>CEF</environment>
+<super>External.ExternalInterface</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports>
+			private CEF.WinSupportLibDictionary.*
+			</imports>
+<category></category>
+<attributes>
+<includeFiles></includeFiles>
+<includeDirectories></includeDirectories>
+<libraryFiles><item>kernel32.dll</item> <item>gdi32.dll</item> <item>advapi32.dll</item> <item>user32.dll</item></libraryFiles>
+<libraryDirectories></libraryDirectories>
+<beVirtual>false</beVirtual>
+<optimizationLevel>full</optimizationLevel>
+<package>ChromiumEmbeddedFramework-Base</package>
+</attributes>
+</class>
 
 <class>
 <name>LibChromium</name>
@@ -95,6 +94,29 @@ Date: 2:52:57 PM September 16, 2017
 <package>ChromiumEmbeddedFramework-Base</package>
 </attributes>
 </shared-variable>
+
+<shared-variable>
+<name>WinSupportLibDictionary</name>
+<environment>CEF</environment>
+<private>false</private>
+<constant>false</constant>
+<category>external dictionaries</category>
+<attributes>
+<package>ChromiumEmbeddedFramework-Base</package>
+</attributes>
+</shared-variable>
+
+<methods>
+<class-id>CEF.WinSupportLib</class-id> <category>procedures</category>
+
+<body package="ChromiumEmbeddedFramework-Base">destroyWindow: hWnd 	&lt;C: BOOL DestroyWindow(void * hWnd )&gt;	^self externalAccessFailedWith: _errorCode</body>
+
+<body package="ChromiumEmbeddedFramework-Base">getModuleHandle: lpModuleName	&lt;C: HMODULE GetModuleHandleA(const char * lpModuleName)&gt;	^self externalAccessFailedWith: _errorCode</body>
+
+<body package="ChromiumEmbeddedFramework-Base">setFocus: hWnd 	&lt;C: HWND SetFocus(void * hWnd )&gt;	^self externalAccessFailedWith: _errorCode</body>
+
+<body package="ChromiumEmbeddedFramework-Base">setWindowPos: hWnd insertAfter: hWndInsertAfter x: X y: Y cx: cx cy: cy flags: uFlags	&lt;C: BOOL SetWindowPos(          void * hWnd,    void * hWndInsertAfter,    int X,    int Y,    int cx,    int cy,    unsigned int uFlags)&gt;	^self externalAccessFailedWith: _errorCode</body>
+</methods>
 
 <methods>
 <class-id>CEF.LibChromium</class-id> <category>procedures</category>
@@ -343,15 +365,9 @@ Date: 2:52:57 PM September 16, 2017
 </methods>
 
 <methods>
-<class-id>OS.Win32SystemSupport</class-id> <category>procedures</category>
+<class-id>CEF.WinSupportLib</class-id> <category>accessing</category>
 
-<body package="ChromiumEmbeddedFramework-Base">cefDestroyWindow: hWnd 	&lt;C: BOOL DestroyWindow(HWND hWnd )&gt;	^self externalAccessFailedWith: _errorCode</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cefGetModuleHandle: lpModuleName	&lt;C: HMODULE GetModuleHandleA(LPCTSTR lpModuleName)&gt;	^self externalAccessFailedWith: _errorCode</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cefSetFocus: hWnd 	&lt;C: HWND SetFocus(HWND hWnd )&gt;	^self externalAccessFailedWith: _errorCode</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cefSetWindowPos: hWnd insertAfter: hWndInsertAfter x: X y: Y cx: cx cy: cy flags: uFlags	&lt;C: BOOL SetWindowPos(          HWND hWnd,    HWND hWndInsertAfter,    int X,    int Y,    int cx,    int cy,    UINT uFlags)&gt;	^self externalAccessFailedWith: _errorCode</body>
+<body package="ChromiumEmbeddedFramework-Base">getHInstance	^ self getModuleHandle: 0</body>
 </methods>
 
 <methods>
@@ -1598,12 +1614,8 @@ Date: 2:52:57 PM September 16, 2017
 <class-id>Core.True</class-id> <category>converting</category>
 
 <body package="ChromiumEmbeddedFramework-Base">asCefDatum	^ 1</body>
-</methods>
 
-<methods>
-<class-id>OS.Win32SystemSupport</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-Base">cefGetHInstance	^ self cefGetModuleHandle: 0</body>
+<body package="ChromiumEmbeddedFramework-Base">bullshit</body>
 </methods>
 
 <methods>
@@ -1646,22 +1658,52 @@ Date: 2:52:57 PM September 16, 2017
 </class>
 
 <class>
-<name>Integer</name>
-<environment>Core</environment>
-<super>Core.Number</super>
+<name>CEnumerationType</name>
+<environment>External</environment>
+<super>External.CCompoundType</super>
+<private>false</private>
+<indexed-type>objects</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>External-Types</category>
+<attributes>
+<package>External-Types</package>
+</attributes>
+</class>
+
+<class>
+<name>CDatum</name>
+<environment>External</environment>
+<super>Core.Object</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>theDatum type </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>External-Data</category>
+<attributes>
+<package>External-Data</package>
+</attributes>
+</class>
+
+<class>
+<name>CProcedurePointer</name>
+<environment>External</environment>
+<super>External.CDatum</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
 <inst-vars></inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
-<category>Magnitude-Numbers</category>
+<category>External-Data</category>
 <attributes>
-<package>Magnitude-Numbers</package>
+<package>External-Data</package>
 </attributes>
 </class>
 
 <class>
-<name>True</name>
+<name>False</name>
 <environment>Core</environment>
 <super>Core.Boolean</super>
 <private>false</private>
@@ -1676,12 +1718,12 @@ Date: 2:52:57 PM September 16, 2017
 </class>
 
 <class>
-<name>CDatum</name>
+<name>CComposite</name>
 <environment>External</environment>
-<super>Core.Object</super>
+<super>External.CDatum</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>theDatum type </inst-vars>
+<inst-vars></inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category>External-Data</category>
@@ -1721,32 +1763,17 @@ Date: 2:52:57 PM September 16, 2017
 </class>
 
 <class>
-<name>Rectangle</name>
-<environment>Graphics</environment>
-<super>Graphics.Geometric</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars>origin corner </inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category>Graphics-Geometry</category>
-<attributes>
-<package>Graphics-Geometry</package>
-</attributes>
-</class>
-
-<class>
-<name>CProcedurePointer</name>
-<environment>External</environment>
-<super>External.CDatum</super>
+<name>True</name>
+<environment>Core</environment>
+<super>Core.Boolean</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
 <inst-vars></inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
-<category>External-Data</category>
+<category>Kernel-Objects</category>
 <attributes>
-<package>External-Data</package>
+<package>Kernel-Objects</package>
 </attributes>
 </class>
 
@@ -1768,44 +1795,6 @@ Date: 2:52:57 PM September 16, 2017
 </class>
 
 <class>
-<name>False</name>
-<environment>Core</environment>
-<super>Core.Boolean</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category>Kernel-Objects</category>
-<attributes>
-<package>Kernel-Objects</package>
-</attributes>
-</class>
-
-<class>
-<name>Win32SystemSupport</name>
-<environment>OS</environment>
-<super>OS.OSSystemSupport</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports>
-			private OS.Win32SystemSupportDictionary.*
-			</imports>
-<category>OS-Support</category>
-<attributes>
-<includeFiles></includeFiles>
-<includeDirectories></includeDirectories>
-<libraryFiles><item>kernel32.dll</item> <item>gdi32.dll</item> <item>advapi32.dll</item> <item>user32.dll</item></libraryFiles>
-<libraryDirectories></libraryDirectories>
-<beVirtual>false</beVirtual>
-<optimizationLevel>full</optimizationLevel>
-<package>OS-PC</package>
-</attributes>
-</class>
-
-<class>
 <name>String</name>
 <environment>Core</environment>
 <super>Core.CharacterArray</super>
@@ -1821,32 +1810,32 @@ Date: 2:52:57 PM September 16, 2017
 </class>
 
 <class>
-<name>CEnumerationType</name>
-<environment>External</environment>
-<super>External.CCompoundType</super>
-<private>false</private>
-<indexed-type>objects</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category>External-Types</category>
-<attributes>
-<package>External-Types</package>
-</attributes>
-</class>
-
-<class>
-<name>CComposite</name>
-<environment>External</environment>
-<super>External.CDatum</super>
+<name>Integer</name>
+<environment>Core</environment>
+<super>Core.Number</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
 <inst-vars></inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
-<category>External-Data</category>
+<category>Magnitude-Numbers</category>
 <attributes>
-<package>External-Data</package>
+<package>Magnitude-Numbers</package>
+</attributes>
+</class>
+
+<class>
+<name>Rectangle</name>
+<environment>Graphics</environment>
+<super>Graphics.Geometric</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>origin corner </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>Graphics-Geometry</category>
+<attributes>
+<package>Graphics-Geometry</package>
 </attributes>
 </class>
 
