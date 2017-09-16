@@ -9,7 +9,4 @@ Windows only.
 
 Based on CEF 3.3112.1659.gfef43e0 (2017-09-06)
 
-Contact: h . kleinsorgen - at - gmail . com
-Github repo: https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
-
 Licensed under the MIT license (see Copyright)
