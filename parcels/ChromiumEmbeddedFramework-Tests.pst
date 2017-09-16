@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+
+<st-source>
+<!-- 
+Name: ChromiumEmbeddedFramework-Tests
+DevelopmentPrerequisites: #(#(#any 'ChromiumEmbeddedFramework-Base' '') #(#any 'SUnitToo' '') #(#any 'ChromiumEmbeddedFramework-UI' ''))
+KSignature: #('definedClasses' 3 'definedClassesHash' 2095862932 'extendedClasses' 0 'extendedClassesHash' 0)
+KSignatureV2: #('definedClasses' 3 'definedClassesHash' 27951786798439927967400108952252602154975496301 'extendedClasses' 0 'extendedClassesHash' 1245845410931227995499360226027473197403882391305)
+PackageName: ChromiumEmbeddedFramework-Tests
+Parcel: #('ChromiumEmbeddedFramework-Tests')
+ParcelDirectory: e:\develop\git\cef\parcels\ChromiumEmbeddedFramework-Tests
+PrerequisiteDescriptions: #(#(#name 'ChromiumEmbeddedFramework-Base' #componentType #package) #(#name 'SUnitToo' #componentType #package) #(#name 'ChromiumEmbeddedFramework-UI' #componentType #package))
+PrerequisiteParcels: #(#('ChromiumEmbeddedFramework-Base' '') #('SUnitToo' '') #('ChromiumEmbeddedFramework-UI' ''))
+Version: 0.1.5
+Date: 2:53:05 PM September 16, 2017
+ -->
+<time-stamp>From VisualWorks®, 8.1.1 of 10. März 2016 on 16. September 2017 at 14:53:05</time-stamp>
+
+
+<do-it>(Dialog confirm: 'You are filing-in a Parcel source file!\\While this is possible it will not have\the same effect as loading the parcel.\None of the Parcel''s prerequisites will\be loaded and none of its load actions\will be performed.\\Are you sure you want to file-in?' withCRs) ifFalse: [self error: 'Parcel file-in abandoned.  Choose terminate or close.']</do-it>
+
+<class>
+<name>MessageLoopTest</name>
+<environment>CEF</environment>
+<super>SUnit.TestCase</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-Tests</package>
+</attributes>
+</class>
+
+<class>
+<name>TestWork</name>
+<environment>CEF</environment>
+<super>CEF.ScheduledWork</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>block type result wasPerformed </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-Tests</package>
+</attributes>
+</class>
+
+<class>
+<name>ConvertTest</name>
+<environment>CEF</environment>
+<super>SUnit.TestCase</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-Tests</package>
+</attributes>
+</class>
+
+<methods>
+<class-id>CEF.MessageLoopTest</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-Tests">testCompress	| messageLoop firstWork duplicateWork differentWork now laterWork |	messageLoop := MainMessageLoop new.	messageLoop minimalDelay: 5.	now := Time millisecondClockValue.	[	firstWork := TestWork delay: 10 type: #grunt.		" w2 is a duplicate that should be discarded "		duplicateWork := TestWork delay: 10 type: #grunt.		" w3 is different, so do not discard "		differentWork := TestWork delay: 10 type: #skunk.		" ww is scheduled later, do not discard either "		laterWork := TestWork delay: 100 type: #grunt.		messageLoop schedule: firstWork now: now;			schedule: duplicateWork now: now;			schedule: differentWork now: now;			schedule: laterWork now: now.		self assert: firstWork isScheduled.		self deny: firstWork wasPerformed.		self deny: duplicateWork isScheduled.		self deny: duplicateWork wasPerformed.		self assert: differentWork isScheduled.		self deny: differentWork wasPerformed.		self assert: laterWork isScheduled.		self deny: laterWork wasPerformed.		messageLoop start.		50 milliseconds wait.		self assert: firstWork wasPerformed.		self deny: duplicateWork wasPerformed.		self assert: differentWork wasPerformed.		self deny: laterWork wasPerformed.	] ensure: [ messageLoop stop ].</body>
+</methods>
+
+<methods>
+<class-id>CEF.TestWork</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-Tests">block	^ block</body>
+
+<body package="ChromiumEmbeddedFramework-Tests">block: aBlock 	block := aBlock.</body>
+
+<body package="ChromiumEmbeddedFramework-Tests">result	^ result</body>
+
+<body package="ChromiumEmbeddedFramework-Tests">type	^ type</body>
+
+<body package="ChromiumEmbeddedFramework-Tests">type: aType 	type := aType.</body>
+
+<body package="ChromiumEmbeddedFramework-Tests">wasPerformed	^ wasPerformed ifNil: [ false ]</body>
+</methods>
+
+<methods>
+<class-id>CEF.TestWork</class-id> <category>work</category>
+
+<body package="ChromiumEmbeddedFramework-Tests">doWork	block notNil 		ifTrue: [ result := block value ].	wasPerformed := true.</body>
+</methods>
+
+<methods>
+<class-id>CEF.TestWork</class-id> <category>comparing</category>
+
+<body package="ChromiumEmbeddedFramework-Tests">= anotherWork 	^ super = anotherWork and: [ self type = anotherWork type ]</body>
+</methods>
+
+<methods>
+<class-id>CEF.TestWork class</class-id> <category>instance creation</category>
+
+<body package="ChromiumEmbeddedFramework-Tests">delay: milliseconds type: type	^ ( self delay: milliseconds )		type: type;		yourself</body>
+
+<body package="ChromiumEmbeddedFramework-Tests">delay: milliseconds type: type block: aBlock 	^ ( self delay: milliseconds )		type: type;		block: aBlock;		yourself</body>
+</methods>
+
+<methods>
+<class-id>CEF.ConvertTest</class-id> <category>tests</category>
+
+<body package="ChromiumEmbeddedFramework-Tests">testBase	| wrapped base sizeof |	wrapped := Frame onNewObject.	base := wrapped cefObject cefMemberAt: #base ifAbsent: [ self signalFailure: 'base not found' ].	sizeof := base cefMemberAt: #size ifAbsent: [ self signalFailure: 'base size not found' ].	self assert: sizeof = self lib cef_frame_t sizeof.</body>
+
+<body package="ChromiumEmbeddedFramework-Tests">testCallbackArgumentString	| string convertedString |	string := 'Some string'.	convertedString := string asCefDatum cefAsSmalltalkArg.	self assert: string = convertedString</body>
+
+<body package="ChromiumEmbeddedFramework-Tests">testEnum	| settings |	settings := Settings onNewObject.	#(#LOGSEVERITY_VERBOSE LOGSEVERITY_DEFAULT LOGSEVERITY_DISABLE) do: [ : level |		settings logSeverity: level .		self assert: settings logSeverity = level 	].</body>
+
+<body package="ChromiumEmbeddedFramework-Tests">testObjectConversion	| object wrapped |	object := Base createCefObjectOfType: self lib cef_app_t.	wrapped := object cefAsSmalltalkArg.	self assert: wrapped class = MainApp.</body>
+
+<body package="ChromiumEmbeddedFramework-Tests">testObjectRegistry	| wrapped1 wrapped2 |	wrapped1 := Frame onNewObject.	wrapped2 := wrapped1 cefObject cefAsSmalltalkArg.	self assert: wrapped1 class = Frame.	self assert: wrapped1 == wrapped2.</body>
+
+<body package="ChromiumEmbeddedFramework-Tests">testSizeOf	| wrapped sizeof |	wrapped := Settings onNewObject.	"  settings has no base "	sizeof := wrapped cefObject 			cefMemberAt: #size			ifAbsent: [ self signalFailure: 'size not found' ].	self assert: sizeof = self lib cef_settings_t sizeof.</body>
+
+<body package="ChromiumEmbeddedFramework-Tests">testStringConversion	| string convertedString |	string := 'Some string with unicode character ¥€$'.	convertedString := string asCefDatum cefAsString.	self assert: string = convertedString</body>
+
+<body package="ChromiumEmbeddedFramework-Tests">testVolatileObjects	| object wrapped1 wrapped2 |	object := Base createCefObjectOfType: self lib cef_frame_t.	wrapped1 := object cefAsSmalltalkArg.	wrapped2 := object cefAsSmalltalkArg.	self assert: wrapped1 class = Frame.	self assert: wrapped1 ~~ wrapped2.</body>
+</methods>
+
+<methods>
+<class-id>CEF.ConvertTest</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-Tests">lib	^ LibChromium current</body>
+</methods>
+
+<do-it>"Imported Classes:"</do-it>
+
+<do-it>self error: 'Attempting to file-in parcel imports.  Choose terminate or close'</do-it>
+
+<class>
+<name>TestCase</name>
+<environment>SUnit</environment>
+<super>Core.Object</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>testSelector </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>SUnit</category>
+<attributes>
+<package>SUnitToo</package>
+</attributes>
+</class>
+
+<class>
+<name>ScheduledWork</name>
+<environment>CEF</environment>
+<super>Core.Object</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>targetTime delay timer isScheduled </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-UI</package>
+</attributes>
+</class>
+
+</st-source>
