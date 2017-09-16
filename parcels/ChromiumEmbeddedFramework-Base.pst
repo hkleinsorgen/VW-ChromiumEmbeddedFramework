@@ -63,7 +63,7 @@ Licensed under the MIT license (see Copyright) -->
 <private>false</private>
 <indexed-type>none</indexed-type>
 <inst-vars></inst-vars>
-<class-inst-vars>current </class-inst-vars>
+<class-inst-vars>current directory </class-inst-vars>
 <imports>
 			private CEF.LibChromiumDictionary.*
 			</imports>
@@ -71,8 +71,8 @@ Licensed under the MIT license (see Copyright) -->
 <attributes>
 <includeFiles><item>include/fixes.h</item> <item>include/window-styles.h</item></includeFiles>
 <includeDirectories><item>include/capi</item> <item>include/c</item> <item>.</item></includeDirectories>
-<libraryFiles><item>libcef.dll</item></libraryFiles>
-<libraryDirectories><item>.</item></libraryDirectories>
+<libraryFiles></libraryFiles>
+<libraryDirectories></libraryDirectories>
 <beVirtual>false</beVirtual>
 <optimizationLevel>full</optimizationLevel>
 <package>ChromiumEmbeddedFramework-Base</package>
@@ -105,6 +105,12 @@ Licensed under the MIT license (see Copyright) -->
 <package>ChromiumEmbeddedFramework-Base</package>
 </attributes>
 </shared-variable>
+
+<methods>
+<class-id>CEF.LibChromium class</class-id> <category>libraries</category>
+
+<body package="ChromiumEmbeddedFramework-Base">libraryWindows	&lt;library: #win&gt;		| lib |	lib := 'libcef.dll'.	^ self directory ifNotNil: [: d | ( d construct: lib ) asString ] ifNil: [ lib ]</body>
+</methods>
 
 <methods>
 <class-id>CEF.WinSupportLib</class-id> <category>procedures</category>
@@ -1492,6 +1498,20 @@ Licensed under the MIT license (see Copyright) -->
 <body package="ChromiumEmbeddedFramework-Base">current	current isNil 		ifTrue: [ current := self new ].	^ current</body>
 
 <body package="ChromiumEmbeddedFramework-Base">flushCurrent	current := nil.</body>
+</methods>
+
+<methods>
+<class-id>CEF.LibChromium class</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-Base">directory	" directory containing the libraries, reources and locales "		^ directory</body>
+
+<body package="ChromiumEmbeddedFramework-Base">directory: aStringOrFilename 	" directory containing the libraries, reources and locales.	Avoid modifiying the 'source' of the lib by using an alternative classInstVar "	directory := aStringOrFilename notNil 		ifTrue: [ aStringOrFilename asFilename asAbsoluteFilename ]		ifFalse: [ nil ].	self rebuildTaggedLibraries.</body>
+</methods>
+
+<methods>
+<class-id>CEF.LibChromium class</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-Base">libraryFilesSearchSignals	^ExternalLibraryHolder libraryNotFoundSignal , ExternalLibrary libraryNotLoadedSignal</body>
 </methods>
 
 <methods>

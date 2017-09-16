@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<st-source>
+
+
+<methods>
+<class-id>CEF.Base class</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-Development">argumentNameForType: aType 	| lib |	( self classForType: aType ) notNil 		ifTrue: 		[	^ self name first isVowel 				ifTrue: [ 'an' , self name ]				ifFalse: [ 'a' , self name ]		].	lib := CEF.LibChromium current.	(aType = lib cef_string_userfree_t or: [aType = lib cef_string_t ]) 		ifTrue: [ ^ 'aString' ].	^ aType printString</body>
+
+<body package="ChromiumEmbeddedFramework-Development">camelCase: key 	^ ( key reading transforming: 		[: in : out | | char camel |			camel := false.			[( char := in next ) notNil ] whileTrue: 				[	char = $_ 						ifTrue: [ camel := true ]						ifFalse: 						[	camel 								ifTrue: 								[	char := char asUppercase.									camel := false								].							out nextPut: char						]				]		]) 		rest</body>
+
+<body package="ChromiumEmbeddedFramework-Development">createAccessorForMember: key type: valueType 	| selector stream category argument |	( key = #size or: [ key = #base ]) 		ifTrue: [ ^ self ].	selector := self camelCase: key.	" get "	category := 'accessing - generated'.	( self includesSelector: selector asSymbol ) 		ifFalse: 		[	stream := String new writeStream.			stream				nextPutAll: selector; cr;				tab; nextPutAll: '"member type: '; nextPutAll: valueType printString , '"'; cr;				cr;				tab; nextPutAll: '^ self memberAt: #'; nextPutAll: key.			self compile: stream contents classified: category		].	" set "	( self includesSelector: ( selector , ':' ) asSymbol ) 		ifFalse: 		[	argument := self argumentNameForType: valueType.			stream := String new writeStream.			stream				nextPutAll: selector; nextPutAll: ': '; nextPutAll: argument; cr;				tab; nextPutAll: '"member type: '; nextPutAll: valueType printString , '"'; cr;				cr;				tab; nextPutAll: 'self memberAt: #'; nextPutAll: key; nextPutAll: ' put: '; nextPutAll: argument.			self compile: stream contents classified: category		].</body>
+</methods>
+
+<methods>
+<class-id>CEF.Base class</class-id> <category>development</category>
+
+<body package="ChromiumEmbeddedFramework-Development">generateAccessors	" add accessors. does not overwrite existing accessors "	| type |	self typeName isNil 		ifTrue: [ ^ self ].	type := ( CEF.LibChromium current perform: self typeName ) type.	type keysAndValuesDo: [: k : v | self createAccessorForMember: k type: v value ].</body>
+</methods>
+
+<do-it>"Imported Classes:"</do-it>
+
+<do-it>self error: 'Attempting to file-in parcel imports.  Choose terminate or close'</do-it>
+
+</st-source>

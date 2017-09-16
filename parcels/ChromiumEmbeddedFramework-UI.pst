@@ -581,9 +581,25 @@ Licensed under the MIT license (see Copyright) -->
 <methods>
 <class-id>CEF.Settings</class-id> <category>accessing</category>
 
+<body package="ChromiumEmbeddedFramework-UI">browserSubprocessPath	^ self memberAt: #browser_subprocess_path</body>
+
+<body package="ChromiumEmbeddedFramework-UI">browserSubprocessPath: aString	self memberAt: #browser_subprocess_path put: aString</body>
+
+<body package="ChromiumEmbeddedFramework-UI">cachePath	^ self memberAt: #cache_path </body>
+
+<body package="ChromiumEmbeddedFramework-UI">cachePath: aString	self memberAt: #cache_path put: aString</body>
+
 <body package="ChromiumEmbeddedFramework-UI">externalMessagePump	^ self booleanAt: #external_message_pump</body>
 
 <body package="ChromiumEmbeddedFramework-UI">externalMessagePump: aBoolean	self memberAt: #external_message_pump put: aBoolean</body>
+
+<body package="ChromiumEmbeddedFramework-UI">frameworkDirPath	^ self memberAt: #framework_dir_path </body>
+
+<body package="ChromiumEmbeddedFramework-UI">frameworkDirPath: aString	self memberAt: #framework_dir_path put: aString</body>
+
+<body package="ChromiumEmbeddedFramework-UI">locale	^ self memberAt: #locale</body>
+
+<body package="ChromiumEmbeddedFramework-UI">locale: aString	self memberAt: #locale put: aString</body>
 
 <body package="ChromiumEmbeddedFramework-UI">logFile	^ self memberAt: #log_file</body>
 
@@ -601,6 +617,10 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-UI">noSandbox: aBoolean	self memberAt: #no_sandbox put: aBoolean</body>
 
+<body package="ChromiumEmbeddedFramework-UI">productVersion	^ self memberAt: #product_version </body>
+
+<body package="ChromiumEmbeddedFramework-UI">productVersion: aString	self memberAt: #product_version put: aString</body>
+
 <body package="ChromiumEmbeddedFramework-UI">singleProcess	^ self booleanAt: #single_process</body>
 
 <body package="ChromiumEmbeddedFramework-UI">singleProcess: aBoolean	self memberAt: #single_process put: aBoolean</body>
@@ -608,6 +628,70 @@ Licensed under the MIT license (see Copyright) -->
 <body package="ChromiumEmbeddedFramework-UI">userAgent	^ self memberAt: #user_agent</body>
 
 <body package="ChromiumEmbeddedFramework-UI">userAgent: aString	self memberAt: #user_agent put: aString</body>
+
+<body package="ChromiumEmbeddedFramework-UI">userDataPath: aString	self memberAt: #user_data_path put: aString</body>
+</methods>
+
+<methods>
+<class-id>CEF.Settings</class-id> <category>accessing - generated</category>
+
+<body package="ChromiumEmbeddedFramework-UI">acceptLanguageList	"member type: cef_string_t"	^ self memberAt: #accept_language_list</body>
+
+<body package="ChromiumEmbeddedFramework-UI">acceptLanguageList: aString	"member type: cef_string_t"	self memberAt: #accept_language_list put: aString</body>
+
+<body package="ChromiumEmbeddedFramework-UI">backgroundColor	"member type: cef_color_t"	^ self memberAt: #background_color</body>
+
+<body package="ChromiumEmbeddedFramework-UI">backgroundColor: cef_color_t	"member type: cef_color_t"	self memberAt: #background_color put: cef_color_t</body>
+
+<body package="ChromiumEmbeddedFramework-UI">commandLineArgsDisabled	"member type: int"	^ self memberAt: #command_line_args_disabled</body>
+
+<body package="ChromiumEmbeddedFramework-UI">commandLineArgsDisabled: int	"member type: int"	self memberAt: #command_line_args_disabled put: int</body>
+
+<body package="ChromiumEmbeddedFramework-UI">enableNetSecurityExpiration	"member type: int"	^ self memberAt: #enable_net_security_expiration</body>
+
+<body package="ChromiumEmbeddedFramework-UI">enableNetSecurityExpiration: int	"member type: int"	self memberAt: #enable_net_security_expiration put: int</body>
+
+<body package="ChromiumEmbeddedFramework-UI">ignoreCertificateErrors	"member type: int"	^ self memberAt: #ignore_certificate_errors</body>
+
+<body package="ChromiumEmbeddedFramework-UI">ignoreCertificateErrors: int	"member type: int"	self memberAt: #ignore_certificate_errors put: int</body>
+
+<body package="ChromiumEmbeddedFramework-UI">javascriptFlags	"member type: cef_string_t"	^ self memberAt: #javascript_flags</body>
+
+<body package="ChromiumEmbeddedFramework-UI">javascriptFlags: aString	"member type: cef_string_t"	self memberAt: #javascript_flags put: aString</body>
+
+<body package="ChromiumEmbeddedFramework-UI">localesDirPath	"member type: cef_string_t"	^ self memberAt: #locales_dir_path</body>
+
+<body package="ChromiumEmbeddedFramework-UI">localesDirPath: aString	"member type: cef_string_t"	self memberAt: #locales_dir_path put: aString</body>
+
+<body package="ChromiumEmbeddedFramework-UI">packLoadingDisabled	"member type: int"	^ self memberAt: #pack_loading_disabled</body>
+
+<body package="ChromiumEmbeddedFramework-UI">packLoadingDisabled: int	"member type: int"	self memberAt: #pack_loading_disabled put: int</body>
+
+<body package="ChromiumEmbeddedFramework-UI">persistSessionCookies	"member type: int"	^ self memberAt: #persist_session_cookies</body>
+
+<body package="ChromiumEmbeddedFramework-UI">persistSessionCookies: int	"member type: int"	self memberAt: #persist_session_cookies put: int</body>
+
+<body package="ChromiumEmbeddedFramework-UI">persistUserPreferences	"member type: int"	^ self memberAt: #persist_user_preferences</body>
+
+<body package="ChromiumEmbeddedFramework-UI">persistUserPreferences: int	"member type: int"	self memberAt: #persist_user_preferences put: int</body>
+
+<body package="ChromiumEmbeddedFramework-UI">remoteDebuggingPort	"member type: int"	^ self memberAt: #remote_debugging_port</body>
+
+<body package="ChromiumEmbeddedFramework-UI">remoteDebuggingPort: int	"member type: int"	self memberAt: #remote_debugging_port put: int</body>
+
+<body package="ChromiumEmbeddedFramework-UI">resourcesDirPath	"member type: cef_string_t"	^ self memberAt: #resources_dir_path</body>
+
+<body package="ChromiumEmbeddedFramework-UI">resourcesDirPath: aString	"member type: cef_string_t"	self memberAt: #resources_dir_path put: aString</body>
+
+<body package="ChromiumEmbeddedFramework-UI">uncaughtExceptionStackSize	"member type: int"	^ self memberAt: #uncaught_exception_stack_size</body>
+
+<body package="ChromiumEmbeddedFramework-UI">uncaughtExceptionStackSize: int	"member type: int"	self memberAt: #uncaught_exception_stack_size put: int</body>
+
+<body package="ChromiumEmbeddedFramework-UI">userDataPath	"member type: cef_string_t"	^ self memberAt: #user_data_path</body>
+
+<body package="ChromiumEmbeddedFramework-UI">windowlessRenderingEnabled	"member type: int"	^ self memberAt: #windowless_rendering_enabled</body>
+
+<body package="ChromiumEmbeddedFramework-UI">windowlessRenderingEnabled: int	"member type: int"	self memberAt: #windowless_rendering_enabled put: int</body>
 </methods>
 
 <methods>
@@ -1055,7 +1139,7 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-UI">createMainArgs	| mainArgs hinstance |	hinstance := self osLib getHInstance.	hinstance isValid 		ifFalse: [ self error: 'Could not get HINSTANCE' ].	mainArgs := self lib cef_main_args_t malloc.	mainArgs memberAt: #instance put: hinstance.	^ mainArgs</body>
 
-<body package="ChromiumEmbeddedFramework-UI">createSettings	| settings level |	settings := Settings onNewObject.	settings singleProcess: true.	settings multiThreadedMessageLoop: true.	settings noSandbox: true.	settings externalMessagePump: true.	settings multiThreadedMessageLoop: true.	settings userAgent: 'VW Chromium'.	self logFilename 		ifNotNil: [: filename | settings logFile: filename asFilename asAbsoluteFilename asString ].	level := self debug 			ifTrue: [ #'LOGSEVERITY_VERBOSE' ]			ifFalse: [ #'LOGSEVERITY_DEFAULT' ].	settings logSeverity: level.	^ settings</body>
+<body package="ChromiumEmbeddedFramework-UI">createSettings	| settings level |	settings := Settings onNewObject.	settings singleProcess: true.	settings multiThreadedMessageLoop: true.	settings noSandbox: true.	settings externalMessagePump: true.	settings multiThreadedMessageLoop: true.	settings userAgent: 'VW Chromium'.	self baseDirectory ifNotNil: 		[: baseDir |			settings resourcesDirPath: baseDir asString.			settings localesDirPath: ( baseDir construct: 'locales' ) asString		].	self logFilename 		ifNotNil: [: filename | settings logFile: filename asFilename asAbsoluteFilename asString ].	level := self debug 			ifTrue: [ #'LOGSEVERITY_VERBOSE' ]			ifFalse: [ #'LOGSEVERITY_DEFAULT' ].	settings logSeverity: level.	^ settings</body>
 </methods>
 
 <methods>
@@ -1096,6 +1180,8 @@ Licensed under the MIT license (see Copyright) -->
 
 <methods>
 <class-id>CEF.MainApp</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">baseDirectory	" base directory for resources / locales " 		^ LibChromium directory</body>
 
 <body package="ChromiumEmbeddedFramework-UI">schedule: work	self messageLoop schedule: work.</body>
 
