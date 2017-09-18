@@ -69,7 +69,7 @@ Licensed under the MIT license (see Copyright) -->
 			</imports>
 <category>ExternalInterface-New</category>
 <attributes>
-<includeFiles><item>include/fixes.h</item> <item>include/window-styles.h</item></includeFiles>
+<includeFiles><item>include/fixes.h</item></includeFiles>
 <includeDirectories><item>include/capi</item> <item>include/c</item> <item>.</item></includeDirectories>
 <libraryFiles></libraryFiles>
 <libraryDirectories></libraryDirectories>
@@ -1013,7 +1013,7 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-Base">_cef_run_file_dialog_callback_t	&lt;C: struct _cef_run_file_dialog_callback_t {			cef_base_ref_counted_t base;			void ( __stdcall * on_file_dialog_dismissed)(struct _cef_run_file_dialog_callback_t * self, int selected_accept_filter, cef_string_list_t file_paths);		}&gt;</body>
 
-<body package="ChromiumEmbeddedFramework-Base">_cef_scheme_handler_factory_t	&lt;C: struct _cef_scheme_handler_factory_t&gt;</body>
+<body package="ChromiumEmbeddedFramework-Base">_cef_scheme_handler_factory_t		&lt;C: struct _cef_scheme_handler_factory_t {			cef_base_ref_counted_t base;			struct _cef_resource_handler_t *  ( __stdcall * create)(  struct _cef_scheme_handler_factory_t* self, struct _cef_browser_t* browser, struct _cef_frame_t* frame, const cef_string_t* scheme_name, struct _cef_request_t* request);	}&gt;</body>
 
 <body package="ChromiumEmbeddedFramework-Base">_cef_scheme_registrar_t	&lt;C: struct _cef_scheme_registrar_t {			cef_base_scoped_t base;			int ( __stdcall * add_custom_scheme)(struct _cef_scheme_registrar_t * self, const cef_string_t * scheme_name, int is_standard, int is_local, int is_display_isolated, int is_secure, int is_cors_enabled, int is_csp_bypassing);		}&gt;</body>
 
@@ -1554,14 +1554,8 @@ Licensed under the MIT license (see Copyright) -->
 <class-id>Core.Object</class-id> <category>converting</category>
 
 <body package="ChromiumEmbeddedFramework-Base">asCefDatum	^ self</body>
-</methods>
-
-<methods>
-<class-id>Core.Object</class-id> <category>accessing</category>
 
 <body package="ChromiumEmbeddedFramework-Base">cefAsSmalltalkArg	" try to wrap / convert this object into a Smalltalk object "		^ self</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cefReleaseCallbackArg	" sent after a callback has finished "</body>
 </methods>
 
 <methods>
@@ -1590,6 +1584,16 @@ Licensed under the MIT license (see Copyright) -->
 <body package="ChromiumEmbeddedFramework-Base">cefMemberAt: key ifAbsent: absentBlock	^ absentBlock value</body>
 
 <body package="ChromiumEmbeddedFramework-Base">cefMemberAt: key put: value	MemberNotFoundError raiseSignal: self printString, ' has no members'</body>
+</methods>
+
+<methods>
+<class-id>External.CDatum</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-Base">cefRefCountFor: owner	^ owner fakeRefCount: self</body>
+</methods>
+
+<methods>
+<class-id>External.CDatum</class-id> <category>accessing</category>
 
 <body package="ChromiumEmbeddedFramework-Base">cefRemoveRef	" hook for generic reference counting "</body>
 </methods>
@@ -1598,6 +1602,12 @@ Licensed under the MIT license (see Copyright) -->
 <class-id>External.CProcedurePointer</class-id> <category>testing</category>
 
 <body package="ChromiumEmbeddedFramework-Base">cefIsValid	^self referentAddress notNil and: [ self isNull not ]</body>
+</methods>
+
+<methods>
+<class-id>External.CType</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-Base">cefIsString	| lib |	lib := CEF.LibChromium current.	self type = lib cef_string_t 		ifTrue: [ ^ true ].	self type = lib cef_string_utf16_t 		ifTrue: [ ^ true ].	self type = lib _cef_string_utf16_t 		ifTrue: [ ^ true ].	self type = lib cef_string_userfree_t 		ifTrue: [ ^ true ].	self type = lib cef_string_userfree_utf16_t 		ifTrue: [ ^ true ].	^ false</body>
 </methods>
 
 <methods>
@@ -1610,6 +1620,12 @@ Licensed under the MIT license (see Copyright) -->
 <class-id>External.CEnumerationType</class-id> <category>accessing</category>
 
 <body package="ChromiumEmbeddedFramework-Base">cefNameOf: aValue	self keysAndValuesDo: [ : key : enumValue |		enumValue = aValue ifTrue: [ ^ key ].		].	^ nil</body>
+</methods>
+
+<methods>
+<class-id>External.CPointerType</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-Base">cefIsString	^ self referentType cefIsString</body>
 </methods>
 
 <methods>
@@ -1645,11 +1661,25 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
+<class-id>External.CComposite</class-id> <category>converting</category>
+
+<body package="ChromiumEmbeddedFramework-Base">cefAsSmalltalkArg	self cefIsString		ifTrue: [ ^ self cefAsString ].	^ super cefAsSmalltalkArg</body>
+</methods>
+
+<methods>
 <class-id>External.CComposite</class-id> <category>accessing</category>
 
-<body package="ChromiumEmbeddedFramework-Base">cefAsSmalltalkArg	| lib |	lib := CEF.LibChromium current.	self type = lib cef_string_utf16_t 		ifTrue: [ ^ self cefAsString ].	self type = lib cef_string_userfree_t 		ifTrue: [ ^ self cefAsString ].	self type = lib _cef_string_utf16_t 		ifTrue: [ ^ self cefAsString ].	^ super cefAsSmalltalkArg</body>
-
 <body package="ChromiumEmbeddedFramework-Base">cefCallbackNamed: memberName set: callbackBlock 	" don't forget that this is most likely a copy of some struct "		^ CCallback cefNamed: memberName of: self set: callbackBlock</body>
+</methods>
+
+<methods>
+<class-id>External.CComposite</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-Base">cefIsString	^ self type cefIsString</body>
+</methods>
+
+<methods>
+<class-id>External.CComposite</class-id> <category>accessing</category>
 
 <body package="ChromiumEmbeddedFramework-Base">cefMemberAt: key	^ self memberAt: key</body>
 
@@ -1678,17 +1708,32 @@ Licensed under the MIT license (see Copyright) -->
 </class>
 
 <class>
-<name>CEnumerationType</name>
-<environment>External</environment>
-<super>External.CCompoundType</super>
+<name>Integer</name>
+<environment>Core</environment>
+<super>Core.Number</super>
 <private>false</private>
-<indexed-type>objects</indexed-type>
+<indexed-type>none</indexed-type>
 <inst-vars></inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
-<category>External-Types</category>
+<category>Magnitude-Numbers</category>
 <attributes>
-<package>External-Types</package>
+<package>Magnitude-Numbers</package>
+</attributes>
+</class>
+
+<class>
+<name>Rectangle</name>
+<environment>Graphics</environment>
+<super>Graphics.Geometric</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>origin corner </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>Graphics-Geometry</category>
+<attributes>
+<package>Graphics-Geometry</package>
 </attributes>
 </class>
 
@@ -1723,21 +1768,6 @@ Licensed under the MIT license (see Copyright) -->
 </class>
 
 <class>
-<name>False</name>
-<environment>Core</environment>
-<super>Core.Boolean</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category>Kernel-Objects</category>
-<attributes>
-<package>Kernel-Objects</package>
-</attributes>
-</class>
-
-<class>
 <name>CComposite</name>
 <environment>External</environment>
 <super>External.CDatum</super>
@@ -1749,6 +1779,21 @@ Licensed under the MIT license (see Copyright) -->
 <category>External-Data</category>
 <attributes>
 <package>External-Data</package>
+</attributes>
+</class>
+
+<class>
+<name>String</name>
+<environment>Core</environment>
+<super>Core.CharacterArray</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>Collections-Text</category>
+<attributes>
+<package>Collections-Text</package>
 </attributes>
 </class>
 
@@ -1815,47 +1860,62 @@ Licensed under the MIT license (see Copyright) -->
 </class>
 
 <class>
-<name>String</name>
+<name>CType</name>
+<environment>External</environment>
+<super>Core.Object</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>specifierFlags </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>External-Types</category>
+<attributes>
+<package>External-Types</package>
+</attributes>
+</class>
+
+<class>
+<name>CPointerType</name>
+<environment>External</environment>
+<super>External.CType</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>referentType </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>External-Types</category>
+<attributes>
+<package>External-Types</package>
+</attributes>
+</class>
+
+<class>
+<name>False</name>
 <environment>Core</environment>
-<super>Core.CharacterArray</super>
+<super>Core.Boolean</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
 <inst-vars></inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
-<category>Collections-Text</category>
+<category>Kernel-Objects</category>
 <attributes>
-<package>Collections-Text</package>
+<package>Kernel-Objects</package>
 </attributes>
 </class>
 
 <class>
-<name>Integer</name>
-<environment>Core</environment>
-<super>Core.Number</super>
+<name>CEnumerationType</name>
+<environment>External</environment>
+<super>External.CCompoundType</super>
 <private>false</private>
-<indexed-type>none</indexed-type>
+<indexed-type>objects</indexed-type>
 <inst-vars></inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
-<category>Magnitude-Numbers</category>
+<category>External-Types</category>
 <attributes>
-<package>Magnitude-Numbers</package>
-</attributes>
-</class>
-
-<class>
-<name>Rectangle</name>
-<environment>Graphics</environment>
-<super>Graphics.Geometric</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars>origin corner </inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category>Graphics-Geometry</category>
-<attributes>
-<package>Graphics-Geometry</package>
+<package>External-Types</package>
 </attributes>
 </class>
 

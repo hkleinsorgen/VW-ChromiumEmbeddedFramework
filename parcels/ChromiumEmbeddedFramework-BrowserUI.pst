@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+
+<st-source>
+<!-- Chromium Embedded Framework (CEF) for VisualWorks.
+Displays a browser inside a VW view.
+
+See 
+https://bitbucket.org/chromiumembedded/cef
+
+Still at an very early stage. 
+Windows only.
+
+Open an examle app with:
+  CEF.BrowserUI open
+
+Based on CEF 3.3112.1659.gfef43e0 (2017-09-06)
+
+Contact: h . kleinsorgen - at - gmail . com
+Github repo: https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
+
+Licensed under the MIT license (see Copyright)
+ -->
+
+
+<class>
+<name>VWResourceHandler</name>
+<environment>CEF</environment>
+<super>CEF.ResourceHandler</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>mimeType </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-BrowserUI</package>
+</attributes>
+</class>
+
+<class>
+<name>VWAssets</name>
+<environment>CEF</environment>
+<super>Core.Assets</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-BrowserUI</package>
+</attributes>
+</class>
+
+<class>
+<name>BrowserUI</name>
+<environment>CEF</environment>
+<super>UI.ApplicationModel</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>urlAspect areaPart client </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports>
+			Graphics.*
+			UI.*
+			</imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-BrowserUI</package>
+</attributes>
+</class>
+
+<comment>
+<class-id>CEF.BrowserUI</class-id>
+<body>A bare bones browser app</body>
+</comment>
+
+<shared-variable>
+<name>DefaultURL</name>
+<environment>CEF.BrowserUI</environment>
+<private>false</private>
+<constant>false</constant>
+<category>accessing</category>
+<initializer></initializer>
+<attributes>
+<package>ChromiumEmbeddedFramework-BrowserUI</package>
+</attributes>
+</shared-variable>
+
+<methods>
+<class-id>CEF.VWResourceHandler</class-id> <category>resources</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">about	&lt;resource: 'about'&gt;	| text |	text := '&lt;html&gt;		&lt;head&gt;		&lt;/head&gt;		&lt;body&gt;		&lt;h1&gt;Welcome&lt;/h1&gt;Welcome to &lt;em&gt;VisualWorks&lt;/em&gt;		&lt;h2&gt;Links&lt;/h2&gt;		&lt;a href="https://bitbucket.org/chromiumembedded/cef"&gt;Chromium embedded framework&lt;/a&gt;&lt;br/&gt;		&lt;a href="http://www.cincomsmalltalk.com"&gt;Cincom Smalltalk&lt;/a&gt;&lt;br/&gt;		&lt;h2&gt;Info&lt;/h2&gt;		Resource URL: &lt;em&gt;', self request method, ' ', self request url, '&lt;/em&gt;&lt;br/&gt;		Allocated memory: &lt;em&gt;', Kernel.ObjectMemory dynamicallyAllocatedFootprint printString, '&lt;/em&gt;&lt;br/&gt;		Image: &lt;em&gt;', Kernel.ObjectMemory imageName, '&lt;/em&gt;&lt;br/&gt;	&lt;/body&gt;&lt;/html&gt;'.	self resourceString: text.</body>
+</methods>
+
+<methods>
+<class-id>CEF.VWResourceHandler class</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">resourcePragma	&lt;pragmas: #instance&gt;	^ #(resource:)</body>
+</methods>
+
+<methods>
+<class-id>CEF.VWAssets class</class-id> <category>css imports</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">wing_min	"WARNING: This code was automatically generated during asset import. Regeneration will destroy any manual edits."	&lt;file: 'wing.min.css'&gt;	&lt;md5sum: #[241 248 249 219 50 62 68 177 170 157 62 80 77 27 0 73]&gt;	^[self fromGZipCompressedString: 'G8,H@@@@@@@@@MTXZ8&gt;$M/I;)O,O5)1F&amp;%$AB?Q#Y&amp;#-:.86""::;I6T/^ &gt;QA/IC^;FM8BQL]O]P_37%H4AF9!G&lt;"7SD(OKUVWW.8+7;=9= =:!?=G""I8B3?]&lt;]4&lt;D%+AO+K10^$0EB/5 :&lt;K#C/4K;2%GW5J\R(0_RTY0QQITE0''!RJPD__;&gt;/&gt; GF)N"H!H#EZJL7+&gt;/J7JBD;0&lt;@&gt;C;/723Y&lt;''ERTV^MS''&amp;Q5)D?*;DRPH($]&lt;*&gt;I:]7X+&gt;J"E;1(F;B9C] QUB $&amp;4C[7M]R/9MA$-"I,R^]L(&lt;KXFT.A-NL$;0J%CVO-&gt;-3; ''FZW2LU%&amp;QF7.%RB9L8? M_#Y11?T\//@L?9&gt;1L)JG^../?(7&gt;P,+)2+K&gt;SHBO+)&gt;2/''Q;Y'' #''?NU&gt;N)GA&gt;6-^E*I5O.ABX$213++:#GJL/.J"@:%/NZMH/?$&amp;2I2I(#HE''SZ:\B,A.QS =-F'' )JFS+)14;ZP[I=5*M[&amp;B%Z@*/XA3A\.#&lt;D&lt;*X#OZRU''IM&amp;OX)*FA,_[BAY1M&amp;:8L)IV7''RN-6''Q-8"1 @I.M QI::3$R8F0[4;O.93#[-''2[(P3''[O&gt;V$8Q"]IO#,7.""T"%?\+3[VM)RM;H5,"*H;\U(BA+R9Z- -''2!P(6%:]-\QN3#OG(+8F?# ?;''^A L"((J2J5 [2 P#K&amp;V12%;H''0I*99APP%(8T _J_I03A,/W4M\!_N3&gt;IR$ =U/\&gt;)&gt;N)40JXO=&lt;@K8FCTR[M;SW.Z&gt;6D#_?M@7&gt;O8&lt;\ YYBLPH@!6W^ZP.&gt;TYUR0C33S K,\I+Z,(KL&gt;&amp;''C#K$A]*J[TLG*.E-KT-20B5$PXU2)OFF?''H_&gt;9B?SF]R.5CML1DZF05&amp;EH[^.&gt;/,&lt;Q4,+]D4K3!:''CZ ,F#@8/+Z"IEA3LQ&amp;/88_2CD,ZAOD2W7P@.%T_X:LI9GUX03\.L=OM0N "^40/.LID;O]0CX''@_0AJ5!IX:).DS^?T:;]&lt;FDB8;AS"Q)ZUGV(.MD\$23+88AN]BLVHB"3/^DV:@RU=TI5F$AJ8I9''E( P[KI&gt;"0,PL4A(XH"G@-G[$H&gt;1,NKP]M4"RW0?^.]3%Y+LNMP\0MHND &gt;3@@L#HCTLQ!LL=!*F''VGPO8FY1%]AZ?%[2G2% /=\?D84;768J$E9&amp;A-!?''FXH79%+[I_DMZY %:E - ZRTM;V2%E;6!I,,Y+6Z.SY$39*+(X&amp;2&amp;"!&amp;8U&lt;U,X5SE[J-W1V1C*VHA^!XKXJVJC*)U4R4FU]#KFZ&lt;1Y228VE^26!\CHP]''5!E0I0.^E8L7X&gt;CH&amp;;D@O63GTHC\!6/A]-7N/W?]^)2]F$ UYXX/4RD#4IWB035@\(! B948K''_?+2-AC1]W,"^E"B+HJDQ65"]B")4Q#/(TUPQ=1_-#]JB&lt;D&amp;:\4"3)&gt;8&amp;LGHQL%IA-F7%\EJ@@0R4U1O$93,A2;39\HU"9U5&lt;58I\O\/''U8+F&gt;U"Q.(GOB6%-Y_:G^C?.\@Q6D=]\3VF&amp;DLMB@]P=8&amp;KCT&gt;1.=/;*3N];)?V5?(:4F7F''@Y''+GG.E^H62'']=S;C7+?++="8O^P2Q4G+_Q*.[=[Y!''4^''$@"F;]*)"CTQD.D+NK.=/^22;.;_[QO*B&lt;RUY\IO6#[XF&lt;3/)6R_/A*75RQ,FAJ''FA-+=$N(=RRJ I@W8HVLJ3%(2QX ?/="VP&gt;#])VA= 8L)(L2&lt;I+R]$7SR+#H;N !V$3?$ Z8[K"$S=R;&lt;!X4MM_#,Y(5A&amp;:[FH)JBZK1IP2_U[6$AB%AME)/E2&amp;"PYFR,Y%AR4%''GQD1B\MDM!:SP4) 00/[?276YH1]C#)B(YZAI:$DF3L@U!6YW,&gt;*2035#&lt;6L8(Q$D,XC(L0T,$R BKLW H04I)*M_3,9QH&lt;@''1LF^+ (?F5,9U,?:B]!Z/[CL5CJ^8KMF(V]4&amp;$=UM9$77GGUIM*VBJG&lt; 8C(2$S;G2IRKE&amp;(L^5;)$5NMF!A,Y^&gt;?:GTVB=;XZ&amp;-[&amp;!=_&amp;?UZ+&lt;AOK7#IVC.$)IF*F&gt;(ZK&amp; !+:JX*H&amp;*C?6!I&gt;,AU SBTX),GJ3:BH[D!W%RMR&lt;]&gt;7J9:,4T)QA,,E8RUY:!J)N[T@:EWT&gt;L]U;4BR5@DKW13\Z?Q"9R&lt;=)-5?2%N@G^O)JCQR@_?K#GM;8#_590&gt;&gt;11K,71$T3]^:).D1]I*=''86!FLF*?R[$\$H0 :@?O#2-[7];M/U*DZX^T#FF&gt;''?G54&amp;5U/C?U&amp;NZG_EWII]F@L[F;[2/RIR''@"8+POV^TSX&lt;@&amp;^?''+EA9XGIF9:A1%; =;WMD*:"*PB17=JP*:=2+%-G"D''PW7''K*NA,=4YF#F.HT\+F;L!.^6S=Z*4,5$V?!\L!QZ:^T_Q4]TM&amp;5[+:23+L--SY\8]XYR\G%JL&gt;YS"G6YCC(YF"L1]AB=+X#&amp;VTLB.''O&amp;:_@ C&gt;/*"5$&amp;[R=8R#V"0&amp;!L];R+7/O&gt;4]&lt;3YY3&gt;J%/[QX)%&amp;8E5N+%_8_:\2Q^#G5)Z)YK_25L1H4WR^$+[_8"&lt; /Y_:):^XZX_D(MZ&amp;+G&gt;X/WWG&gt;L&lt;RG7PR:WP3017$\5M&gt;;[^PUF+,"H&amp;9BT''+=ZQ&amp;BU$2BS*8142O9]A\/GB1\%&lt;W$?_M*3+OFHO:=AUVY&gt;UO4E1YMCFN)=Y VO&amp;_BYE1)2\ET0]JBW;*F:&gt;7G&gt;(&gt;*R?69''7ACIU&amp;GY2DN5J5A:F.D]W+-/_@GJ-EMN/F@@@'] once</body>
+</methods>
+
+<methods>
+<class-id>CEF.BrowserUI class</class-id> <category>interface specs</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">browserSpec	"Tools.UIPainter new openOnClass: self andSelector: #browserSpec"	&lt;resource: #canvas&gt;	^#(#{UI.FullSpec} 		#window: 		#(#{UI.WindowSpec} 			#label: '' 			#bounds: #(#{Graphics.Rectangle} 640 347 1280 693 ) ) 		#component: 		#(#{UI.SpecCollection} 			#collection: #(				#(#{UI.ArbitraryComponentSpec} 					#layout: #(#{Graphics.LayoutFrame} 0 0 0 0 0 1 0 1 ) 					#name: #areaPart 					#flags: 0 					#component: #areaPart ) ) ) )</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">windowSpec	"Tools.UIPainter new openOnClass: self andSelector: #windowSpec"	&lt;resource: #canvas&gt;	^#(#{UI.FullSpec} 		#window: 		#(#{UI.WindowSpec} 			#label: '' 			#min: #(#{Core.Point} 100 100 ) 			#max: #(#{Core.Point} 0 0 ) 			#bounds: #(#{Graphics.Rectangle} 460 220 1460 820 ) ) 		#component: 		#(#{UI.SpecCollection} 			#collection: #(				#(#{UI.ActionButtonSpec} 					#layout: #(#{Graphics.LayoutFrame} 5 0 5 0 80 0 30 0 ) 					#name: #loadUrl 					#model: #loadUrl 					#label: 'Go' 					#defaultable: true ) 				#(#{UI.ActionButtonSpec} 					#layout: #(#{Graphics.LayoutFrame} 85 0 5 0 140 0 30 0 ) 					#name: #stopLoad 					#flags: 40 					#model: #stopLoad 					#label: 'Stop' 					#defaultable: true ) 				#(#{UI.ActionButtonSpec} 					#layout: #(#{Graphics.LayoutFrame} 145 0 5 0 170 0 30 0 ) 					#name: #goBack 					#model: #goBack 					#label: '&lt;' 					#defaultable: true ) 				#(#{UI.ActionButtonSpec} 					#layout: #(#{Graphics.LayoutFrame} 175 0 5 0 200 0 30 0 ) 					#name: #goForward 					#model: #goForward 					#label: '&gt;' 					#defaultable: true ) 				#(#{UI.InputFieldSpec} 					#layout: #(#{Graphics.LayoutFrame} 205 0 5 0 -5 1 30 0 ) 					#name: #urlAspect 					#model: #urlAspect 					#callbacksSpec: 					#(#{UI.UIEventCallbackSubSpec} 						#valueChangeSelector: #loadUrl ) ) 				#(#{UI.SubCanvasSpec} 					#layout: #(#{Graphics.LayoutFrame} 0 0 35 0 0 1 0 1 ) 					#name: #browserSpec 					#flags: 0 					#minorKey: #browserSpec ) ) ) )</body>
+</methods>
+
+<methods>
+<class-id>CEF.VWResourceHandler</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">initializeStream	| resourceName |	resourceName := self request url copyReplaceAll: 'vw://' with: ''.	( Tools.Pragma allNamed: #resource: in: self class ) do: 		[: pragma | (( pragma argumentAt: 1 ) match: resourceName ) 				ifTrue: [ ^ self perform: pragma selector ]		].	self notFound.</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">mimeType	^ mimeType ifNil: [ 'text/html' ]</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">mimeType: aMimeType 	mimeType := aMimeType.</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">notFound	statusCode := 404.	self resourceString: '&lt;html&gt;&lt;body&gt;Resource not found&lt;/body&gt;&lt;/html&gt;'.</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">resourceString: aString	resourceStream := ( aString asByteArrayEncoding: #utf8 ) reading.</body>
+</methods>
+
+<methods>
+<class-id>CEF.VWResourceHandler class</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">schemeName	^ 'vw'</body>
+</methods>
+
+<methods>
+<class-id>CEF.VWAssets class</class-id> <category>private-import-helpers</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">fromGZipCompressedString: aPackedCompressedString	| compressedBytes bytes |	compressedBytes := ByteArray fromPackedString:  aPackedCompressedString.	bytes := (OS.ZLib.GZipReadStream on: compressedBytes readStream) contents.	^ bytes asStringEncoding: #utf8.</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">importString: aLogicalFile 	| byteStream sourceBytes |	byteStream := ByteArray new writeStream.	sourceBytes := (aLogicalFile withEncoding: #binary) contentsOfEntireFile .	(OS.ZLib.GZipWriteStream bestCompressionOn: byteStream) nextPutAll: sourceBytes; close.	^ 'self fromGZipCompressedString: ', byteStream contents asPackedString storeString</body>
+</methods>
+
+<methods>
+<class-id>CEF.BrowserUI</class-id> <category>aspects</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">areaPart	areaPart isNil 		ifTrue: [ areaPart := BrowserAreaPart new ].	^ areaPart</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">urlAspect	urlAspect isNil 		ifTrue: [ urlAspect := self class defaultURL asValue ].	^ urlAspect</body>
+</methods>
+
+<methods>
+<class-id>CEF.BrowserUI</class-id> <category>actions</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">goBack	self browser goBack</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">goForward	self browser goForward.</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">stopLoad	self browser stopLoad</body>
+</methods>
+
+<methods>
+<class-id>CEF.BrowserUI</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">browser	^ client browser</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">registerEvents	client when: #loading do: [: frame : transitionType | self loading: frame ].	client when: #loaded do: [: frame : statusCode | self loaded: frame statusCode: statusCode ].	client 		when: #loadError		do: [: frame : errorCode : errorUrl : errorText | self loadError: frame errorCode: errorCode errorUrl: errorUrl errorText: errorText ].	client when: #createdBrowser do: [ self loadUrl ].</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">startBrowser	client := Client areaPart: self areaPart.	self registerEvents.	self urlColor: ColorValue darkGray.	client start.</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">urlColor: aColor 	| widget lookPreferences |	widget := self wrapperAt: #urlAspect.	lookPreferences := widget lookPreferences.	lookPreferences setBackgroundColor: aColor.	widget lookPreferences: lookPreferences.	widget invalidate.</body>
+</methods>
+
+<methods>
+<class-id>CEF.BrowserUI</class-id> <category>interface opening</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">postBuildWith: aBuilder 	| win |	super postBuildWith: aBuilder.	( win := aBuilder window ) notNil 		ifTrue: 		[				[					[( client isNil and: [ win isOpen ]) 						ifTrue: [ self startBrowser ]				] uiEventFor: win			] forkAt: Processor activeProcess priority - 1		].</body>
+</methods>
+
+<methods>
+<class-id>CEF.BrowserUI</class-id> <category>events</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">loadError: frame errorCode: errorCode errorUrl: errorUrl errorText: errorText 	Log debugLog: [ 'Load error ' , errorUrl , ': ' , errorText ].	frame isMain 		ifTrue: 		[	(self widgetAt: #stopLoad) isEnabled: false.			self urlColor: ColorValue orange.			self urlAspect value: frame url		].</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">loaded: frame statusCode: statusCode 	| color |	Log debugLog: [ 'Loaded ' , frame url , ', status code ' , statusCode printString ].	frame isMain 		ifTrue: 		[	(self widgetAt: #stopLoad) isEnabled: false.			color := ( statusCode = 200 or: [ statusCode = 0 ]) 					ifTrue: [ ColorValue white ]					ifFalse: [ ColorValue orange ].			self urlColor: color		].</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">loading: frame 	Log debugLog: [ 'Loading ', frame url ].	frame isMain 		ifTrue: 		[	(self widgetAt: #stopLoad) isEnabled: true.			self urlColor: ColorValue lightGray.			self urlAspect value: frame url		].</body>
+</methods>
+
+<methods>
+<class-id>CEF.BrowserUI class</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">defaultURL	^ DefaultURL ifNil: [ 'vw://about' ]</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">defaultURL: anURIOrString	DefaultURL := anURIOrString asString</body>
+</methods>
+
+<do-it>"Imported Classes:"</do-it>
+
+<do-it>self error: 'Attempting to file-in parcel imports.  Choose terminate or close'</do-it>
+
+<class>
+<name>ApplicationModel</name>
+<environment>UI</environment>
+<super>UI.Model</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>builder uiSession eventHandlers </inst-vars>
+<class-inst-vars>savedWindowInformation </class-inst-vars>
+<imports></imports>
+<category>UIBuilder-Framework</category>
+<attributes>
+<package>UIBuilder-Framework</package>
+</attributes>
+</class>
+
+<class>
+<name>Assets</name>
+<environment>Core</environment>
+<super>Core.Object</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars>lastDirectory </class-inst-vars>
+<imports></imports>
+<category>Assets</category>
+<attributes>
+<package>Assets</package>
+</attributes>
+</class>
+
+<class>
+<name>ResourceHandler</name>
+<environment>CEF</environment>
+<super>CEF.Base</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>resourceStream buffer statusCode </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-UI</package>
+</attributes>
+</class>
+
+</st-source>
