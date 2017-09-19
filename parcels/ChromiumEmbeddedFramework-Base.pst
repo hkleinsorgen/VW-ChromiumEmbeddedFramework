@@ -40,7 +40,7 @@ Licensed under the MIT license (see Copyright) -->
 <private>false</private>
 <indexed-type>none</indexed-type>
 <inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
+<class-inst-vars>current </class-inst-vars>
 <imports>
 			private CEF.WinSupportLibDictionary.*
 			</imports>
@@ -374,6 +374,14 @@ Licensed under the MIT license (see Copyright) -->
 <class-id>CEF.WinSupportLib</class-id> <category>accessing</category>
 
 <body package="ChromiumEmbeddedFramework-Base">getHInstance	^ self getModuleHandle: 0</body>
+</methods>
+
+<methods>
+<class-id>CEF.WinSupportLib class</class-id> <category>instance creation</category>
+
+<body package="ChromiumEmbeddedFramework-Base">current	current isNil 		ifTrue: [ current := self new ].	^ current</body>
+
+<body package="ChromiumEmbeddedFramework-Base">flushCurrent	current := nil.</body>
 </methods>
 
 <methods>
