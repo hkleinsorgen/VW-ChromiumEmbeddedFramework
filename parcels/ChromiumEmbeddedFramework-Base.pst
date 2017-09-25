@@ -1105,138 +1105,6 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-Base">CEF_EXPORT	&lt;C: #define CEF_EXPORT 	&gt;</body>
 
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_BASE_CEF_BASICTYPES_H_	&lt;C: #define CEF_INCLUDE_BASE_CEF_BASICTYPES_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_BASE_CEF_BUILD_H_	&lt;C: #define CEF_INCLUDE_BASE_CEF_BUILD_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_ACCESSIBILITY_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_ACCESSIBILITY_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_APP_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_APP_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_AUTH_CALLBACK_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_AUTH_CALLBACK_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_BASE_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_BASE_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_BROWSER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_BROWSER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_BROWSER_PROCESS_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_BROWSER_PROCESS_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_CALLBACK_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_CALLBACK_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_CLIENT_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_CLIENT_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_COMMAND_LINE_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_COMMAND_LINE_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_CONTEXT_MENU_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_CONTEXT_MENU_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_COOKIE_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_COOKIE_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_DIALOG_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_DIALOG_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_DISPLAY_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_DISPLAY_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_DOM_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_DOM_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_DOWNLOAD_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_DOWNLOAD_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_DOWNLOAD_ITEM_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_DOWNLOAD_ITEM_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_DRAG_DATA_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_DRAG_DATA_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_DRAG_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_DRAG_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_FIND_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_FIND_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_FOCUS_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_FOCUS_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_FRAME_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_FRAME_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_GEOLOCATION_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_GEOLOCATION_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_IMAGE_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_IMAGE_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_JSDIALOG_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_JSDIALOG_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_KEYBOARD_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_KEYBOARD_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_LIFE_SPAN_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_LIFE_SPAN_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_LOAD_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_LOAD_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_MENU_MODEL_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_MENU_MODEL_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_MENU_MODEL_DELEGATE_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_MENU_MODEL_DELEGATE_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_NAVIGATION_ENTRY_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_NAVIGATION_ENTRY_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_PRINT_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_PRINT_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_PRINT_SETTINGS_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_PRINT_SETTINGS_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_PROCESS_MESSAGE_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_PROCESS_MESSAGE_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_RENDER_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_RENDER_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_RENDER_PROCESS_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_RENDER_PROCESS_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_REQUEST_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_REQUEST_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_REQUEST_CONTEXT_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_REQUEST_CONTEXT_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_REQUEST_CONTEXT_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_REQUEST_CONTEXT_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_REQUEST_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_REQUEST_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_RESOURCE_BUNDLE_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_RESOURCE_BUNDLE_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_RESOURCE_HANDLER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_RESOURCE_HANDLER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_RESPONSE_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_RESPONSE_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_RESPONSE_FILTER_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_RESPONSE_FILTER_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_SCHEME_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_SCHEME_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_SSL_INFO_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_SSL_INFO_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_SSL_STATUS_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_SSL_STATUS_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_STREAM_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_STREAM_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_STRING_VISITOR_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_STRING_VISITOR_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_TASK_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_TASK_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_V8_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_V8_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_VALUES_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_VALUES_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_WEB_PLUGIN_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_WEB_PLUGIN_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_CAPI_CEF_X509_CERTIFICATE_CAPI_H_	&lt;C: #define CEF_INCLUDE_CAPI_CEF_X509_CERTIFICATE_CAPI_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_INTERNAL_CEF_EXPORT_H_	&lt;C: #define CEF_INCLUDE_INTERNAL_CEF_EXPORT_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_INTERNAL_CEF_STRING_H_	&lt;C: #define CEF_INCLUDE_INTERNAL_CEF_STRING_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_INTERNAL_CEF_STRING_LIST_H_	&lt;C: #define CEF_INCLUDE_INTERNAL_CEF_STRING_LIST_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_INTERNAL_CEF_STRING_MAP_H_	&lt;C: #define CEF_INCLUDE_INTERNAL_CEF_STRING_MAP_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_INTERNAL_CEF_STRING_MULTIMAP_H_	&lt;C: #define CEF_INCLUDE_INTERNAL_CEF_STRING_MULTIMAP_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_INTERNAL_CEF_STRING_TYPES_H_	&lt;C: #define CEF_INCLUDE_INTERNAL_CEF_STRING_TYPES_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_INTERNAL_CEF_TIME_H_	&lt;C: #define CEF_INCLUDE_INTERNAL_CEF_TIME_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_INTERNAL_CEF_TYPES_H_	&lt;C: #define CEF_INCLUDE_INTERNAL_CEF_TYPES_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_INTERNAL_CEF_TYPES_WIN_H_	&lt;C: #define CEF_INCLUDE_INTERNAL_CEF_TYPES_WIN_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_INTERNAL_CEF_TYPES_WRAPPERS_H_	&lt;C: #define CEF_INCLUDE_INTERNAL_CEF_TYPES_WRAPPERS_H_ 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">CEF_INCLUDE_INTERNAL_CEF_WIN_H_	&lt;C: #define CEF_INCLUDE_INTERNAL_CEF_WIN_H_ 	&gt;</body>
-
 <body package="ChromiumEmbeddedFramework-Base">CEF_STRING_TYPE_UTF16	&lt;C: #define CEF_STRING_TYPE_UTF16 1	&gt;</body>
 
 <body package="ChromiumEmbeddedFramework-Base">CHAR_BIT	&lt;C: #define CHAR_BIT __CHAR_BIT__	&gt;</body>

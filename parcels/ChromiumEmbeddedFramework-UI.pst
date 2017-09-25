@@ -107,7 +107,7 @@ Licensed under the MIT license (see Copyright) -->
 </class>
 
 <class>
-<name>BrowserAreaPart</name>
+<name>BrowserPart</name>
 <environment>CEF</environment>
 <super>Graphics.VisualPart</super>
 <private>false</private>
@@ -122,7 +122,7 @@ Licensed under the MIT license (see Copyright) -->
 </class>
 
 <comment>
-<class-id>CEF.BrowserAreaPart</class-id>
+<class-id>CEF.BrowserPart</class-id>
 <body>The area covered by the browser. The only purpose of this view is to trigger events.</body>
 </comment>
 
@@ -1256,7 +1256,7 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-UI">getBrowserWindowHandle	^ self host windowHandle</body>
 
-<body package="ChromiumEmbeddedFramework-UI">initializeWrapped	super initializeWrapped.	self externalAt: #browserWindowHandle put: self getBrowserWindowHandle.</body>
+<body package="ChromiumEmbeddedFramework-UI">initializeWrapped	super initializeWrapped.	self isVolatile 		ifFalse: [ self externalAt: #browserWindowHandle put: self getBrowserWindowHandle ].</body>
 
 <body package="ChromiumEmbeddedFramework-UI">mainWindow	^ self client mainWindow</body>
 
@@ -1294,7 +1294,7 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>CEF.BrowserAreaPart</class-id> <category>bounds accessing</category>
+<class-id>CEF.BrowserPart</class-id> <category>bounds accessing</category>
 
 <body package="ChromiumEmbeddedFramework-UI">bounds: aRectangle	super bounds: aRectangle.	self triggerEvent: #resized</body>
 
@@ -1304,13 +1304,13 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>CEF.BrowserAreaPart</class-id> <category>initialize-release</category>
+<class-id>CEF.BrowserPart</class-id> <category>initialize-release</category>
 
 <body package="ChromiumEmbeddedFramework-UI">release	self triggerEvent: #released.	super release.</body>
 </methods>
 
 <methods>
-<class-id>CEF.BrowserAreaPart class</class-id> <category>private-events</category>
+<class-id>CEF.BrowserPart class</class-id> <category>private-events</category>
 
 <body package="ChromiumEmbeddedFramework-UI">constructEventsTriggered	^super constructEventsTriggered		add: #resized;		add: #released;		yourself</body>
 </methods>

@@ -17,11 +17,7 @@ Based on CEF 3.3112.1659.gfef43e0 (2017-09-06)
 
 Contact: h . kleinsorgen - at - gmail . com
 Github repo: https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
-
-Includes https://github.com/russmaxdesign/example-layout-one-full
-
-Copyright (c) 2015 Russ Weakley, Max Design
-https://github.com/russmaxdesign/example-layout-one-full -->
+ -->
 
 
 <class>
@@ -92,7 +88,7 @@ https://github.com/russmaxdesign/example-layout-one-full -->
 <methods>
 <class-id>CEF.VWResourceHandler</class-id> <category>resources</category>
 
-<body package="ChromiumEmbeddedFramework-BrowserUI">about	&lt;resource: 'about.html'&gt;		| text |	text := '&lt;html&gt;	&lt;head&gt;		&lt;title&gt;CEF for VisualWorks&lt;/title&gt;		&lt;link rel="stylesheet" href="styles.css"/&gt;	&lt;/head&gt;	&lt;body&gt;			&lt;div class="header"&gt;			&lt;div class="container"&gt;				&lt;h1 class="header-heading"&gt;CEF for VisualWorks&lt;/h1&gt;			&lt;/div&gt;		&lt;/div&gt;		&lt;div class="content"&gt;			&lt;div class="container"&gt;				&lt;div class="main"&gt;					&lt;h2&gt;Links&lt;/h2&gt;					&lt;ul class="list-unstyled"&gt;						&lt;li&gt;							&lt;a href="https://bitbucket.org/chromiumembedded/cef"&gt;Chromium embedded framework&lt;/a&gt;						&lt;/li&gt;						&lt;li&gt;							&lt;a href="http://www.cincomsmalltalk.com"&gt;Cincom Smalltalk&lt;/a&gt;						&lt;/li&gt;					&lt;/ul&gt;					&lt;h2&gt;Info&lt;/h2&gt;					&lt;ul class="list-unstyled"&gt;						&lt;li&gt;Resource URL: &lt;code&gt;{{request}}&lt;/code&gt;						&lt;/li&gt;						&lt;li&gt;Allocated memory: &lt;code&gt;{{memory}}&lt;/code&gt;						&lt;/li&gt;						&lt;li&gt;Image: &lt;code&gt;{{image}}&lt;/code&gt;						&lt;/li&gt;					&lt;/ul&gt;				&lt;/div&gt;			&lt;/div&gt;		&lt;/div&gt;	&lt;/body&gt;&lt;/html&gt;'.	self 		resourceString: text		context: ( Dictionary new				at: 'request' put: self request method , ' ' , self request url;				at: 'memory' put: Kernel.ObjectMemory dynamicallyAllocatedFootprint printString;				at: 'image' put: Kernel.ObjectMemory imageName;				yourself ).</body>
+<body package="ChromiumEmbeddedFramework-BrowserUI">about	&lt;resource: 'about.html'&gt;		self 		resourceString: VWAssets about		context: ( Dictionary new				at: 'request' put: self request method , ' ' , self request url;				at: 'memory' put: Kernel.ObjectMemory dynamicallyAllocatedFootprint printString;				at: 'image' put: Kernel.ObjectMemory imageName;				yourself ).</body>
 
 <body package="ChromiumEmbeddedFramework-BrowserUI">styles	&lt;resource: 'styles.css'&gt;	self resourceString: VWAssets styles.</body>
 </methods>
@@ -106,7 +102,13 @@ https://github.com/russmaxdesign/example-layout-one-full -->
 <methods>
 <class-id>CEF.VWAssets class</class-id> <category>css imports</category>
 
-<body package="ChromiumEmbeddedFramework-BrowserUI">styles	"WARNING: This code was automatically generated during asset import. Regeneration will destroy any manual edits."	&lt;file: 'styles.css'&gt;	&lt;md5sum: #[94 241 24 112 166 193 18 188 37 124 157 7 144 254 195 3]&gt;	^[self fromGZipCompressedString: 'G8,H@@@@@@@@@H5VR7O[M!@&gt;&amp;;&lt;BSR\3+X^$RD)2X&amp;&amp;&amp;$?RRG#*9=M@3RD@"1"CA *A,M^O?'',VCID!Q-.2C+W5=6M5/];V:Q=G2S?@''["%*5Y''SM+!"D=6/ "@W9A3&lt;BN8*KH&gt;,7*E$G=05&amp;AAVG&gt;6GP''@!]&gt;#W=W(M''7I\OA6%:F(R=P)JJR N(%X;%MI*%\XY&gt;/@W9R^*VHGQ]=+QC2DZABG:J!''&amp;H_)FZ7*B#26.6:"%$!760V,P%F%XY&amp;F9C,-MVF;C&lt;&amp;G2N/"M-;Q2 MD3Y\\R\K^I_")''MX5JI4+#5LUCO9@1[-''?]H^2NMLA4B-Z7ZO5P?NB(@1%M#UJ84&gt;#T_[YFZ7''Q&amp;/_J''MV&amp;;%U: F&amp;_Z3-3F*4:I?4LKVHO7- :\XZA\6&lt;N*$+3:0VV5NK''H/":[=NJJ+]!#XCNL*L%1?IR''H!BYTQ)0]]Y$A-AV_D]U6WU&gt;)POU@21H"TZF1Z 2PWR(%*M0%,WQ2H]Q$1BBDFP&gt;F\&amp;1]_,$=IXD&gt;CIZ7UF@\D1\A_I0M;#),VB-''?]0M.FRIEI*WR5WUY''Z#T_NXQ9.0HMXL(HEW4Q_TRW[PQ)T=?@P#/(E5O4F&gt;W%QQ''3GO^TV 7JD&gt;,YX*RT]=4,.EN^QAE58:*''DNM+JXT&lt;LQQ\9RT5%ZCB&lt;UN5LN#QB.B5_U=&lt;#\&gt;"4;],%G"@$"K W;R\/L%^&amp;YD%W)HY13C''QH&amp;?;"$&amp;E#;_*,\C(_I. GQ8&gt;O#_,[Z5@:3E2OR_4@O2X4+S^\V5? T9U!N^PQ!$6R&gt;&lt;59]D$B*"3'')DY\6(W&amp;3]#8HFKG74)''!3-I9(1W_&lt;^''-A$B&amp;[:943%+XJ+*SN5RK6 :2=$J\ZT_B6([#&lt;0:1V*&gt;Q?RQT[8(''%&amp;Z3&gt;C#1I;=X43JXFRF4DAH+I.+&gt;D]\G9R#16TN^S\-3B]N!^&gt;24E&gt;L2FOPVY&amp;Z&lt;=-"!V^*)]_V 3UA9+,9 0]WN&amp;&gt;]*)&gt;8&amp;W36P;;C G2 3/&gt;''D1:0:Q)J6#Z![N?[^TJYI&lt;-FVI%_5#KG(E5X5P"),%&gt;/%J8\59Z=Y895%6_:BRMD%R&lt;Y5N#,R2_3D[9YN_C[[.@VLKIT MJT5!&lt;A0?E''"Y&amp;E%U80P+%=_]KH5"5T0E:@?S2LIE4&gt;M!FWS-YBHOV)W&amp;N7J^4F^V8+,4T"G&amp;EO7%!BN7''6HB1;^5F/G2G 81#:AI''-&gt;$D2/_-J&lt;6@!&amp;?WR5XZ9?W]6W#N,[2$ -%Y[]GJPUQE,M&gt;G8(=L_26).3MYK..:XIN0W_.-3^&amp;M]?F[%)V+=T%CBL_*, DU_PCYC+]?5B]&gt;M  ,^3XTY([[8Y (D;\!LKW&gt;?N&amp;*?O_K6=WM_TE$BW:09^,7@''/NN.XQOS%]DQW?V[7J_9H[AAW''&lt;B/$SZT&gt;8L@@@b'] once</body>
+<body package="ChromiumEmbeddedFramework-BrowserUI">styles	"WARNING: This code was automatically generated during asset import. Regeneration will destroy any manual edits."	&lt;file: 'styles.css'&gt;	&lt;md5sum: #[1 240 123 172 191 200 172 212 40 139 192 206 89 215 238 149]&gt;	^[self fromGZipCompressedString: 'G8,H@@@@@@@@@IUSSX?ZLAR&lt;95]X+B*5D$FPEA[B+R/55K64T.&gt;N?YIXNG:);_CQZ/=;[YL/]!]UAQRQ&lt;S1;7(1_#/1B?$RD5ERWP&amp;U$.U!C/W]@P3$W*''RH_2-P6]"H79@QT5L)A:2 -YBW#O0D3Z&amp;"\6J(L+DAKP+O,WB6LYV"]E-KJJ3GFD+TFW%H4=R?9)P]R(6-8 8+"%C6D$UQ-P+B\-P\]I2#-U!''YMV\"TD)&gt;C92)B*91&gt;G.O51IT@]R$G,BTUX6\1VR#77Y"7RMJ]R.-UBRR6RGW25ZBJU8AE5HOFVD-![7T;/BM54691/OU 8HJ4&amp;7L/E/.?7 DR$T1ET''Y=V;7''.36V0:G1+=K07!,OE1S&lt;2U,Y;(:[M#6F(A&gt;''=4/!]Z%&lt;II\E.EDBY Y7FW7@B?[Y\!!3F.W.G,1=]''UA!?!;JUUL?&amp;9@&amp;U682ZNY%=D3%(Z T*8$%.&lt;Q&amp;TQL&lt;I_\5I;VCST@Z74//#]Y''S#&lt;%:_/4-E:-OD8&amp;Z\-DZO1#):&lt;EXIA91(%,YID-!!,/D!FXR2I!S;J=?Q)K7)&amp;,,#N6%\]U\FAY9N:RXSN]00Y^K3=]-)"\*UK8?O3(Q3U1,!5@:V+3[L]Z9SKN#LLHM2B.JI06T2%&gt;9F&lt;K:26N:^1(H%E%1!C.LLO$\FE:#F_S94(UO&amp;VE] ;H79X'';[K_;^=O:D/4EHM&lt;0R;@D@@@b'] once</body>
+</methods>
+
+<methods>
+<class-id>CEF.VWAssets class</class-id> <category>html imports</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">about	"WARNING: This code was automatically generated during asset import. Regeneration will destroy any manual edits."	&lt;file: 'about.html'&gt;	&lt;md5sum: #[84 23 111 193 115 124 86 105 249 109 242 145 76 3 232 153]&gt;	^[self fromGZipCompressedString: 'G8,H@@@@@@@@@H5S2T;CLA@=)5=!9T:,=%"9$Q@B*UIOQ\CY\RZ5ER= N4QU5W?GS+MPZ@,''3;1Y7+3Q&amp;GB/YD884CJ_IP''10$/HG1:_TFT,^!V.(_KM6M(Q_@+EIB%4#R3HU^+&lt;W(K#@C9E7DH5HA%3K 69AO^]RVGJ_Y;D:%I&lt;H"Z)\:,4A,GF1GN\F^6)4DL(HW1&gt;W''HWG:E7:^UQ&gt;_3TD(^^7\R#&lt;XLD-O&lt;G&gt;;^XB(D^C%L-&lt;$5XQRQ\CE #^2..ZS@SP//5\N?_7QK#P/""XSW83M ]Y-0ZIQ(E*(B2!AH3*HJ4G$TC#B)KE[QAH&lt;E4)LDS35WJ0M"6[\ZDY$X9QZW4UMYY\@IMA:K''@[7\&amp;&gt;AQV]R=5)V9K'',K3#RV@W+Y[)ZHLEMB_#!X&gt;F#@&gt;^NQ8@:9H.A^R,N(C7KCO(3]S05N?%?5Z4U7LAVI:M:(&amp;XRMU?K;\FXD]0\\IL_?&lt; U"?5$NM L@@@@a'] once</body>
 </methods>
 
 <methods>
@@ -128,7 +130,7 @@ https://github.com/russmaxdesign/example-layout-one-full -->
 
 <body package="ChromiumEmbeddedFramework-BrowserUI">resourceString: aString	resourceStream := ( aString asByteArrayEncoding: #utf8 ) reading.</body>
 
-<body package="ChromiumEmbeddedFramework-BrowserUI">resourceString: aString context: mustacheContext 	| expanded |	expanded := aString.	mustacheContext 		keysAndValuesDo: [: k : v | expanded := expanded copyReplaceAll: '{{' , k , '}}' with: v ].	resourceStream := ( expanded asByteArrayEncoding: #utf8 ) reading.</body>
+<body package="ChromiumEmbeddedFramework-BrowserUI">resourceString: aString context: mustacheContext 	| expanded |	expanded := aString.	mustacheContext 		keysAndValuesDo: [: k : v | expanded := expanded copyReplaceAll: '{{' , k , '}}' with: v ].	self resourceString: expanded.</body>
 </methods>
 
 <methods>
@@ -145,12 +147,14 @@ https://github.com/russmaxdesign/example-layout-one-full -->
 <body package="ChromiumEmbeddedFramework-BrowserUI">importString: aLogicalFile 	| byteStream sourceBytes |	byteStream := ByteArray new writeStream.	sourceBytes := (aLogicalFile withEncoding: #binary) contentsOfEntireFile .	(OS.ZLib.GZipWriteStream bestCompressionOn: byteStream) nextPutAll: sourceBytes; close.	^ 'self fromGZipCompressedString: ', byteStream contents asPackedString storeString</body>
 
 <body package="ChromiumEmbeddedFramework-BrowserUI">import_css: aFilename 	^self importString: aFilename</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">import_html: aFilename 	^self importString: aFilename</body>
 </methods>
 
 <methods>
 <class-id>CEF.BrowserUI</class-id> <category>aspects</category>
 
-<body package="ChromiumEmbeddedFramework-BrowserUI">areaPart	areaPart isNil 		ifTrue: [ areaPart := BrowserAreaPart new ].	^ areaPart</body>
+<body package="ChromiumEmbeddedFramework-BrowserUI">areaPart	areaPart isNil 		ifTrue: [ areaPart := BrowserPart new ].	^ areaPart</body>
 
 <body package="ChromiumEmbeddedFramework-BrowserUI">urlAspect	urlAspect isNil 		ifTrue: [ urlAspect := self class defaultURL asValue ].	^ urlAspect</body>
 </methods>
@@ -188,7 +192,7 @@ https://github.com/russmaxdesign/example-layout-one-full -->
 
 <body package="ChromiumEmbeddedFramework-BrowserUI">loadError: frame errorCode: errorCode errorUrl: errorUrl errorText: errorText 	Log debugLog: [ 'Load error ' , errorUrl , ': ' , errorText ].	frame isMain 		ifTrue: 		[	(self widgetAt: #stopLoad) isEnabled: false.			self urlColor: ColorValue orange.			self urlAspect value: frame url		].</body>
 
-<body package="ChromiumEmbeddedFramework-BrowserUI">loaded: frame statusCode: statusCode 	| color |	Log debugLog: [ 'Loaded ' , frame url , ', status code ' , statusCode printString ].	frame isMain 		ifTrue: 		[	(self widgetAt: #stopLoad) isEnabled: false.			color := ( statusCode = 200 or: [ statusCode = 0 ]) 					ifTrue: [ ColorValue white ]					ifFalse: [ ColorValue orange ].			self urlColor: color		].</body>
+<body package="ChromiumEmbeddedFramework-BrowserUI">loaded: frame statusCode: statusCode 	| color |	Log debugLog: [ 'Loaded ' , frame url , ', status code ' , statusCode printString ].	frame isMain 		ifTrue: 		[	( self widgetAt: #stopLoad ) isEnabled: false.			color := ( statusCode = 200 or: [ statusCode = 0 ]) 					ifTrue: [ ColorValue white ]					ifFalse: [ ColorValue orange ].			self urlColor: color		].</body>
 
 <body package="ChromiumEmbeddedFramework-BrowserUI">loading: frame 	Log debugLog: [ 'Loading ', frame url ].	frame isMain 		ifTrue: 		[	(self widgetAt: #stopLoad) isEnabled: true.			self urlColor: ColorValue lightGray.			self urlAspect value: frame url		].</body>
 </methods>
