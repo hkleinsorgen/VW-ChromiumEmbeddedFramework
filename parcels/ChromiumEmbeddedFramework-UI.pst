@@ -926,7 +926,7 @@ Licensed under the MIT license (see Copyright) -->
 <methods>
 <class-id>CEF.Client</class-id> <category>events-lifespan</category>
 
-<body package="ChromiumEmbeddedFramework-UI">onAfterCreated: aBrowser 	&lt;callback: #'on_after_created' handler: #'get_life_span_handler'&gt;		createdBrowser := aBrowser.	" aBrowser is a volatile argument, so register now "	createdBrowser register.	createdBrowser client: self.	self areaPart when: #resized send: #resized to: createdBrowser.	self areaPart when: #released send: #stop to: self.	self triggerEvent: #createdBrowser.</body>
+<body package="ChromiumEmbeddedFramework-UI">onAfterCreated: aBrowser 	&lt;callback: #'on_after_created' handler: #'get_life_span_handler'&gt;		createdBrowser := aBrowser.	" aBrowser is a volatile argument, so register now "	createdBrowser register.	createdBrowser client: self.	aBrowser initializeBrowserWindowHandle.	self areaPart when: #resized send: #resized to: createdBrowser.	self areaPart when: #released send: #stop to: self.	self triggerEvent: #createdBrowser.</body>
 </methods>
 
 <methods>
@@ -978,7 +978,7 @@ Licensed under the MIT license (see Copyright) -->
 <methods>
 <class-id>Core.SystemEventInterest class</class-id> <category>dependencies-pragma</category>
 
-<body package="ChromiumEmbeddedFramework-UI">flushCEF	&lt;triggerAtSystemEvent: #returnFromSnapshot&gt;	CEF.LibChromium flushCurrent.	CEF.WinSupportLib flushCurrent.	CEF.MainApp flushCurrent.	CEF.Log stop.</body>
+<body package="ChromiumEmbeddedFramework-UI">flushCEF	&lt;triggerAtSystemEvent: #returnFromSnapshot&gt;	CEF.LibChromium flushCurrent.	CEF.OSSupport flushCurrent.	CEF.MainApp flushCurrent.	CEF.Log stop.</body>
 </methods>
 
 <methods>
@@ -1064,7 +1064,7 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-UI">mainApp	^ MainApp current</body>
 
-<body package="ChromiumEmbeddedFramework-UI">osLib	^  WinSupportLib new </body>
+<body package="ChromiumEmbeddedFramework-UI">osLib	^ OSSupport current</body>
 
 <body package="ChromiumEmbeddedFramework-UI">register	self isVolatile 		ifTrue: 		[	self isVolatile: false.			self fakeRefCount: self cefObject		].	self class registry registerValueOf: [ self ].</body>
 </methods>
@@ -1256,7 +1256,7 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-UI">getBrowserWindowHandle	^ self host windowHandle</body>
 
-<body package="ChromiumEmbeddedFramework-UI">initializeWrapped	super initializeWrapped.	self isVolatile 		ifFalse: [ self externalAt: #browserWindowHandle put: self getBrowserWindowHandle ].</body>
+<body package="ChromiumEmbeddedFramework-UI">initializeBrowserWindowHandle	self externalAt: #browserWindowHandle put: self getBrowserWindowHandle.</body>
 
 <body package="ChromiumEmbeddedFramework-UI">mainWindow	^ self client mainWindow</body>
 
@@ -1418,11 +1418,11 @@ Licensed under the MIT license (see Copyright) -->
 <methods>
 <class-id>CEF.MainApp</class-id> <category>factory</category>
 
-<body package="ChromiumEmbeddedFramework-UI">createMainArgs	| mainArgs hinstance |	hinstance := self osLib getHInstance.	hinstance isValid 		ifFalse: [ self error: 'Could not get HINSTANCE' ].	mainArgs := self lib cef_main_args_t malloc.	mainArgs memberAt: #instance put: hinstance.	^ mainArgs</body>
+<body package="ChromiumEmbeddedFramework-UI">createMainArgs	^ self lib createMainArgs</body>
 
 <body package="ChromiumEmbeddedFramework-UI">createSchemeHandlerFactory	^ SchemeHandlerFactory onNewObject</body>
 
-<body package="ChromiumEmbeddedFramework-UI">createSettings	| settings level |	settings := Settings onNewObject.	settings singleProcess: true.	settings multiThreadedMessageLoop: true.	settings noSandbox: true.	settings externalMessagePump: true.	settings userAgent: 'VW Chromium'.	self baseDirectory ifNotNil: 		[: baseDir |			settings resourcesDirPath: baseDir asString.			settings localesDirPath: ( baseDir construct: 'locales' ) asString		].	self logFilename 		ifNotNil: [: filename | settings logFile: filename asFilename asAbsoluteFilename asString ].	level := self debug 			ifTrue: [ #'LOGSEVERITY_VERBOSE' ]			ifFalse: [ #'LOGSEVERITY_DEFAULT' ].	settings logSeverity: level.	^ settings</body>
+<body package="ChromiumEmbeddedFramework-UI">createSettings	| settings level |	settings := Settings onNewObject.	settings singleProcess: true.	settings multiThreadedMessageLoop: self lib multiThreadedMessageLoop.	settings noSandbox: true.	settings externalMessagePump: true.	settings userAgent: 'VW Chromium'.	self baseDirectory ifNotNil: 		[: baseDir |			settings resourcesDirPath: baseDir asString.			settings localesDirPath: ( baseDir construct: 'locales' ) asString		].	self logFilename 		ifNotNil: [: filename | settings logFile: filename asFilename asAbsoluteFilename asString ].	level := self debug 			ifTrue: [ #'LOGSEVERITY_VERBOSE' ]			ifFalse: [ #'LOGSEVERITY_DEFAULT' ].	settings logSeverity: level.	^ settings</body>
 </methods>
 
 <methods>
@@ -1634,7 +1634,7 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-UI">createBrowserSettings	^ BrowserSettings onNewObject		localStorage: #STATE_DISABLED;		plugins: #STATE_DISABLED;		yourself</body>
 
-<body package="ChromiumEmbeddedFramework-UI">createWindowInfo	| windowInfo style rectangle |	windowInfo := self lib cef_window_info_t malloc.	windowInfo zeroFill.	windowInfo memberAt: #'parent_window' put: self mainWindow windowHandle.	style := self lib WS_CHILD + self lib WS_CLIPCHILDREN + self lib WS_CLIPSIBLINGS + self lib WS_TABSTOP 			+ self lib WS_VISIBLE.	rectangle := self browserRectangle.	windowInfo memberAt: #x put: rectangle left.	windowInfo memberAt: #y put: rectangle top.	windowInfo memberAt: #width put: rectangle width.	windowInfo memberAt: #height put: rectangle height.	windowInfo memberAt: #style put: style.	^ windowInfo</body>
+<body package="ChromiumEmbeddedFramework-UI">createWindowInfo	^ self lib createWindowInfoFor: self mainWindow bounds: self browserRectangle</body>
 </methods>
 
 <methods>
