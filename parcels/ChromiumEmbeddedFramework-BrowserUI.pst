@@ -116,7 +116,7 @@ Github repo: https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
 
 <body package="ChromiumEmbeddedFramework-BrowserUI">browserSpec	"Tools.UIPainter new openOnClass: self andSelector: #browserSpec"	&lt;resource: #canvas&gt;	^#(#{UI.FullSpec} 		#window: 		#(#{UI.WindowSpec} 			#label: '' 			#bounds: #(#{Graphics.Rectangle} 640 347 1280 693 ) ) 		#component: 		#(#{UI.SpecCollection} 			#collection: #(				#(#{UI.ArbitraryComponentSpec} 					#layout: #(#{Graphics.LayoutFrame} 0 0 0 0 0 1 0 1 ) 					#name: #areaPart 					#flags: 0 					#component: #areaPart ) ) ) )</body>
 
-<body package="ChromiumEmbeddedFramework-BrowserUI">windowSpec	"Tools.UIPainter new openOnClass: self andSelector: #windowSpec"	&lt;resource: #canvas&gt;	^#(#{UI.FullSpec} 		#window: 		#(#{UI.WindowSpec} 			#label: '' 			#min: #(#{Core.Point} 100 100 ) 			#max: #(#{Core.Point} 0 0 ) 			#bounds: #(#{Graphics.Rectangle} 460 220 1460 820 ) ) 		#component: 		#(#{UI.SpecCollection} 			#collection: #(				#(#{UI.ActionButtonSpec} 					#layout: #(#{Graphics.LayoutFrame} 5 0 5 0 80 0 30 0 ) 					#name: #loadUrl 					#model: #loadUrl 					#label: 'Go' 					#defaultable: true ) 				#(#{UI.ActionButtonSpec} 					#layout: #(#{Graphics.LayoutFrame} 85 0 5 0 140 0 30 0 ) 					#name: #stopLoad 					#flags: 40 					#model: #stopLoad 					#label: 'Stop' 					#defaultable: true ) 				#(#{UI.ActionButtonSpec} 					#layout: #(#{Graphics.LayoutFrame} 145 0 5 0 170 0 30 0 ) 					#name: #goBack 					#model: #goBack 					#label: '&lt;' 					#defaultable: true ) 				#(#{UI.ActionButtonSpec} 					#layout: #(#{Graphics.LayoutFrame} 175 0 5 0 200 0 30 0 ) 					#name: #goForward 					#model: #goForward 					#label: '&gt;' 					#defaultable: true ) 				#(#{UI.InputFieldSpec} 					#layout: #(#{Graphics.LayoutFrame} 205 0 5 0 -5 1 30 0 ) 					#name: #urlAspect 					#model: #urlAspect 					#callbacksSpec: 					#(#{UI.UIEventCallbackSubSpec} 						#valueChangeSelector: #loadUrl ) ) 				#(#{UI.SubCanvasSpec} 					#layout: #(#{Graphics.LayoutFrame} 0 0 35 0 0 1 0 1 ) 					#name: #browserSpec 					#flags: 0 					#minorKey: #browserSpec ) ) ) )</body>
+<body package="ChromiumEmbeddedFramework-BrowserUI">windowSpec	"Tools.UIPainter new openOnClass: self andSelector: #windowSpec"	&lt;resource: #canvas&gt;	^#(#{UI.FullSpec} 		#window: 		#(#{UI.WindowSpec} 			#label: '' 			#min: #(#{Core.Point} 100 100 ) 			#max: #(#{Core.Point} 0 0 ) 			#bounds: #(#{Graphics.Rectangle} 648 342 1648 942 ) ) 		#component: 		#(#{UI.SpecCollection} 			#collection: #(				#(#{UI.ActionButtonSpec} 					#layout: #(#{Graphics.LayoutFrame} 5 0 5 0 85 0 30 0 ) 					#name: #chromeInfo 					#model: #chromeInfo 					#label: 'Chrome info' 					#defaultable: true ) 				#(#{UI.ActionButtonSpec} 					#layout: #(#{Graphics.LayoutFrame} 90 0 5 0 145 0 30 0 ) 					#name: #home 					#model: #home 					#label: 'Home' 					#defaultable: true ) 				#(#{UI.ActionButtonSpec} 					#layout: #(#{Graphics.LayoutFrame} 150 0 5 0 205 0 30 0 ) 					#name: #stopLoad 					#flags: 40 					#model: #stopLoad 					#label: 'Stop' 					#defaultable: true ) 				#(#{UI.ActionButtonSpec} 					#layout: #(#{Graphics.LayoutFrame} 210 0 5 0 235 0 30 0 ) 					#name: #goBack 					#model: #goBack 					#label: '&lt;' 					#defaultable: true ) 				#(#{UI.ActionButtonSpec} 					#layout: #(#{Graphics.LayoutFrame} 240 0 5 0 265 0 30 0 ) 					#name: #goForward 					#model: #goForward 					#label: '&gt;' 					#defaultable: true ) 				#(#{UI.InputFieldSpec} 					#layout: #(#{Graphics.LayoutFrame} 270 0 5 0 -5 1 30 0 ) 					#name: #urlAspect 					#model: #urlAspect 					#callbacksSpec: 					#(#{UI.UIEventCallbackSubSpec} 						#valueChangeSelector: #loadUrl ) ) 				#(#{UI.SubCanvasSpec} 					#layout: #(#{Graphics.LayoutFrame} 0 0 35 0 0 1 0 1 ) 					#name: #browserSpec 					#flags: 0 					#minorKey: #browserSpec ) ) ) )</body>
 </methods>
 
 <methods>
@@ -162,23 +162,17 @@ Github repo: https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
 <methods>
 <class-id>CEF.BrowserUI</class-id> <category>actions</category>
 
+<body package="ChromiumEmbeddedFramework-BrowserUI">chromeInfo	self loadUrl: 'chrome://about'</body>
+
 <body package="ChromiumEmbeddedFramework-BrowserUI">goBack	self browser goBack</body>
 
 <body package="ChromiumEmbeddedFramework-BrowserUI">goForward	self browser goForward.</body>
 
+<body package="ChromiumEmbeddedFramework-BrowserUI">home	self loadUrl: CEF.BrowserUI defaultURL</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">loadUrl	self loadUrl: self urlAspect value.</body>
+
 <body package="ChromiumEmbeddedFramework-BrowserUI">stopLoad	self browser stopLoad</body>
-</methods>
-
-<methods>
-<class-id>CEF.BrowserUI</class-id> <category>private</category>
-
-<body package="ChromiumEmbeddedFramework-BrowserUI">browser	^ client browser</body>
-
-<body package="ChromiumEmbeddedFramework-BrowserUI">registerEvents	client when: #loading do: [: frame : transitionType | self loading: frame ].	client when: #loaded do: [: frame : statusCode | self loaded: frame statusCode: statusCode ].	client 		when: #loadError		do: [: frame : errorCode : errorUrl : errorText | self loadError: frame errorCode: errorCode errorUrl: errorUrl errorText: errorText ].	client when: #createdBrowser do: [ self loadUrl ].</body>
-
-<body package="ChromiumEmbeddedFramework-BrowserUI">startBrowser	client := Client areaPart: self areaPart.	self registerEvents.	self urlColor: ColorValue darkGray.	client start.</body>
-
-<body package="ChromiumEmbeddedFramework-BrowserUI">urlColor: aColor 	| widget lookPreferences |	widget := self wrapperAt: #urlAspect.	lookPreferences := widget lookPreferences.	lookPreferences setBackgroundColor: aColor.	widget lookPreferences: lookPreferences.	widget invalidate.</body>
 </methods>
 
 <methods>
@@ -195,6 +189,20 @@ Github repo: https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
 <body package="ChromiumEmbeddedFramework-BrowserUI">loaded: frame statusCode: statusCode 	| color |	Log debugLog: [ 'Loaded ' , frame url , ', status code ' , statusCode printString ].	frame isMain 		ifTrue: 		[	( self widgetAt: #stopLoad ) isEnabled: false.			color := ( statusCode = 200 or: [ statusCode = 0 ]) 					ifTrue: [ ColorValue white ]					ifFalse: [ ColorValue orange ].			self urlColor: color		].</body>
 
 <body package="ChromiumEmbeddedFramework-BrowserUI">loading: frame 	Log debugLog: [ 'Loading ', frame url ].	frame isMain 		ifTrue: 		[	(self widgetAt: #stopLoad) isEnabled: true.			self urlColor: ColorValue lightGray.			self urlAspect value: frame url		].</body>
+</methods>
+
+<methods>
+<class-id>CEF.BrowserUI</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">browser	^ client browser</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">loadUrl: aString	self browser loadUrl: aString</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">registerEvents	client when: #loading do: [: frame : transitionType | self loading: frame ].	client when: #loaded do: [: frame : statusCode | self loaded: frame statusCode: statusCode ].	client 		when: #loadError		do: [: frame : errorCode : errorUrl : errorText | self loadError: frame errorCode: errorCode errorUrl: errorUrl errorText: errorText ].	client when: #createdBrowser do: [ self loadUrl ].</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">startBrowser	client := Client areaPart: self areaPart.	self registerEvents.	self urlColor: ColorValue darkGray.	client start.</body>
+
+<body package="ChromiumEmbeddedFramework-BrowserUI">urlColor: aColor 	| widget lookPreferences |	widget := self wrapperAt: #urlAspect.	lookPreferences := widget lookPreferences.	lookPreferences setBackgroundColor: aColor.	widget lookPreferences: lookPreferences.	widget invalidate.</body>
 </methods>
 
 <methods>

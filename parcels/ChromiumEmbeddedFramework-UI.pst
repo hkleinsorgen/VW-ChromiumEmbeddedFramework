@@ -198,7 +198,7 @@ Licensed under the MIT license (see Copyright) -->
 <private>false</private>
 <indexed-type>none</indexed-type>
 <inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
+<class-inst-vars>defaults </class-inst-vars>
 <imports></imports>
 <category></category>
 <attributes>
@@ -1260,7 +1260,7 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-UI">mainWindow	^ self client mainWindow</body>
 
-<body package="ChromiumEmbeddedFramework-UI">resizeBrowser	| rectangle |	rectangle := self browserRectangle.	self osLib 		setWindowPos: self browserWindowHandle		insertAfter: nil		x: rectangle left		y: rectangle top		cx: rectangle width		cy: rectangle height		flags: self lib SWP_ASYNCWINDOWPOS + self lib SWP_NOREDRAW + self lib SWP_NOACTIVATE 				+ self lib SWP_NOMOVE + self lib SWP_NOZORDER.	self host notifyMoveOrResizeStarted.</body>
+<body package="ChromiumEmbeddedFramework-UI">resizeBrowser	self lib resizeBrowser: self</body>
 </methods>
 
 <methods>
@@ -1422,7 +1422,7 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-UI">createSchemeHandlerFactory	^ SchemeHandlerFactory onNewObject</body>
 
-<body package="ChromiumEmbeddedFramework-UI">createSettings	| settings level |	settings := Settings onNewObject.	settings singleProcess: true.	settings multiThreadedMessageLoop: self lib multiThreadedMessageLoop.	settings noSandbox: true.	settings externalMessagePump: true.	settings userAgent: 'VW Chromium'.	self baseDirectory ifNotNil: 		[: baseDir |			settings resourcesDirPath: baseDir asString.			settings localesDirPath: ( baseDir construct: 'locales' ) asString		].	self logFilename 		ifNotNil: [: filename | settings logFile: filename asFilename asAbsoluteFilename asString ].	level := self debug 			ifTrue: [ #'LOGSEVERITY_VERBOSE' ]			ifFalse: [ #'LOGSEVERITY_DEFAULT' ].	settings logSeverity: level.	^ settings</body>
+<body package="ChromiumEmbeddedFramework-UI">createSettings	| settings level baseDir |	baseDir := self baseDirectory.	settings := Settings onNewObject.	Settings browserSubprocessPath 		ifNotNil: 		[: executable |			settings browserSubprocessPath: executable asFilename asAbsoluteFilename asString.			settings singleProcess: false		]		ifNil: [ settings singleProcess: true ].	settings noSandbox: true.	settings multiThreadedMessageLoop: self lib multiThreadedMessageLoop.	settings externalMessagePump: true.	settings userAgent: 'VW Chromium'.	settings resourcesDirPath: baseDir asString.	settings localesDirPath: ( baseDir construct: 'locales' ) asString.	self logFilename 		ifNotNil: [: filename | settings logFile: filename asFilename asAbsoluteFilename asString ].	level := self debug 			ifTrue: [ #'LOGSEVERITY_VERBOSE' ]			ifFalse: [ #'LOGSEVERITY_DEFAULT' ].	settings logSeverity: level.	^ settings</body>
 </methods>
 
 <methods>
@@ -1474,7 +1474,7 @@ Licensed under the MIT license (see Copyright) -->
 <methods>
 <class-id>CEF.MainApp</class-id> <category>accessing</category>
 
-<body package="ChromiumEmbeddedFramework-UI">baseDirectory	" base directory for resources / locales " 		^ LibChromium directory</body>
+<body package="ChromiumEmbeddedFramework-UI">baseDirectory	" base directory for resources / locales " 		^ (LibChromium directory ifNil: [ '.' asFilename ]) asAbsoluteFilename</body>
 
 <body package="ChromiumEmbeddedFramework-UI">customSchemeName	^ 'vw'</body>
 
@@ -1505,6 +1505,16 @@ Licensed under the MIT license (see Copyright) -->
 <class-id>CEF.Settings class</class-id> <category>instance creation</category>
 
 <body package="ChromiumEmbeddedFramework-UI">typeName	^ #cef_settings_t</body>
+</methods>
+
+<methods>
+<class-id>CEF.Settings class</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">browserSubprocessPath	^ self defaults at: #browser_subprocess_path ifAbsent: [ nil ]</body>
+
+<body package="ChromiumEmbeddedFramework-UI">browserSubprocessPath: aFilename	self defaults at: #browser_subprocess_path put: aFilename</body>
+
+<body package="ChromiumEmbeddedFramework-UI">defaults	defaults isNil ifTrue: [defaults := Dictionary new ].	^ defaults</body>
 </methods>
 
 <methods>
