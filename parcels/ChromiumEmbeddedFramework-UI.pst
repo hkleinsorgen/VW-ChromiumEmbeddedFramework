@@ -8,12 +8,19 @@ See
 https://bitbucket.org/chromiumembedded/cef
 
 Still at an very early stage. 
-Windows only.
-
-Open an examle app with:
-  CEF.BrowserUI open
 
 Based on CEF 3.3112.1659.gfef43e0 (2017-09-06)
+
+OS specific information:
+
+Linux: 
+It is neccessary to put the following files from the CEF resources directory next to the VM (e.g. symlink):
+icudtl.dat
+natives_blob.bin
+snapshot_blob.bin
+
+macOS:
+Currently not supported
 
 Contact: h . kleinsorgen - at - gmail . com
 Github repo: https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
@@ -1458,7 +1465,7 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-UI">doStop	self lib cef_shutdown.	Log stop.</body>
 
-<body package="ChromiumEmbeddedFramework-UI">initializeApp	| settings initialized application mainArgs exitCode |	mainArgs := self mainArgs.	application := self cefObject.	exitCode := self lib cef_execute_process: mainArgs with: application with: nil.	exitCode &gt;= 0 		ifTrue: [ self error: 'cef_execute_process failed with code ' , exitCode printString ].	settings := self settings.	initialized := self lib cef_initialize: mainArgs with: settings cefObject with: application with: nil.	initialized = 0 		ifTrue: [ self error: 'cef_initialize failed' ].</body>
+<body package="ChromiumEmbeddedFramework-UI">initializeApp	| settings initialized application mainArgs |	self lib initializeSignals.	mainArgs := self mainArgs.	application := self cefObject.	settings := self settings.	initialized := self lib cef_initialize: mainArgs with: settings cefObject with: application with: nil.	self lib restoreSignals.	initialized = 0 		ifTrue: [ self error: 'cef_initialize failed' ].</body>
 </methods>
 
 <methods>
@@ -1654,7 +1661,7 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-UI">mainWindow	^ self areaPart topComponent</body>
 
-<body package="ChromiumEmbeddedFramework-UI">restoreFocus	" CEF got the keyboard focus, let's take it back "	| win |	win := self mainWindow.	[	self osLib setFocus: 0;			setFocus: win windowHandle	] uiEventFor: win.</body>
+<body package="ChromiumEmbeddedFramework-UI">restoreFocus	" CEF got the keyboard focus, let's take it back "	| win |	win := self mainWindow.	[	self osLib restoreFocus: win	] uiEventFor: win.</body>
 </methods>
 
 <methods>

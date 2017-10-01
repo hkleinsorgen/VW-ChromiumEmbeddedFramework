@@ -8,9 +8,19 @@ See
 https://bitbucket.org/chromiumembedded/cef
 
 Still at an very early stage. 
-Windows only.
 
 Based on CEF 3.3112.1659.gfef43e0 (2017-09-06)
+
+OS specific information:
+
+Linux: 
+It is neccessary to put the following files from the CEF resources directory next to the VM (e.g. symlink):
+icudtl.dat
+natives_blob.bin
+snapshot_blob.bin
+
+macOS:
+Currently not supported
 
 Contact: h . kleinsorgen - at - gmail . com
 Github repo: https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
@@ -62,15 +72,15 @@ Licensed under the MIT license (see Copyright) -->
 </comment>
 
 <class>
-<name>LibChromiumWindows</name>
+<name>LibChromiumUnix</name>
 <environment>CEF</environment>
 <super>CEF.LibChromium</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
+<inst-vars>signalCallback signalAction </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports>
-			private CEF.LibChromiumWindowsDictionary.*
+			private CEF.LibChromiumUnixDictionary.*
 			</imports>
 <category></category>
 <attributes>
@@ -108,6 +118,52 @@ Licensed under the MIT license (see Copyright) -->
 </class>
 
 <class>
+<name>LinuxSupport</name>
+<environment>CEF</environment>
+<super>CEF.OSSupport</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports>
+			private CEF.LinuxSupportDictionary.*
+			</imports>
+<category></category>
+<attributes>
+<includeFiles></includeFiles>
+<includeDirectories></includeDirectories>
+<libraryFiles><item type="sym">linkedIn</item></libraryFiles>
+<libraryDirectories></libraryDirectories>
+<beVirtual>false</beVirtual>
+<optimizationLevel>full</optimizationLevel>
+<package>ChromiumEmbeddedFramework-Base</package>
+</attributes>
+</class>
+
+<class>
+<name>LibChromiumWindows</name>
+<environment>CEF</environment>
+<super>CEF.LibChromium</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports>
+			private CEF.LibChromiumWindowsDictionary.*
+			</imports>
+<category></category>
+<attributes>
+<includeFiles></includeFiles>
+<includeDirectories></includeDirectories>
+<libraryFiles></libraryFiles>
+<libraryDirectories></libraryDirectories>
+<beVirtual>false</beVirtual>
+<optimizationLevel>full</optimizationLevel>
+<package>ChromiumEmbeddedFramework-Base</package>
+</attributes>
+</class>
+
+<class>
 <name>WindowsSupport</name>
 <environment>CEF</environment>
 <super>CEF.OSSupport</super>
@@ -130,29 +186,6 @@ Licensed under the MIT license (see Copyright) -->
 </attributes>
 </class>
 
-<class>
-<name>LibChromiumLinux</name>
-<environment>CEF</environment>
-<super>CEF.LibChromium</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports>
-			private CEF.LibChromiumLinuxDictionary.*
-			</imports>
-<category></category>
-<attributes>
-<includeFiles></includeFiles>
-<includeDirectories></includeDirectories>
-<libraryFiles></libraryFiles>
-<libraryDirectories></libraryDirectories>
-<beVirtual>false</beVirtual>
-<optimizationLevel>full</optimizationLevel>
-<package>ChromiumEmbeddedFramework-Base</package>
-</attributes>
-</class>
-
 <shared-variable>
 <name>Current</name>
 <environment>CEF.OSSupport</environment>
@@ -160,17 +193,6 @@ Licensed under the MIT license (see Copyright) -->
 <constant>false</constant>
 <category>accessing</category>
 <initializer>nil</initializer>
-<attributes>
-<package>ChromiumEmbeddedFramework-Base</package>
-</attributes>
-</shared-variable>
-
-<shared-variable>
-<name>LibChromiumDictionary</name>
-<environment>CEF</environment>
-<private>false</private>
-<constant>false</constant>
-<category>external dictionaries</category>
 <attributes>
 <package>ChromiumEmbeddedFramework-Base</package>
 </attributes>
@@ -188,7 +210,18 @@ Licensed under the MIT license (see Copyright) -->
 </shared-variable>
 
 <shared-variable>
-<name>LibChromiumLinuxDictionary</name>
+<name>LibChromiumUnixDictionary</name>
+<environment>CEF</environment>
+<private>false</private>
+<constant>false</constant>
+<category>external dictionaries</category>
+<attributes>
+<package>ChromiumEmbeddedFramework-Base</package>
+</attributes>
+</shared-variable>
+
+<shared-variable>
+<name>LibChromiumDictionary</name>
 <environment>CEF</environment>
 <private>false</private>
 <constant>false</constant>
@@ -200,6 +233,17 @@ Licensed under the MIT license (see Copyright) -->
 
 <shared-variable>
 <name>OSSupportDictionary</name>
+<environment>CEF</environment>
+<private>false</private>
+<constant>false</constant>
+<category>external dictionaries</category>
+<attributes>
+<package>ChromiumEmbeddedFramework-Base</package>
+</attributes>
+</shared-variable>
+
+<shared-variable>
+<name>LinuxSupportDictionary</name>
 <environment>CEF</environment>
 <private>false</private>
 <constant>false</constant>
@@ -484,6 +528,14 @@ Licensed under the MIT license (see Copyright) -->
 <body package="ChromiumEmbeddedFramework-Base">cef_value_create	&lt;C: cef_value_t *  cef_value_create(void)&gt;	^self externalAccessFailedWith: _errorCode</body>
 
 <body package="ChromiumEmbeddedFramework-Base">cef_visit_web_plugin_info: visitor	&lt;C: void cef_visit_web_plugin_info(cef_web_plugin_info_visitor_t * visitor)&gt;	^self externalAccessFailedWith: _errorCode</body>
+</methods>
+
+<methods>
+<class-id>CEF.LinuxSupport</class-id> <category>procedures</category>
+
+<body package="ChromiumEmbeddedFramework-Base">sigaction: signum with: act with: oldact	&lt;C: int sigaction(int signum, const struct sigaction_t *act, struct sigaction_t *oldact)&gt;		^ self externalAccessFailedWith: _errorCode</body>
+
+<body package="ChromiumEmbeddedFramework-Base">signal: s with: f 	&lt;C: void signal(int, sigfunc)&gt;		^ self externalAccessFailedWith: _errorCode</body>
 </methods>
 
 <methods>
@@ -963,11 +1015,15 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-Base">createWindowInfoFor: aWindow bounds: rectangle	self subclassResponsibility</body>
 
+<body package="ChromiumEmbeddedFramework-Base">initializeSignals</body>
+
 <body package="ChromiumEmbeddedFramework-Base">multiThreadedMessageLoop	^ false</body>
 
 <body package="ChromiumEmbeddedFramework-Base">prepareCallbackType: aCallbackPointerType	aCallbackPointerType beCdecl</body>
 
 <body package="ChromiumEmbeddedFramework-Base">resizeBrowser: browser </body>
+
+<body package="ChromiumEmbeddedFramework-Base">restoreSignals</body>
 </methods>
 
 <methods>
@@ -1449,6 +1505,80 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
+<class-id>CEF.LibChromiumUnix</class-id> <category>structs</category>
+
+<body package="ChromiumEmbeddedFramework-Base">_cef_main_args_t	&lt;C: struct _cef_main_args_t {		int argc;		char** argv;	}&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">_cef_window_info_t	&lt;C: struct _cef_window_info_t {			unsigned int x;			unsigned int y;			unsigned int width;			unsigned int height;			cef_window_handle_t parent_window;			int windowless_rendering_enabled;			cef_window_handle_t window;	}&gt;</body>
+</methods>
+
+<methods>
+<class-id>CEF.LibChromiumUnix</class-id> <category>types</category>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_main_args_t	&lt;C: typedef struct _cef_main_args_t cef_main_args_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_window_handle_t	&lt;C: typedef unsigned long cef_window_handle_t 	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_window_info_t	&lt;C: typedef struct _cef_window_info_t cef_window_info_t&gt;</body>
+</methods>
+
+<methods>
+<class-id>CEF.LibChromiumUnix</class-id> <category>defines</category>
+
+<body package="ChromiumEmbeddedFramework-Base">SIGALRM	^ 14</body>
+</methods>
+
+<methods>
+<class-id>CEF.LibChromiumUnix</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-Base">createMainArgs	| mainArgs |	mainArgs := self cef_main_args_t malloc.	mainArgs zeroFill.	^ mainArgs</body>
+
+<body package="ChromiumEmbeddedFramework-Base">createWindowInfoFor: aWindow bounds: rectangle 	| windowInfo |	windowInfo := self cef_window_info_t malloc.	windowInfo zeroFill.	windowInfo memberAt: #'parent_window' put: aWindow windowHandle.	windowInfo memberAt: #x put: rectangle left.	windowInfo memberAt: #y put: rectangle top.	windowInfo memberAt: #width put: rectangle width.	windowInfo memberAt: #height put: rectangle height.	^ windowInfo</body>
+
+<body package="ChromiumEmbeddedFramework-Base">initializeSignals	signalAction := OSSupport current  sigaction_t malloc.	signalAction zeroFill.	OSSupport current sigaction: self SIGALRM with: nil with: signalAction.</body>
+
+<body package="ChromiumEmbeddedFramework-Base">restoreSignals	OSSupport current sigaction: self SIGALRM with: signalAction with: nil</body>
+</methods>
+
+<methods>
+<class-id>CEF.OSSupport</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-Base">restoreFocus: aWindow</body>
+</methods>
+
+<methods>
+<class-id>CEF.OSSupport class</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-Base">concreteClass	^ OSSystemSupport concreteClass cefSupportLibClass</body>
+</methods>
+
+<methods>
+<class-id>CEF.OSSupport class</class-id> <category>instance creation</category>
+
+<body package="ChromiumEmbeddedFramework-Base">current	" nil if no OS support library is needed "		Current isNil 		ifTrue: [ self concreteClass ifNotNil: [: osSupportClass | Current := osSupportClass new ]].	^ Current</body>
+
+<body package="ChromiumEmbeddedFramework-Base">flushCurrent	Current := nil.</body>
+</methods>
+
+<methods>
+<class-id>CEF.LinuxSupport</class-id> <category>types</category>
+
+<body package="ChromiumEmbeddedFramework-Base">sigaction_t	&lt;C: typedef struct _sigaction_t sigaction_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">sigfunc	&lt;C: typedef void (* sigfunc)(int)&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">sigset_t	&lt;C: typedef struct _sigset_t sigset_t&gt;</body>
+</methods>
+
+<methods>
+<class-id>CEF.LinuxSupport</class-id> <category>structs</category>
+
+<body package="ChromiumEmbeddedFramework-Base">_sigaction_t	&lt;C: struct _sigaction_t {               void    *sa_handler_or_action;               sigset_t   sa_mask;               int        sa_flags;               void     (*sa_restorer)(void);           }&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">_sigset_t	&lt;C: typedef struct {	    unsigned long int __val[16];	  } _sigset_t&gt;</body>
+</methods>
+
+<methods>
 <class-id>CEF.LibChromiumWindows</class-id> <category>structs</category>
 
 <body package="ChromiumEmbeddedFramework-Base">_cef_main_args_t	&lt;C: struct _cef_main_args_t {			HINSTANCE instance;		}&gt;</body>
@@ -1487,23 +1617,11 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>CEF.OSSupport class</class-id> <category>private</category>
-
-<body package="ChromiumEmbeddedFramework-Base">concreteClass	^ OSSystemSupport concreteClass cefSupportLibClass</body>
-</methods>
-
-<methods>
-<class-id>CEF.OSSupport class</class-id> <category>instance creation</category>
-
-<body package="ChromiumEmbeddedFramework-Base">current	" nil if no OS support library is needed "		Current isNil 		ifTrue: [ self concreteClass ifNotNil: [: osSupportClass | Current := osSupportClass new ]].	^ Current</body>
-
-<body package="ChromiumEmbeddedFramework-Base">flushCurrent	Current := nil.</body>
-</methods>
-
-<methods>
 <class-id>CEF.WindowsSupport</class-id> <category>accessing</category>
 
 <body package="ChromiumEmbeddedFramework-Base">getHInstance	^ self getModuleHandle: 0</body>
+
+<body package="ChromiumEmbeddedFramework-Base">restoreFocus: aWindow	[	self setFocus: 0;			setFocus: aWindow windowHandle	] uiEventFor: aWindow</body>
 
 <body package="ChromiumEmbeddedFramework-Base">windowFlags	^ self WS_CHILD + self WS_CLIPCHILDREN + self WS_CLIPSIBLINGS + self WS_VISIBLE</body>
 </methods>
@@ -1574,32 +1692,6 @@ Licensed under the MIT license (see Copyright) -->
 <body package="ChromiumEmbeddedFramework-Base">WS_VISIBLE	&lt;C: #define WS_VISIBLE 268435456	&gt;</body>
 
 <body package="ChromiumEmbeddedFramework-Base">WS_VSCROLL	&lt;C: #define WS_VSCROLL 2097152	&gt;</body>
-</methods>
-
-<methods>
-<class-id>CEF.LibChromiumLinux</class-id> <category>structs</category>
-
-<body package="ChromiumEmbeddedFramework-Base">_cef_main_args_t	&lt;C: struct _cef_main_args_t {		int argc;		char** argv;	}&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">_cef_window_info_t	&lt;C: struct _cef_window_info_t {			unsigned int x;			unsigned int y;			unsigned int width;			unsigned int height;			cef_window_handle_t parent_window;			int windowless_rendering_enabled;			cef_window_handle_t window;	}&gt;</body>
-</methods>
-
-<methods>
-<class-id>CEF.LibChromiumLinux</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-Base">createMainArgs	| mainArgs |	mainArgs := self cef_main_args_t malloc.	mainArgs zeroFill.	^ mainArgs</body>
-
-<body package="ChromiumEmbeddedFramework-Base">createWindowInfoFor: aWindow bounds: rectangle 	| windowInfo |	windowInfo := self cef_window_info_t malloc.	windowInfo zeroFill.	windowInfo memberAt: #'parent_window' put: aWindow windowHandle.	windowInfo memberAt: #x put: rectangle left.	windowInfo memberAt: #y put: rectangle top.	windowInfo memberAt: #width put: rectangle width.	windowInfo memberAt: #height put: rectangle height.	^ windowInfo</body>
-</methods>
-
-<methods>
-<class-id>CEF.LibChromiumLinux</class-id> <category>types</category>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_main_args_t	&lt;C: typedef struct _cef_main_args_t cef_main_args_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_window_handle_t	&lt;C: typedef unsigned long cef_window_handle_t 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_window_info_t	&lt;C: typedef struct _cef_window_info_t cef_window_info_t&gt;</body>
 </methods>
 
 <methods>
@@ -1707,7 +1799,9 @@ Licensed under the MIT license (see Copyright) -->
 <methods>
 <class-id>OS.UnixSystemSupport class</class-id> <category>accessing</category>
 
-<body package="ChromiumEmbeddedFramework-Base">cefLibClass	^ CEF.LibChromiumLinux</body>
+<body package="ChromiumEmbeddedFramework-Base">cefLibClass	^ CEF.LibChromiumUnix</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cefSupportLibClass	^ CEF.LinuxSupport</body>
 </methods>
 
 <methods>
