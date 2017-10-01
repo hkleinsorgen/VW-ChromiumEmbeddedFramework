@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+
+<st-source>
+
+
+<class>
+<name>DevelopmentAssets</name>
+<environment>CEF</environment>
+<super>Core.Assets</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-Development</package>
+</attributes>
+</class>
+
+<methods>
+<class-id>CEF.DevelopmentAssets class</class-id> <category>h imports</category>
+
+<body package="ChromiumEmbeddedFramework-Development">fixes	"WARNING: This code was automatically generated during asset import. Regeneration will destroy any manual edits."	&lt;file: 'fixes.h'&gt;	&lt;md5sum: #[92 103 138 160 93 233 28 2 121 132 222 111 39 136 1 120]&gt;	^['#define CEF_EXPORT#define _CRTIMP#define __cdecl#define __MINGW_NOTHROW#define OS_WIN#define CEF_CALLBACK __stdcall'] once</body>
+
+<body package="ChromiumEmbeddedFramework-Development">window_styles	"WARNING: This code was automatically generated during asset import. Regeneration will destroy any manual edits."	&lt;file: 'window-styles.h'&gt;	&lt;md5sum: #[195 150 131 45 136 208 98 204 179 227 114 242 54 209 151 246]&gt;	^['#define WS_BORDER				     0x800000#define WS_CAPTION			 	     0xC00000#define WS_CHILD				   0x40000000#define WS_CHILDWINDOW				   0x40000000#define WS_CLIPCHILDREN 			    0x2000000#define WS_CLIPSIBLINGS 			    0x4000000#define WS_DISABLED				    0x8000000#define WS_DLGFRAME			 	     0x400000#define WS_GROUP				      0x20000#define WS_HSCROLL				     0x100000#define WS_ICONIC				   0x20000000#define WS_MAXIMIZE				    0x1000000#define WS_MAXIMIZEBOX				      0x10000#define WS_MINIMIZE				   0x20000000#define WS_MINIMIZEBOX				      0x20000#define WS_OVERLAPPED					    0#define WS_OVERLAPPEDWINDOW			     0xCF0000#define WS_POPUP				   0x80000000#define WS_POPUPWINDOW				   0x80880000#define WS_SIZEBOX				      0x40000#define WS_SYSMENU				      0x80000#define WS_TABSTOP				      0x10000#define WS_THICKFRAME				      0x40000#define WS_TILED					    0#define WS_TILEDWINDOW				     0xCF0000#define WS_VISIBLE				   0x10000000#define WS_VSCROLL				     0x200000'] once</body>
+</methods>
+
+<methods>
+<class-id>CEF.DevelopmentAssets class</class-id> <category>private-import-helpers</category>
+
+<body package="ChromiumEmbeddedFramework-Development">import_h: aFilename 	^self importString: aFilename</body>
+</methods>
+
+<methods>
+<class-id>CEF.Base class</class-id> <category>code generator - private</category>
+
+<body package="ChromiumEmbeddedFramework-Development">apiCategory	^ #'accessing-API'</body>
+
+<body package="ChromiumEmbeddedFramework-Development">argumentNameForType: aType 	| lib |	( self classForType: aType ) notNil 		ifTrue: 		[	^ self name first isVowel 				ifTrue: [ 'an' , self name ]				ifFalse: [ 'a' , self name ]		].	lib := CEF.LibChromium current.	( aType = lib cef_string_userfree_t or: [ aType = lib cef_string_t ]) 		ifTrue: [ ^ 'aString' ].	^ aType printString</body>
+
+<body package="ChromiumEmbeddedFramework-Development">booleanMemberPatterns	^ #( '*_disabled' '*_enabled' )</body>
+
+<body package="ChromiumEmbeddedFramework-Development">booleanReturnValuePatterns	^ #( 'is_*' 'was_*' 'has_*' )</body>
+
+<body package="ChromiumEmbeddedFramework-Development">callbackPatterns	^ #( '*_handler' 'on_*' )</body>
+
+<body package="ChromiumEmbeddedFramework-Development">callbackResultPatterns	^ #( '*_handler_t*'  )</body>
+
+<body package="ChromiumEmbeddedFramework-Development">camelCase: key 	"self camelCase: '_stiff_upper_lip' "	^ ( key reading transforming: 		[: in : out | | char last |			last := nil.			in peek = $_ ifTrue: [ in next ].			[( char := in next ) notNil ] whileTrue: 				[	char = $_ 						ifFalse: 						[	last = $_ 								ifTrue: [ char := char asUppercase ].							out nextPut: char						].					last := char				]		]) 		rest</body>
+
+<body package="ChromiumEmbeddedFramework-Development">codePartsForMember: member type: aType 	| lib get set arg |	get := #memberAt:.	set := #memberAt:.	arg := self argumentNameForType: aType.	( self classForType: aType ) notNil 		ifTrue: 		[	arg := self name first isVowel 					ifTrue: [ 'an' , self name ]					ifFalse: [ 'a' , self name ]		].	lib := CEF.LibChromium current.	( aType = lib cef_string_userfree_t or: [ aType = lib cef_string_t ]) 		ifTrue: [ arg := 'aString' ].	( self booleanMemberPatterns anySatisfy: [: pattern | pattern match: member ]) 		ifTrue: 		[	get := #booleanAt:.			arg := 'aBoolean'		].	( (aType isKindOf: CTypedefType) and: [ aType type class = CEnumerationType ])  		ifTrue: 		[	get := #enumAt:.			set := #enumAt:.			arg := 'aSymbol'		].	^ Dictionary new		at: #get put: get;		at: #set put: set;		at: #arg put: arg;		yourself</body>
+
+<body package="ChromiumEmbeddedFramework-Development">compileAccessor: stream selector: selector category: category removeFrom: oldSelectors 		(( self includesSelector: selector ) and: [( oldSelectors includes: selector ) not ]) 		ifTrue: 		[	Transcript show: 'Skipping ' , selector; cr.			^ self		].	Transcript show: 'Compiling ' , selector; cr.	self compile: stream contents classified: category.	oldSelectors remove: selector ifAbsent: [ nil ].</body>
+
+<body package="ChromiumEmbeddedFramework-Development">compileAccessor: stream selector: selector removeFrom: oldSelectors 	self compileAccessor: stream selector: selector category: self apiCategory removeFrom: oldSelectors.</body>
+
+<body package="ChromiumEmbeddedFramework-Development">createAccessorForMember: key type: valueType removeFrom: oldSelectors 	| stream argument codeParts methodName |	methodName := ( self camelCase: key ) asSymbol.	codeParts := self codePartsForMember: key type: valueType.	" get "	stream := String new writeStream.	stream nextPutAll: methodName; cr.	self printPragmasForKey: key type: valueType on: stream.	stream		tab; nextPutAll: '^ self '; nextPutAll: ( codeParts at: #get ); nextPutAll: ' #'; nextPutAll: key.	self compileAccessor: stream selector: methodName removeFrom: oldSelectors.	" set "	argument := codeParts at: #arg.	stream := String new writeStream.	stream		nextPutAll: methodName; nextPutAll: ': '; nextPutAll: argument; cr.	self printPragmasForKey: key type: valueType on: stream.	stream		tab; nextPutAll: 'self '; nextPutAll: ( codeParts at: #set ); nextPutAll: ' #'; nextPutAll: key; nextPutAll: ' put: '; nextPutAll: argument.	self compileAccessor: stream selector: ( methodName , ':' ) asSymbol removeFrom: oldSelectors.</body>
+
+<body package="ChromiumEmbeddedFramework-Development">createCallForMember: key procedureType: procedureType removeFrom: oldSelectors 	| stream isBoolean argumentNames selector methodName |	argumentNames := procedureType argumentNames collect: [: arg | self camelCase: arg ].	argumentNames first = 'self' 		ifTrue: [ argumentNames := argumentNames copyFrom: 2 to: argumentNames size ].	methodName := (( 'get_*' match: key ) and: [ argumentNames isEmpty ]) 			ifTrue: [ key copyFrom: 5 to: key size ]			ifFalse: [ key ].	methodName := ( self camelCase: methodName ) asSymbol.	isBoolean := self booleanReturnValuePatterns anySatisfy: [: pattern | pattern match: key ].	stream := String new writeStream.	stream nextPutAll: methodName.	selector := methodName.	argumentNames keysAndValuesDo: 		[: i : argName |			i &gt; 1 				ifTrue: 				[	selector := selector , argName.					stream nextPutAll: ' '; nextPutAll: argName				].			selector := selector , ':'.			stream nextPutAll: ': '; nextPutAll: argName		].	stream cr.	self printPragmasForKey: key type: procedureType resultType on: stream.	stream tab; nextPutAll: '^ '.	isBoolean 		ifTrue: [ stream nextPutAll: '(' ].	stream nextPutAll: 'self call: #'; nextPutAll: key.	argumentNames size &gt; 0 		ifTrue: 		[	argumentNames size &lt;= 2 				ifTrue: 				[	argumentNames do: [: argName | stream nextPutAll: ' with: '; nextPutAll: argName ]				]				ifFalse: 				[	stream nextPutAll: ' arguments: (OrderedCollection new'.					argumentNames do: [: argName | stream nextPutAll: ' add: '; nextPutAll: argName; nextPutAll: ';' ].					stream nextPutAll: ' yourself)'				]		].	isBoolean 		ifTrue: [ stream nextPutAll: ') cefAsBoolean' ].	self compileAccessor: stream selector: selector asSymbol removeFrom: oldSelectors.</body>
+
+<body package="ChromiumEmbeddedFramework-Development">createMethodForMember: key procedureType: procedureType removeFrom: oldSelectors 	( self callbackPatterns anySatisfy: [: pattern | pattern match: key ]) 		ifTrue: 		[	" callbacks are defined with the #callback:handler: pragma "			^ self		].	( self callbackResultPatterns 		anySatisfy: [: pattern | pattern match: procedureType resultType printString ]) 		ifTrue: [ ^ self ].	self createCallForMember: key procedureType: procedureType removeFrom: oldSelectors.</body>
+
+<body package="ChromiumEmbeddedFramework-Development">createMethodsForForMember: key type: valueType removeFrom: oldSelectors 	( key = #size or: [ key = #base ]) 		ifTrue: [ ^ self ].	valueType isProcedurePointer 		ifTrue: [ self createMethodForMember: key procedureType: valueType referentType removeFrom: oldSelectors ]		ifFalse: [ self createAccessorForMember: key type: valueType removeFrom: oldSelectors ].</body>
+
+<body package="ChromiumEmbeddedFramework-Development">eventsCategory	^ #'events - API'</body>
+</methods>
+
+<methods>
+<class-id>CEF.Base class</class-id> <category>code generator</category>
+
+<body package="ChromiumEmbeddedFramework-Development">generateAccessors	" add accessors. does not overwrite existing accessors "	| type oldSelectors |	self typeName isNil 		ifTrue: [ ^ self ].	type := ( CEF.LibChromium current perform: self typeName ) type.	oldSelectors := Set new.	( Tools.Pragma allNamed: self apiPragma in: self ) 		do: [: pragma | oldSelectors add: pragma selector ].	type 		keysAndValuesDo: [: k : v | self createMethodsForForMember: k type: v value removeFrom: oldSelectors ].	oldSelectors do: 		[: oldSelector |			Transcript show: 'Removing ' , oldSelector; cr.			self removeSelector: oldSelector		].</body>
+</methods>
+
+<methods>
+<class-id>CEF.Base class</class-id> <category>code generator - private</category>
+
+<body package="ChromiumEmbeddedFramework-Development">printPragmasForKey: key type: type on: stream 	stream		tab; nextPutAll: '&lt;'; nextPutAll: self apiPragma; nextPutAll: ' #'; nextPutAll: key; nextPutAll: '&gt;'; cr;		tab; nextPutAll: '&lt;'; nextPutAll: self typePragma; space; nextPut: $'; nextPutAll: type printString trimBlanks; nextPut: $'; nextPut: $&gt;; cr;		cr.</body>
+</methods>
+
+<methods>
+<class-id>CEF.LibChromium class</class-id> <category>public develop</category>
+
+<body package="ChromiumEmbeddedFramework-Development">generateMethodsFrom: newExternals selectedKeys: regularExpressions 	" Patch: Only update the selected externals "	| selectecExternals |	selectecExternals := self updateExternalsWith: newExternals adding: regularExpressions.	selectecExternals do: 		[: ext | ( ext isKindOf: ExternalObject ) 				ifTrue: [ ext owner: self ]		].	selectecExternals do: [: ext | self generateMethodsForExternal: ext ].	selectecExternals do: [: ext | self externals weakenAt: ext name ].</body>
+</methods>
+
+<methods>
+<class-id>CEF.LibChromium class</class-id> <category>generating methods</category>
+
+<body package="ChromiumEmbeddedFramework-Development">updateExternalsWith: newExternals adding: selectedKeys 	" 'regular expressions' are symbols .... "	| myExternals selections |	myExternals := self externals.	selections := IdentitySet new.	newExternals ownKeysAndValuesDo: 		[: key : ext | ( selectedKeys includes: ext name )  				ifTrue: 				[	selections add: ext.					( ext respondsTo: #type ) 						ifTrue: [ selections addAll: ext type namedTypes ]				]		].	selections do: [: sel | myExternals installAt: sel name asSymbol put: sel ].	" &gt;&gt;&gt; Patch: return new externals "	^ selections</body>
+</methods>
+
+<do-it>"Imported Classes:"</do-it>
+
+<do-it>self error: 'Attempting to file-in parcel imports.  Choose terminate or close'</do-it>
+
+<class>
+<name>Assets</name>
+<environment>Core</environment>
+<super>Core.Object</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars>lastDirectory </class-inst-vars>
+<imports></imports>
+<category>Assets</category>
+<attributes>
+<package>Assets</package>
+</attributes>
+</class>
+
+</st-source>

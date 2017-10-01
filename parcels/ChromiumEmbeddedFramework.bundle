@@ -54,7 +54,7 @@ Licensed under the MIT license (see Copyright)'</value>
 </component-property>
 
 <bundle-structure>
-<name>ChromiumEmbeddedFramework</name> <structure>#(#(#package 'ChromiumEmbeddedFramework-Base') #(#package 'ChromiumEmbeddedFramework-UI') #(#package 'ChromiumEmbeddedFramework-Tests') #(#package 'ChromiumEmbeddedFramework-BrowserUI'))</structure>
+<name>ChromiumEmbeddedFramework</name> <structure>#(#(#package 'ChromiumEmbeddedFramework-Base') #(#package 'ChromiumEmbeddedFramework-UI') #(#package 'ChromiumEmbeddedFramework-Tests') #(#package 'ChromiumEmbeddedFramework-BrowserUI') #(#package 'ChromiumEmbeddedFramework-Development'))</structure>
 </bundle-structure>
 
 </st-source>
