@@ -1,32 +1,124 @@
 <?xml version="1.0"?>
 
 <st-source>
-<!-- Chromium Embedded Framework (CEF) for VisualWorks.
-Displays a browser inside a VW view.
+<!-- 
+Name: ChromiumEmbeddedFramework-UI
+Notice: Licensed under the MIT license
+
+Copyright (c) 2017 Holger Kleinsorgen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Comment: Chromium Embedded Framework (CEF) for VisualWorks.
 
 See 
 https://bitbucket.org/chromiumembedded/cef
+Github repo:
+https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
 
 Still at an very early stage. 
 
-Based on CEF 3.3112.1659.gfef43e0 (2017-09-06)
-
-OS specific information:
-
-Linux: 
-It is neccessary to put the following files from the CEF resources directory next to the VM (e.g. symlink):
-icudtl.dat
-natives_blob.bin
-snapshot_blob.bin
-
-macOS:
-Currently not supported
-
 Contact: h . kleinsorgen - at - gmail . com
-Github repo: https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
 
-Licensed under the MIT license (see Copyright) -->
+Licensed under the MIT license (see Copyright)
+DevelopmentPrerequisites: #(#(#any 'ChromiumEmbeddedFramework-Base' '') #(#any 'Xtreams-Core' '') #(#any 'DLLCC' ''))
+DisregardedPrerequisites: #(#(#name 'Base VisualWorks' #componentType #bundle))
+PackageName: ChromiumEmbeddedFramework-UI
+Parcel: #('ChromiumEmbeddedFramework-UI')
+ParcelDirectory: ChromiumEmbeddedFramework-UI
+PrerequisiteDescriptions: #(#(#name 'ChromiumEmbeddedFramework-Base' #componentType #package) #(#name 'Xtreams-Core' #componentType #package) #(#name 'DLLCC' #componentType #package))
+PrerequisiteParcels: #(#('ChromiumEmbeddedFramework-Base' '') #('Xtreams-Core' '') #('DLLCC' ''))
+SkipSignature: true
+Version: 0.2.27
+Date: 9:16:13 PM February 13, 2020
+ -->
+<time-stamp>From VisualWorks®, 8.1.1 of 10. März 2016 on 13. Februar 2020 at 21:16:13</time-stamp>
 
+
+<do-it>(Dialog confirm: 'You are filing-in a Parcel source file!\\While this is possible it will not have\the same effect as loading the parcel.\None of the Parcel''s prerequisites will\be loaded and none of its load actions\will be performed.\\Are you sure you want to file-in?' withCRs) ifFalse: [self error: 'Parcel file-in abandoned.  Choose terminate or close.']</do-it>
+
+<class>
+<name>ScheduledWork</name>
+<environment>CEF</environment>
+<super>Core.Object</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>targetTime delay timer isScheduled </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-UI</package>
+</attributes>
+</class>
+
+<class>
+<name>PumpWork</name>
+<environment>CEF</environment>
+<super>CEF.ScheduledWork</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-UI</package>
+</attributes>
+</class>
+
+<class>
+<name>BrowserPart</name>
+<environment>CEF</environment>
+<super>Graphics.VisualPart</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-UI</package>
+</attributes>
+</class>
+
+<comment>
+<class-id>CEF.BrowserPart</class-id>
+<body>The area covered by the browser. The only purpose of this view is to trigger events.</body>
+</comment>
+
+<class>
+<name>ResizeWork</name>
+<environment>CEF</environment>
+<super>CEF.ScheduledWork</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>browser </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-UI</package>
+</attributes>
+</class>
+
+<class>
+<name>MainMessageLoop</name>
+<environment>CEF</environment>
+<super>Core.Object</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>messageProcess loopSemaphore minimalDelay scheduledWork scheduleLock </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-UI</package>
+</attributes>
+</class>
 
 <class>
 <name>Base</name>
@@ -49,12 +141,57 @@ Licensed under the MIT license (see Copyright) -->
 </comment>
 
 <class>
-<name>ResourceHandler</name>
+<name>SchemeHandlerFactory</name>
 <environment>CEF</environment>
 <super>CEF.Base</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>resourceStream buffer statusCode </inst-vars>
+<inst-vars>resourceHandlers </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-UI</package>
+</attributes>
+</class>
+
+<class>
+<name>Log</name>
+<environment>CEF</environment>
+<super>Core.Object</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>logProcess logQueue debug </inst-vars>
+<class-inst-vars>current </class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-UI</package>
+</attributes>
+</class>
+
+<class>
+<name>Callback</name>
+<environment>CEF</environment>
+<super>CEF.Base</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-UI</package>
+</attributes>
+</class>
+
+<class>
+<name>Response</name>
+<environment>CEF</environment>
+<super>CEF.Base</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category></category>
@@ -99,86 +236,6 @@ Licensed under the MIT license (see Copyright) -->
 </comment>
 
 <class>
-<name>Request</name>
-<environment>CEF</environment>
-<super>CEF.Base</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category></category>
-<attributes>
-<package>ChromiumEmbeddedFramework-UI</package>
-</attributes>
-</class>
-
-<class>
-<name>BrowserPart</name>
-<environment>CEF</environment>
-<super>Graphics.VisualPart</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category></category>
-<attributes>
-<package>ChromiumEmbeddedFramework-UI</package>
-</attributes>
-</class>
-
-<comment>
-<class-id>CEF.BrowserPart</class-id>
-<body>The area covered by the browser. The only purpose of this view is to trigger events.</body>
-</comment>
-
-<class>
-<name>SchemeRegistrar</name>
-<environment>CEF</environment>
-<super>CEF.Base</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category></category>
-<attributes>
-<package>ChromiumEmbeddedFramework-UI</package>
-</attributes>
-</class>
-
-<class>
-<name>MainMessageLoop</name>
-<environment>CEF</environment>
-<super>Core.Object</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars>messageProcess loopSemaphore minimalDelay scheduledWork scheduleLock </inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category></category>
-<attributes>
-<package>ChromiumEmbeddedFramework-UI</package>
-</attributes>
-</class>
-
-<class>
-<name>Log</name>
-<environment>CEF</environment>
-<super>Core.Object</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars>logProcess logQueue debug </inst-vars>
-<class-inst-vars>current </class-inst-vars>
-<imports></imports>
-<category></category>
-<attributes>
-<package>ChromiumEmbeddedFramework-UI</package>
-</attributes>
-</class>
-
-<class>
 <name>MainApp</name>
 <environment>CEF</environment>
 <super>CEF.LifecycleBase</super>
@@ -197,6 +254,66 @@ Licensed under the MIT license (see Copyright) -->
 <class-id>CEF.MainApp</class-id>
 <body>Wraps the main application. This is a singleton which can only be initialized once per OS process.</body>
 </comment>
+
+<class>
+<name>Client</name>
+<environment>CEF</environment>
+<super>CEF.LifecycleBase</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>areaPart createdBrowser </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-UI</package>
+</attributes>
+</class>
+
+<class>
+<name>ResourceHandler</name>
+<environment>CEF</environment>
+<super>CEF.Base</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>resourceStream buffer statusCode </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-UI</package>
+</attributes>
+</class>
+
+<class>
+<name>Request</name>
+<environment>CEF</environment>
+<super>CEF.Base</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-UI</package>
+</attributes>
+</class>
+
+<class>
+<name>SchemeRegistrar</name>
+<environment>CEF</environment>
+<super>CEF.Base</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category></category>
+<attributes>
+<package>ChromiumEmbeddedFramework-UI</package>
+</attributes>
+</class>
 
 <class>
 <name>Settings</name>
@@ -263,111 +380,6 @@ Licensed under the MIT license (see Copyright) -->
 </attributes>
 </class>
 
-<class>
-<name>ScheduledWork</name>
-<environment>CEF</environment>
-<super>Core.Object</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars>targetTime delay timer isScheduled </inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category></category>
-<attributes>
-<package>ChromiumEmbeddedFramework-UI</package>
-</attributes>
-</class>
-
-<class>
-<name>PumpWork</name>
-<environment>CEF</environment>
-<super>CEF.ScheduledWork</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category></category>
-<attributes>
-<package>ChromiumEmbeddedFramework-UI</package>
-</attributes>
-</class>
-
-<class>
-<name>ResizeWork</name>
-<environment>CEF</environment>
-<super>CEF.ScheduledWork</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars>browser </inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category></category>
-<attributes>
-<package>ChromiumEmbeddedFramework-UI</package>
-</attributes>
-</class>
-
-<class>
-<name>SchemeHandlerFactory</name>
-<environment>CEF</environment>
-<super>CEF.Base</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars>resourceHandlers </inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category></category>
-<attributes>
-<package>ChromiumEmbeddedFramework-UI</package>
-</attributes>
-</class>
-
-<class>
-<name>Callback</name>
-<environment>CEF</environment>
-<super>CEF.Base</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category></category>
-<attributes>
-<package>ChromiumEmbeddedFramework-UI</package>
-</attributes>
-</class>
-
-<class>
-<name>Client</name>
-<environment>CEF</environment>
-<super>CEF.LifecycleBase</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars>areaPart createdBrowser </inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category></category>
-<attributes>
-<package>ChromiumEmbeddedFramework-UI</package>
-</attributes>
-</class>
-
-<class>
-<name>Response</name>
-<environment>CEF</environment>
-<super>CEF.Base</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category></category>
-<attributes>
-<package>ChromiumEmbeddedFramework-UI</package>
-</attributes>
-</class>
-
 <shared-variable>
 <name>Registry</name>
 <environment>CEF.Base</environment>
@@ -389,19 +401,45 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>CEF.ResourceHandler</class-id> <category>events</category>
+<class-id>CEF.SchemeHandlerFactory</class-id> <category>events</category>
 
-<body package="ChromiumEmbeddedFramework-UI">canGetCookie: cookie	&lt;callback: #'can_get_cookie'&gt;		^ true</body>
+<body package="ChromiumEmbeddedFramework-UI">create: browser frame: frame schemeName: schemeName request: request 	&lt;callback: #'create'&gt;		| resHandler handlerClass |	Log debugLog: 'Request: ' , request url.	handlerClass := ResourceHandler allSubclasses detect: [ : class | class schemeName = schemeName ] ifNone: [ nil ].	handlerClass isNil ifTrue: [ ^nil ].	resHandler := handlerClass  request: request factory: self.	" register to avoid GC "	resourceHandlers add: resHandler.	^ resHandler</body>
+</methods>
 
-<body package="ChromiumEmbeddedFramework-UI">canSetCookie: cookie	&lt;callback: #'can_set_cookie'&gt;		^ true</body>
+<methods>
+<class-id>CEF.Callback</class-id> <category>accessing-API</category>
 
-<body package="ChromiumEmbeddedFramework-UI">cancel	&lt;callback: #'cancel'&gt;		self factory finishedHandler: self</body>
+<body package="ChromiumEmbeddedFramework-UI">cancel	&lt;api: #cancel&gt;	&lt;type: 'void'&gt;	^ self call: #cancel</body>
 
-<body package="ChromiumEmbeddedFramework-UI">getResponseHeaders: response length: responseLength redirectUrl: redirectUrl 	&lt;callback: #'get_response_headers'&gt;		responseLength contents: -1.	response setStatus: self statusCode.	response setMimeType: self mimeType.</body>
+<body package="ChromiumEmbeddedFramework-UI">cont	&lt;api: #cont&gt;	&lt;type: 'void'&gt;	^ self call: #cont</body>
+</methods>
 
-<body package="ChromiumEmbeddedFramework-UI">processRequest: request callback: callback	&lt;callback: #'process_request'&gt;		callback cont.	^ true</body>
+<methods>
+<class-id>CEF.Response</class-id> <category>accessing-API</category>
 
-<body package="ChromiumEmbeddedFramework-UI">readResponse: dataOut bytesToRead: bytesToRead bytesRead: bytesRead callback: callback 	&lt;callback: #'read_response' &gt;		| length |	buffer isNil 		ifTrue: [ buffer := ByteArray new: bytesToRead ].	[	resourceStream read: bytesToRead into: buffer at: 1.		length := buffer size	] on: Xtreams.Incomplete do: [: ex | length := ex count ].	dataOut copyAt: 0 from: buffer size: length startingAt: 1.	bytesRead contents: length.	" return true even if the stream is at end "	^ length &gt; 0 		ifTrue: [ true ]		ifFalse: 		[	self factory finishedHandler: self.			false		]</body>
+<body package="ChromiumEmbeddedFramework-UI">error	&lt;api: #get_error&gt;	&lt;type: 'cef_errorcode_t'&gt;	^ self call: #get_error</body>
+
+<body package="ChromiumEmbeddedFramework-UI">getHeader: name	&lt;api: #get_header&gt;	&lt;type: 'cef_string_userfree_t'&gt;	^ self call: #get_header with: name</body>
+
+<body package="ChromiumEmbeddedFramework-UI">getHeaderMap: headerMap	&lt;api: #get_header_map&gt;	&lt;type: 'void'&gt;	^ self call: #get_header_map with: headerMap</body>
+
+<body package="ChromiumEmbeddedFramework-UI">isReadOnly	&lt;api: #is_read_only&gt;	&lt;type: 'int'&gt;	^ (self call: #is_read_only) cefAsBoolean</body>
+
+<body package="ChromiumEmbeddedFramework-UI">mimeType	&lt;api: #get_mime_type&gt;	&lt;type: 'cef_string_userfree_t'&gt;	^ self call: #get_mime_type</body>
+
+<body package="ChromiumEmbeddedFramework-UI">setError: error	&lt;api: #set_error&gt;	&lt;type: 'void'&gt;	^ self call: #set_error with: error</body>
+
+<body package="ChromiumEmbeddedFramework-UI">setHeaderMap: headerMap	&lt;api: #set_header_map&gt;	&lt;type: 'void'&gt;	^ self call: #set_header_map with: headerMap</body>
+
+<body package="ChromiumEmbeddedFramework-UI">setMimeType: mimeType	&lt;api: #set_mime_type&gt;	&lt;type: 'void'&gt;	^ self call: #set_mime_type with: mimeType</body>
+
+<body package="ChromiumEmbeddedFramework-UI">setStatus: status	&lt;api: #set_status&gt;	&lt;type: 'void'&gt;	^ self call: #set_status with: status</body>
+
+<body package="ChromiumEmbeddedFramework-UI">setStatusText: statusText	&lt;api: #set_status_text&gt;	&lt;type: 'void'&gt;	^ self call: #set_status_text with: statusText</body>
+
+<body package="ChromiumEmbeddedFramework-UI">status	&lt;api: #get_status&gt;	&lt;type: 'int'&gt;	^ self call: #get_status</body>
+
+<body package="ChromiumEmbeddedFramework-UI">statusText	&lt;api: #get_status_text&gt;	&lt;type: 'cef_string_userfree_t'&gt;	^ self call: #get_status_text</body>
 </methods>
 
 <methods>
@@ -448,6 +486,62 @@ Licensed under the MIT license (see Copyright) -->
 <body package="ChromiumEmbeddedFramework-UI">sendProcessMessage: targetProcess message: message	&lt;api: #send_process_message&gt;	&lt;type: 'int'&gt;	^ self call: #send_process_message with: targetProcess with: message</body>
 
 <body package="ChromiumEmbeddedFramework-UI">stopLoad	&lt;api: #stop_load&gt;	&lt;type: 'void'&gt;	^ self call: #stop_load</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainApp</class-id> <category>events-browser process handler</category>
+
+<body package="ChromiumEmbeddedFramework-UI">onContextInitialized	&lt;callback: #on_context_initialized handler: #get_browser_process_handler&gt;		ResourceHandler allSchemeHandlerClasses do: 		[: handlerClass | | ok |			ok := self lib 					cef_register_scheme_handler_factory: handlerClass schemeName asCefDatum					with: '' asCefDatum					with: self schemeHandlerFactory cefObject.			ok cefAsBoolean 				ifFalse: [ self error: 'Scheme handler factory could not be registered' ]		].</body>
+
+<body package="ChromiumEmbeddedFramework-UI">onScheduleMessagePumpWork: delay	&lt;callback: #on_schedule_message_pump_work handler: #get_browser_process_handler&gt;		self schedule: ( PumpWork delay: delay ).</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainApp</class-id> <category>events-app</category>
+
+<body package="ChromiumEmbeddedFramework-UI">onBeforeCommandLineProcessing: process_type commandLine: commandLine	&lt;callback: #on_before_command_line_processing&gt; 	self switches do: [: switch | commandLine cefCall: #'append_switch' with: switch ].</body>
+
+<body package="ChromiumEmbeddedFramework-UI">onRegisterCustomSchemes: schemeRegistrar 	&lt;callback: #on_register_custom_schemes&gt;		ResourceHandler allSchemeHandlerClasses do: [ : handlerClass |		schemeRegistrar addCustomScheme: handlerClass schemeName flags: handlerClass schemeFlags.	].</body>
+</methods>
+
+<methods>
+<class-id>CEF.Client</class-id> <category>events-load</category>
+
+<body package="ChromiumEmbeddedFramework-UI">onLoadEnd: theBrowser frame: frame statusCode: statusCode 	&lt;callback: #'on_load_end' handler: #'get_load_handler'&gt;		self triggerEvent: #loaded with: frame with: statusCode.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">onLoadError: theBrowser frame: frame errorCode: errorCode errorText: errorText failedUrl: failedUrl 	&lt;callback: #'on_load_error' handler: #'get_load_handler'&gt;		| arguments |	arguments := OrderedCollection new: 4.	arguments add: frame.	arguments add: errorCode.	arguments add: errorText.	arguments add: failedUrl.	self triggerEvent: #loadError withArguments: arguments asArray</body>
+
+<body package="ChromiumEmbeddedFramework-UI">onLoadStart: cefBrowser frame: frame transitionType: transitionType 	&lt;callback: #'on_load_start' handler: #'get_load_handler'&gt;		self triggerEvent: #loading with: frame with: transitionType.</body>
+</methods>
+
+<methods>
+<class-id>CEF.Client</class-id> <category>events-focus</category>
+
+<body package="ChromiumEmbeddedFramework-UI">onGotFocus: theBrowser	&lt;callback: #'on_got_focus' handler: #'get_focus_handler'&gt;		self restoreFocus.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">onSetFocus: theBrowser source: source	&lt;callback: #'on_set_focus' handler: #'get_focus_handler'&gt;		self restoreFocus.	^ self lib RV_CONTINUE</body>
+</methods>
+
+<methods>
+<class-id>CEF.Client</class-id> <category>events-lifespan</category>
+
+<body package="ChromiumEmbeddedFramework-UI">onAfterCreated: aBrowser 	&lt;callback: #'on_after_created' handler: #'get_life_span_handler'&gt;		createdBrowser := aBrowser.	" aBrowser is a volatile argument, so register now "	createdBrowser register.	createdBrowser client: self.	aBrowser initializeBrowserWindowHandle.	self areaPart when: #resized send: #resized to: createdBrowser.	self areaPart when: #released send: #stop to: self.	self triggerEvent: #createdBrowser.</body>
+</methods>
+
+<methods>
+<class-id>CEF.ResourceHandler</class-id> <category>events</category>
+
+<body package="ChromiumEmbeddedFramework-UI">canGetCookie: cookie	&lt;callback: #'can_get_cookie'&gt;		^ true</body>
+
+<body package="ChromiumEmbeddedFramework-UI">canSetCookie: cookie	&lt;callback: #'can_set_cookie'&gt;		^ true</body>
+
+<body package="ChromiumEmbeddedFramework-UI">cancel	&lt;callback: #'cancel'&gt;		self factory finishedHandler: self</body>
+
+<body package="ChromiumEmbeddedFramework-UI">getResponseHeaders: response length: responseLength redirectUrl: redirectUrl 	&lt;callback: #'get_response_headers'&gt;		responseLength contents: -1.	response setStatus: self statusCode.	response setMimeType: self mimeType.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">processRequest: request callback: callback	&lt;callback: #'process_request'&gt;		callback cont.	^ true</body>
+
+<body package="ChromiumEmbeddedFramework-UI">readResponse: dataOut bytesToRead: bytesToRead bytesRead: bytesRead callback: callback 	&lt;callback: #'read_response' &gt;		| length |	buffer isNil 		ifTrue: [ buffer := ByteArray new: bytesToRead ].	[	resourceStream read: bytesToRead into: buffer at: 1.		length := buffer size	] on: Xtreams.Incomplete do: [: ex | length := ex count ].	dataOut copyAt: 0 from: buffer size: length startingAt: 1.	bytesRead contents: length.	" return true even if the stream is at end "	^ length &gt; 0 		ifTrue: [ true ]		ifFalse: 		[	self factory finishedHandler: self.			false		]</body>
 </methods>
 
 <methods>
@@ -498,22 +592,6 @@ Licensed under the MIT license (see Copyright) -->
 <class-id>CEF.SchemeRegistrar</class-id> <category>accessing-API</category>
 
 <body package="ChromiumEmbeddedFramework-UI">addCustomScheme: schemeName isStandard: isStandard isLocal: isLocal isDisplayIsolated: isDisplayIsolated isSecure: isSecure isCorsEnabled: isCorsEnabled isCspBypassing: isCspBypassing	&lt;api: #add_custom_scheme&gt;	&lt;type: 'int'&gt;	^ self call: #add_custom_scheme arguments: (OrderedCollection new add: schemeName; add: isStandard; add: isLocal; add: isDisplayIsolated; add: isSecure; add: isCorsEnabled; add: isCspBypassing; yourself)</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainApp</class-id> <category>events-app</category>
-
-<body package="ChromiumEmbeddedFramework-UI">onBeforeCommandLineProcessing: process_type commandLine: commandLine	&lt;callback: #on_before_command_line_processing&gt; 	self switches do: [: switch | commandLine cefCall: #'append_switch' with: switch ].</body>
-
-<body package="ChromiumEmbeddedFramework-UI">onRegisterCustomSchemes: schemeRegistrar 	&lt;callback: #on_register_custom_schemes&gt;		ResourceHandler allSchemeHandlerClasses do: [ : handlerClass |		schemeRegistrar addCustomScheme: handlerClass schemeName flags: handlerClass schemeFlags.	].</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainApp</class-id> <category>events-browser process handler</category>
-
-<body package="ChromiumEmbeddedFramework-UI">onContextInitialized	&lt;callback: #on_context_initialized handler: #get_browser_process_handler&gt;		ResourceHandler allSchemeHandlerClasses do: 		[: handlerClass | | ok |			ok := self lib 					cef_register_scheme_handler_factory: handlerClass schemeName asCefDatum					with: '' asCefDatum					with: self schemeHandlerFactory cefObject.			ok cefAsBoolean 				ifFalse: [ self error: 'Scheme handler factory could not be registered' ]		].</body>
-
-<body package="ChromiumEmbeddedFramework-UI">onScheduleMessagePumpWork: delay	&lt;callback: #on_schedule_message_pump_work handler: #get_browser_process_handler&gt;		self schedule: ( PumpWork delay: delay ).</body>
 </methods>
 
 <methods>
@@ -917,113 +995,149 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>CEF.SchemeHandlerFactory</class-id> <category>events</category>
-
-<body package="ChromiumEmbeddedFramework-UI">create: browser frame: frame schemeName: schemeName request: request 	&lt;callback: #'create'&gt;		| resHandler handlerClass |	Log debugLog: 'Request: ' , request url.	handlerClass := ResourceHandler allSubclasses detect: [ : class | class schemeName = schemeName ] ifNone: [ nil ].	handlerClass isNil ifTrue: [ ^nil ].	resHandler := handlerClass  request: request factory: self.	" register to avoid GC "	resourceHandlers add: resHandler.	^ resHandler</body>
-</methods>
-
-<methods>
-<class-id>CEF.Callback</class-id> <category>accessing-API</category>
-
-<body package="ChromiumEmbeddedFramework-UI">cancel	&lt;api: #cancel&gt;	&lt;type: 'void'&gt;	^ self call: #cancel</body>
-
-<body package="ChromiumEmbeddedFramework-UI">cont	&lt;api: #cont&gt;	&lt;type: 'void'&gt;	^ self call: #cont</body>
-</methods>
-
-<methods>
-<class-id>CEF.Client</class-id> <category>events-lifespan</category>
-
-<body package="ChromiumEmbeddedFramework-UI">onAfterCreated: aBrowser 	&lt;callback: #'on_after_created' handler: #'get_life_span_handler'&gt;		createdBrowser := aBrowser.	" aBrowser is a volatile argument, so register now "	createdBrowser register.	createdBrowser client: self.	aBrowser initializeBrowserWindowHandle.	self areaPart when: #resized send: #resized to: createdBrowser.	self areaPart when: #released send: #stop to: self.	self triggerEvent: #createdBrowser.</body>
-</methods>
-
-<methods>
-<class-id>CEF.Client</class-id> <category>events-load</category>
-
-<body package="ChromiumEmbeddedFramework-UI">onLoadEnd: theBrowser frame: frame statusCode: statusCode 	&lt;callback: #'on_load_end' handler: #'get_load_handler'&gt;		self triggerEvent: #loaded with: frame with: statusCode.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">onLoadError: theBrowser frame: frame errorCode: errorCode errorText: errorText failedUrl: failedUrl 	&lt;callback: #'on_load_error' handler: #'get_load_handler'&gt;		| arguments |	arguments := OrderedCollection new: 4.	arguments add: frame.	arguments add: errorCode.	arguments add: errorText.	arguments add: failedUrl.	self triggerEvent: #loadError withArguments: arguments asArray</body>
-
-<body package="ChromiumEmbeddedFramework-UI">onLoadStart: cefBrowser frame: frame transitionType: transitionType 	&lt;callback: #'on_load_start' handler: #'get_load_handler'&gt;		self triggerEvent: #loading with: frame with: transitionType.</body>
-</methods>
-
-<methods>
-<class-id>CEF.Client</class-id> <category>events-focus</category>
-
-<body package="ChromiumEmbeddedFramework-UI">onGotFocus: theBrowser	&lt;callback: #'on_got_focus' handler: #'get_focus_handler'&gt;		self restoreFocus.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">onSetFocus: theBrowser source: source	&lt;callback: #'on_set_focus' handler: #'get_focus_handler'&gt;		self restoreFocus.	^ self lib RV_CONTINUE</body>
-</methods>
-
-<methods>
-<class-id>CEF.Response</class-id> <category>accessing-API</category>
-
-<body package="ChromiumEmbeddedFramework-UI">error	&lt;api: #get_error&gt;	&lt;type: 'cef_errorcode_t'&gt;	^ self call: #get_error</body>
-
-<body package="ChromiumEmbeddedFramework-UI">getHeader: name	&lt;api: #get_header&gt;	&lt;type: 'cef_string_userfree_t'&gt;	^ self call: #get_header with: name</body>
-
-<body package="ChromiumEmbeddedFramework-UI">getHeaderMap: headerMap	&lt;api: #get_header_map&gt;	&lt;type: 'void'&gt;	^ self call: #get_header_map with: headerMap</body>
-
-<body package="ChromiumEmbeddedFramework-UI">isReadOnly	&lt;api: #is_read_only&gt;	&lt;type: 'int'&gt;	^ (self call: #is_read_only) cefAsBoolean</body>
-
-<body package="ChromiumEmbeddedFramework-UI">mimeType	&lt;api: #get_mime_type&gt;	&lt;type: 'cef_string_userfree_t'&gt;	^ self call: #get_mime_type</body>
-
-<body package="ChromiumEmbeddedFramework-UI">setError: error	&lt;api: #set_error&gt;	&lt;type: 'void'&gt;	^ self call: #set_error with: error</body>
-
-<body package="ChromiumEmbeddedFramework-UI">setHeaderMap: headerMap	&lt;api: #set_header_map&gt;	&lt;type: 'void'&gt;	^ self call: #set_header_map with: headerMap</body>
-
-<body package="ChromiumEmbeddedFramework-UI">setMimeType: mimeType	&lt;api: #set_mime_type&gt;	&lt;type: 'void'&gt;	^ self call: #set_mime_type with: mimeType</body>
-
-<body package="ChromiumEmbeddedFramework-UI">setStatus: status	&lt;api: #set_status&gt;	&lt;type: 'void'&gt;	^ self call: #set_status with: status</body>
-
-<body package="ChromiumEmbeddedFramework-UI">setStatusText: statusText	&lt;api: #set_status_text&gt;	&lt;type: 'void'&gt;	^ self call: #set_status_text with: statusText</body>
-
-<body package="ChromiumEmbeddedFramework-UI">status	&lt;api: #get_status&gt;	&lt;type: 'int'&gt;	^ self call: #get_status</body>
-
-<body package="ChromiumEmbeddedFramework-UI">statusText	&lt;api: #get_status_text&gt;	&lt;type: 'cef_string_userfree_t'&gt;	^ self call: #get_status_text</body>
-</methods>
-
-<methods>
 <class-id>Core.SystemEventInterest class</class-id> <category>dependencies-pragma</category>
 
 <body package="ChromiumEmbeddedFramework-UI">flushCEF	&lt;triggerAtSystemEvent: #returnFromSnapshot&gt;	CEF.LibChromium flushCurrent.	CEF.OSSupport flushCurrent.	CEF.MainApp flushCurrent.	CEF.Log stop.</body>
 </methods>
 
 <methods>
-<class-id>CEF.Base</class-id> <category>initialize-release</category>
+<class-id>CEF.ScheduledWork</class-id> <category>private</category>
 
-<body package="ChromiumEmbeddedFramework-UI">initialize	callbacks := Set new.	self initializeExternals.</body>
+<body package="ChromiumEmbeddedFramework-UI">stopTimer	timer notNil 		ifTrue: 		[	timer stop.			timer := nil		].</body>
 
-<body package="ChromiumEmbeddedFramework-UI">initializeWrapped	" called once the associated CEF object is set / created "		self installCallbacks.</body>
+<body package="ChromiumEmbeddedFramework-UI">targetTime	^ targetTime</body>
 
-<body package="ChromiumEmbeddedFramework-UI">release	self initializeExternals</body>
+<body package="ChromiumEmbeddedFramework-UI">targetTime: aTargetTime 	" set by the message loop "	targetTime := aTargetTime.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">timer	^ timer</body>
+
+<body package="ChromiumEmbeddedFramework-UI">timer: aTimer 	timer := aTimer.</body>
 </methods>
 
 <methods>
-<class-id>CEF.Base</class-id> <category>callbacks-private</category>
+<class-id>CEF.ScheduledWork</class-id> <category>accessing</category>
 
-<body package="ChromiumEmbeddedFramework-UI">callbackBlockForArguments: numberOfArguments selector: selector 	numberOfArguments = 0 		ifTrue: 		[	^ [	self debugCallback: selector.				self performCallback: selector arguments: #()			]		].	numberOfArguments = 1 		ifTrue: 		[	^ [: myself |				self debugCallback: selector.				self performCallback: selector arguments: #()			]		].	numberOfArguments = 2 		ifTrue: 		[	^ [: myself : a1 |				self debugCallback: selector.				self performCallback: selector arguments: ( Array with: a1 )			]		].	numberOfArguments = 3 		ifTrue: 		[	^ [: myself : a1 : a2 |				self debugCallback: selector.				self performCallback: selector arguments: ( Array with: a1 with: a2 )			]		].	numberOfArguments = 4 		ifTrue: 		[	^ [: myself : a1 : a2 : a3 |				self debugCallback: selector.				self performCallback: selector arguments: ( Array with: a1 with: a2 with: a3 )			]		].	numberOfArguments = 5 		ifTrue: 		[	^ [: myself : a1 : a2 : a3 : a4 | | args |				self debugCallback: selector.				args := ( OrderedCollection new: 4 )						add: a1;						add: a2;						add: a3;						add: a4;						asArray.				self performCallback: selector arguments: args			]		].	numberOfArguments = 6 		ifTrue: 		[	^ [: myself : a1 : a2 : a3 : a4 : a5 | | args |				self debugCallback: selector.				args := ( OrderedCollection new: 5 )						add: a1;						add: a2;						add: a3;						add: a4;						add: a5;						asArray.				self performCallback: selector arguments: args			]		].	self error: 'unsupported number of callback arguments, ' , numberOfArguments printString.</body>
+<body package="ChromiumEmbeddedFramework-UI">delay	^ delay</body>
 
-<body package="ChromiumEmbeddedFramework-UI">debugCallback: selector	Log debugLog: 'Callback: ', selector</body>
+<body package="ChromiumEmbeddedFramework-UI">delay: milliseconds 	delay := milliseconds.</body>
 
-<body package="ChromiumEmbeddedFramework-UI">installCallbackFromPragma: pragma 	self installCallbackFromPragma: pragma on: self cefObject</body>
+<body package="ChromiumEmbeddedFramework-UI">isScheduled	^ isScheduled ifNil: [ false ].</body>
 
-<body package="ChromiumEmbeddedFramework-UI">installCallbackFromPragma: pragma on: cefObject 	| numberOfArguments callbackProtoype block memberName selector |	memberName := pragma argumentAt: 1.	Log debugLog: 'Installing callback ' , memberName.	callbackProtoype := cefObject 			cefMemberAt: memberName			ifAbsent: [ self error: 'Callback ' , memberName , ' not found' ].	numberOfArguments := callbackProtoype type referentType numArgs.	selector := pragma selector.	selector numArgs = ( numberOfArguments - 1 ) 		ifFalse: 		[	self error: ( numberOfArguments - 1 ) printString , ' arguments expected for #' , selector		].	block := self callbackBlockForArguments: numberOfArguments selector: selector.	self createCallback: block named: memberName of: cefObject.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">installCallbacks	| handlerPragmas |	" callbacks of the object "	( Tools.Pragma allNamed: #callback: from: self class to: Base ) 		do: [: pragma | self installCallbackFromPragma: pragma ].	" generic handlers that dont require a separate wrapper object "	handlerPragmas := Tools.Pragma allNamed: #callback:handler: from: self class to: Base.	( handlerPragmas groupedBy: [: pragma | pragma argumentAt: 2 ]) keysAndValuesDo: 		[: handlerCallbackName : pragmas | | handler handlerType |			" get the handler signature from the callback  "			handlerType := ( self cefObject memberAt: handlerCallbackName ) resultType referentType.			" create a new handler an register all defined callbacks "			handler := self class createCefObjectOfType: handlerType.			pragmas do: [: pragma | self installCallbackFromPragma: pragma on: handler ].			self externalAt: handlerCallbackName put: handler.			" register the callback the returns the handler "			self createCallback: [ 				Log debugLog: 'Creating handler ', self class name, ' &gt;&gt; ', handlerCallbackName  printString.				handler ] named: handlerCallbackName of: self cefObject		].</body>
-
-<body package="ChromiumEmbeddedFramework-UI">performCallback: selector arguments: arguments 	| callbackArguments result |	callbackArguments := arguments collect: [: a | a cefAsSmalltalkArg ].	result := self perform: selector withArguments: callbackArguments.	^ result asCefDatum</body>
+<body package="ChromiumEmbeddedFramework-UI">isScheduled: aIsScheduled 	isScheduled := aIsScheduled.</body>
 </methods>
 
 <methods>
-<class-id>CEF.Base</class-id> <category>calls</category>
+<class-id>CEF.ScheduledWork</class-id> <category>comparing</category>
 
-<body package="ChromiumEmbeddedFramework-UI">call: memberFunctionName 	^ self call: memberFunctionName arguments: #()</body>
+<body package="ChromiumEmbeddedFramework-UI">= anotherWork 	^ self class = anotherWork class and: [ self targetTime = anotherWork targetTime ]</body>
 
-<body package="ChromiumEmbeddedFramework-UI">call: memberFunctionName arguments: arguments 	^ (self cefObject cefCall: memberFunctionName arguments: arguments) cefAsSmalltalkArg</body>
+<body package="ChromiumEmbeddedFramework-UI">hash	^ targetTime hash</body>
+</methods>
 
-<body package="ChromiumEmbeddedFramework-UI">call: memberFunctionName with: anArgument	^ self call: memberFunctionName arguments: (Array with: anArgument)</body>
+<methods>
+<class-id>CEF.ScheduledWork</class-id> <category>work</category>
 
-<body package="ChromiumEmbeddedFramework-UI">call: memberFunctionName with: anArgument1 with: anArgument2	^ self call: memberFunctionName arguments: (Array with: anArgument1 with: anArgument2)</body>
+<body package="ChromiumEmbeddedFramework-UI">doWork	self subclassResponsibility</body>
+</methods>
+
+<methods>
+<class-id>CEF.ScheduledWork class</class-id> <category>instance creation</category>
+
+<body package="ChromiumEmbeddedFramework-UI">delay: milliseconds 	^ self new delay: milliseconds;		yourself</body>
+
+<body package="ChromiumEmbeddedFramework-UI">fps: framesPerSecond	^ self delay: (1000 // framesPerSecond)</body>
+</methods>
+
+<methods>
+<class-id>CEF.PumpWork</class-id> <category>work</category>
+
+<body package="ChromiumEmbeddedFramework-UI">doWork	LibChromium current cef_do_message_loop_work</body>
+</methods>
+
+<methods>
+<class-id>CEF.BrowserPart</class-id> <category>bounds accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">bounds: aRectangle	super bounds: aRectangle.	self triggerEvent: #resized</body>
+
+<body package="ChromiumEmbeddedFramework-UI">globalBounds	| translation |	translation := self localPointToGlobal: 0 @ 0.	^ self bounds translatedBy: translation</body>
+
+<body package="ChromiumEmbeddedFramework-UI">preferredExtent	^ Point zero</body>
+</methods>
+
+<methods>
+<class-id>CEF.BrowserPart</class-id> <category>initialize-release</category>
+
+<body package="ChromiumEmbeddedFramework-UI">release	self triggerEvent: #released.	super release.</body>
+</methods>
+
+<methods>
+<class-id>CEF.BrowserPart class</class-id> <category>private-events</category>
+
+<body package="ChromiumEmbeddedFramework-UI">constructEventsTriggered	^super constructEventsTriggered		add: #resized;		add: #released;		yourself</body>
+</methods>
+
+<methods>
+<class-id>CEF.ResizeWork</class-id> <category>work</category>
+
+<body package="ChromiumEmbeddedFramework-UI">doWork	self browser resizeBrowser</body>
+</methods>
+
+<methods>
+<class-id>CEF.ResizeWork</class-id> <category>comparing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">= anotherWork 	^ super = anotherWork and: [ self browser = anotherWork browser ]</body>
+</methods>
+
+<methods>
+<class-id>CEF.ResizeWork</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">browser	^ browser</body>
+
+<body package="ChromiumEmbeddedFramework-UI">browser: aBrowser 	browser := aBrowser.</body>
+</methods>
+
+<methods>
+<class-id>CEF.ResizeWork class</class-id> <category>instance creation</category>
+
+<body package="ChromiumEmbeddedFramework-UI">browser: aBrowser 	^ ( self fps: 30)		browser: aBrowser;		yourself</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainMessageLoop</class-id> <category>scheduling</category>
+
+<body package="ChromiumEmbeddedFramework-UI">schedule: work 	" Schedule the work based on the delay.	Similar work is compressed to avoid unnecessary updates.	A minimal delay is enforced to avoid overload "	self schedule: work now: Time millisecondClockValue</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainMessageLoop</class-id> <category>initialize-release</category>
+
+<body package="ChromiumEmbeddedFramework-UI">initialize	loopSemaphore := Semaphore new.	scheduledWork := SortedCollection sortBlock: [: w1 : w2 | w1 targetTime &lt;= w2 targetTime ].	scheduleLock := RecursionLock new.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">start	" cef_run_message_loop wants to run on the main thread, which does not suit VW.	Thus use cef_do_message_loop_work here "	messageProcess :=		[				[ self doMessageLoopWork ] repeat.			messageProcess := nil		] forkAt: Processor userBackgroundPriority.	messageProcess name: 'CEF message loop'.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">stop	( messageProcess notNil and: [ messageProcess isTerminated not ]) 		ifTrue: 		[	messageProcess terminate.			messageProcess := nil		].</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainMessageLoop</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">minimalDelay	" do not set this value too low, which results in choppy updates or frequent crashes "		^ minimalDelay ifNil: [ 20 ]</body>
+
+<body package="ChromiumEmbeddedFramework-UI">minimalDelay: anInteger 	minimalDelay := anInteger.</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainMessageLoop</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-UI">doMessageLoopWork	| work |	loopSemaphore wait.	work := scheduleLock critical: 			[	scheduledWork notEmpty 					ifTrue: [ scheduledWork removeFirst ]					ifFalse: [ nil ]			].	work notNil 		ifTrue: 		[	work isScheduled: false.			work doWork		].</body>
+
+<body package="ChromiumEmbeddedFramework-UI">schedule: work now: now	" Schedule the work based on the delay.	Similar work is compressed to avoid unnecessary updates.	A minimal delay is enforced to avoid overload.		'now' is passed as an argument to make debugging test cases easier "	| targetTime timer minDelay |	targetTime := now + work delay.	minDelay := self minimalDelay.	" restrict update frequency "	targetTime := (targetTime / minDelay) ceiling * minDelay.	work targetTime: targetTime.	" avoid duplicate updates "	scheduleLock critical: 		[( scheduledWork includes: work ) 				ifFalse: 				[	scheduledWork add: work.					work isScheduled: true.					timer := Timer after: ( targetTime - now ) milliseconds signal: loopSemaphore.					work timer: timer				]		].</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainMessageLoop class</class-id> <category>instance creation</category>
+
+<body package="ChromiumEmbeddedFramework-UI">new	^ super new initialize</body>
 </methods>
 
 <methods>
@@ -1046,6 +1160,38 @@ Licensed under the MIT license (see Copyright) -->
 <body package="ChromiumEmbeddedFramework-UI">executor	^ self shallowCopy actAsExecutor</body>
 
 <body package="ChromiumEmbeddedFramework-UI">finalize	"Log debugLog: 'Finalize ', self printString."	self release.</body>
+</methods>
+
+<methods>
+<class-id>CEF.Base</class-id> <category>callbacks-private</category>
+
+<body package="ChromiumEmbeddedFramework-UI">callbackBlockForArguments: numberOfArguments selector: selector 	numberOfArguments = 0 		ifTrue: 		[	^ [	self debugCallback: selector.				self performCallback: selector arguments: #()			]		].	numberOfArguments = 1 		ifTrue: 		[	^ [: myself |				self debugCallback: selector.				self performCallback: selector arguments: #()			]		].	numberOfArguments = 2 		ifTrue: 		[	^ [: myself : a1 |				self debugCallback: selector.				self performCallback: selector arguments: ( Array with: a1 )			]		].	numberOfArguments = 3 		ifTrue: 		[	^ [: myself : a1 : a2 |				self debugCallback: selector.				self performCallback: selector arguments: ( Array with: a1 with: a2 )			]		].	numberOfArguments = 4 		ifTrue: 		[	^ [: myself : a1 : a2 : a3 |				self debugCallback: selector.				self performCallback: selector arguments: ( Array with: a1 with: a2 with: a3 )			]		].	numberOfArguments = 5 		ifTrue: 		[	^ [: myself : a1 : a2 : a3 : a4 | | args |				self debugCallback: selector.				args := ( OrderedCollection new: 4 )						add: a1;						add: a2;						add: a3;						add: a4;						asArray.				self performCallback: selector arguments: args			]		].	numberOfArguments = 6 		ifTrue: 		[	^ [: myself : a1 : a2 : a3 : a4 : a5 | | args |				self debugCallback: selector.				args := ( OrderedCollection new: 5 )						add: a1;						add: a2;						add: a3;						add: a4;						add: a5;						asArray.				self performCallback: selector arguments: args			]		].	self error: 'unsupported number of callback arguments, ' , numberOfArguments printString.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">debugCallback: selector	Log debugLog: 'Callback: ', selector</body>
+
+<body package="ChromiumEmbeddedFramework-UI">installCallbackFromPragma: pragma 	self installCallbackFromPragma: pragma on: self cefObject</body>
+
+<body package="ChromiumEmbeddedFramework-UI">installCallbackFromPragma: pragma on: cefObject 	| numberOfArguments callbackProtoype block memberName selector |	memberName := pragma argumentAt: 1.	Log debugLog: 'Installing callback ' , memberName.	callbackProtoype := cefObject 			cefMemberAt: memberName			ifAbsent: [ self error: 'Callback ' , memberName , ' not found' ].	numberOfArguments := callbackProtoype type referentType numArgs.	selector := pragma selector.	selector numArgs = ( numberOfArguments - 1 ) 		ifFalse: 		[	self error: ( numberOfArguments - 1 ) printString , ' arguments expected for #' , selector		].	block := self callbackBlockForArguments: numberOfArguments selector: selector.	self createCallback: block named: memberName of: cefObject.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">installCallbacks	| handlerPragmas |	" callbacks of the object "	( Tools.Pragma allNamed: #callback: from: self class to: Base ) 		do: [: pragma | self installCallbackFromPragma: pragma ].	" generic handlers that dont require a separate wrapper object "	handlerPragmas := Tools.Pragma allNamed: #callback:handler: from: self class to: Base.	( handlerPragmas groupedBy: [: pragma | pragma argumentAt: 2 ]) keysAndValuesDo: 		[: handlerCallbackName : pragmas | | handler handlerType |			" get the handler signature from the callback  "			handlerType := ( self cefObject memberAt: handlerCallbackName ) cefResultType referentType.			" create a new handler an register all defined callbacks "			handler := self class createCefObjectOfType: handlerType.			pragmas do: [: pragma | self installCallbackFromPragma: pragma on: handler ].			self externalAt: handlerCallbackName put: handler.			" register the callback the returns the handler "			self createCallback: [ 				Log debugLog: 'Creating handler ', self class name, ' &gt;&gt; ', handlerCallbackName  printString.				handler ] named: handlerCallbackName of: self cefObject		].</body>
+
+<body package="ChromiumEmbeddedFramework-UI">performCallback: selector arguments: arguments 	| callbackArguments result |	callbackArguments := arguments collect: [: a | a cefAsSmalltalkArg ].	result := self perform: selector withArguments: callbackArguments.	^ result asCefDatum</body>
+</methods>
+
+<methods>
+<class-id>CEF.Base</class-id> <category>externals-private</category>
+
+<body package="ChromiumEmbeddedFramework-UI">externalAt: aSymbol 	^ externals at: aSymbol ifAbsent: [ nil ]</body>
+
+<body package="ChromiumEmbeddedFramework-UI">externalAt: aSymbol ifAbsent: aBlock	^ externals at: aSymbol ifAbsent: aBlock</body>
+
+<body package="ChromiumEmbeddedFramework-UI">externalAt: aSymbol ifAbsentPut: aBlock 	^ externals 		at: aSymbol		ifAbsentPut: 		[ | ext |			ext := aBlock value.			ext cefRefCountFor: self.			ext		]</body>
+
+<body package="ChromiumEmbeddedFramework-UI">externalAt: aSymbol put: anExternal 	externals at: aSymbol put: anExternal.	anExternal cefRefCountFor: self.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">initializeExternals	externals := Dictionary new.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">removeExternalAt: aSymbol 	externals removeKey: aSymbol ifAbsent: [ nil ]</body>
 </methods>
 
 <methods>
@@ -1077,22 +1223,6 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>CEF.Base</class-id> <category>externals-private</category>
-
-<body package="ChromiumEmbeddedFramework-UI">externalAt: aSymbol 	^ externals at: aSymbol ifAbsent: [ nil ]</body>
-
-<body package="ChromiumEmbeddedFramework-UI">externalAt: aSymbol ifAbsent: aBlock	^ externals at: aSymbol ifAbsent: aBlock</body>
-
-<body package="ChromiumEmbeddedFramework-UI">externalAt: aSymbol ifAbsentPut: aBlock 	^ externals 		at: aSymbol		ifAbsentPut: 		[ | ext |			ext := aBlock value.			ext cefRefCountFor: self.			ext		]</body>
-
-<body package="ChromiumEmbeddedFramework-UI">externalAt: aSymbol put: anExternal 	externals at: aSymbol put: anExternal.	anExternal cefRefCountFor: self.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">initializeExternals	externals := Dictionary new.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">removeExternalAt: aSymbol 	externals removeKey: aSymbol ifAbsent: [ nil ]</body>
-</methods>
-
-<methods>
 <class-id>CEF.Base</class-id> <category>accessing</category>
 
 <body package="ChromiumEmbeddedFramework-UI">booleanAt: key	^ self memberAt: key convertedWith: [ : int | int cefAsBoolean]</body>
@@ -1109,17 +1239,31 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>CEF.Base</class-id> <category>converting</category>
+<class-id>CEF.Base</class-id> <category>initialize-release</category>
 
-<body package="ChromiumEmbeddedFramework-UI">asCefDatum	^ self cefObject</body>
+<body package="ChromiumEmbeddedFramework-UI">initialize	callbacks := Set new.	self initializeExternals.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">initializeWrapped	" called once the associated CEF object is set / created "		self installCallbacks.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">release	self initializeExternals</body>
 </methods>
 
 <methods>
-<class-id>CEF.Base class</class-id> <category>pragmas</category>
+<class-id>CEF.Base</class-id> <category>calls</category>
 
-<body package="ChromiumEmbeddedFramework-UI">apiPragma		^ #api:</body>
+<body package="ChromiumEmbeddedFramework-UI">call: memberFunctionName 	^ self call: memberFunctionName arguments: #()</body>
 
-<body package="ChromiumEmbeddedFramework-UI">typePragma	^ #type:</body>
+<body package="ChromiumEmbeddedFramework-UI">call: memberFunctionName arguments: arguments 	^ (self cefObject cefCall: memberFunctionName arguments: arguments) cefAsSmalltalkArg</body>
+
+<body package="ChromiumEmbeddedFramework-UI">call: memberFunctionName with: anArgument	^ self call: memberFunctionName arguments: (Array with: anArgument)</body>
+
+<body package="ChromiumEmbeddedFramework-UI">call: memberFunctionName with: anArgument1 with: anArgument2	^ self call: memberFunctionName arguments: (Array with: anArgument1 with: anArgument2)</body>
+</methods>
+
+<methods>
+<class-id>CEF.Base</class-id> <category>converting</category>
+
+<body package="ChromiumEmbeddedFramework-UI">asCefDatum	^ self cefObject</body>
 </methods>
 
 <methods>
@@ -1141,6 +1285,14 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
+<class-id>CEF.Base class</class-id> <category>pragmas</category>
+
+<body package="ChromiumEmbeddedFramework-UI">apiPragma		^ #api:</body>
+
+<body package="ChromiumEmbeddedFramework-UI">typePragma	^ #type:</body>
+</methods>
+
+<methods>
 <class-id>CEF.Base class</class-id> <category>private</category>
 
 <body package="ChromiumEmbeddedFramework-UI">classForType: aType 	^ self allSubclasses 		detect: [: class | class type ifNotNil: [: classType | classType = aType or: [classType type = aType ] ] ifNil: [ false ]]		ifNone: [ nil ]</body>
@@ -1154,6 +1306,338 @@ Licensed under the MIT license (see Copyright) -->
 <body package="ChromiumEmbeddedFramework-UI">on: aCefObject isVolatile: isVolatile 	| registeredObject newObject |	" try to return the same object "	registeredObject := self registry at: aCefObject cefRegistryKey.	registeredObject notNil 		ifTrue: [ ^ registeredObject ].	newObject := self new			isVolatile: isVolatile;			cefObject: aCefObject;			initializeWrapped;			yourself.	isVolatile 		ifFalse: [ newObject register ].	^ newObject</body>
 
 <body package="ChromiumEmbeddedFramework-UI">registry	Registry isNil 		ifTrue: [ Registry := HandleRegistry new ].	^ Registry</body>
+</methods>
+
+<methods>
+<class-id>CEF.SchemeHandlerFactory</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">finishedHandler: aResourceHandler	resourceHandlers remove: aResourceHandler ifAbsent: [ nil ]</body>
+</methods>
+
+<methods>
+<class-id>CEF.SchemeHandlerFactory</class-id> <category>initialize-release</category>
+
+<body package="ChromiumEmbeddedFramework-UI">initialize	super initialize.	resourceHandlers := IdentitySet new.</body>
+</methods>
+
+<methods>
+<class-id>CEF.SchemeHandlerFactory class</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">typeName	^ #cef_scheme_handler_factory_t</body>
+</methods>
+
+<methods>
+<class-id>CEF.Log</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-UI">addToQueue: aStringOrBlock level: levelString 	| string |	string := aStringOrBlock isCharacters 			ifTrue: [ aStringOrBlock ]			ifFalse: [ aStringOrBlock value ].	logQueue nextPut: 'CEF-DEBUG' -&gt; string.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">logStringForEntry: entry 	| stream |	stream := String new writeStream.	stream		cr;		nextPutAll: '['; 		nextPutAll: entry key; 		nextPutAll: '] '; 		nextPutAll: Time now shortPrintString; 		nextPutAll: ' '; 		nextPutAll: entry value.	^ stream contents</body>
+
+<body package="ChromiumEmbeddedFramework-UI">showEntry: entry 	| logString |	" write as one single entry, so create a temporary string first "	logString := self logStringForEntry: entry.	Transcript show: logString.</body>
+</methods>
+
+<methods>
+<class-id>CEF.Log</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">debug	^ debug ifNil: [ true ]</body>
+
+<body package="ChromiumEmbeddedFramework-UI">debug: aBoolean 	debug := aBoolean.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">debugLog: aStringOrBlock 	self debug 		ifTrue: [ self addToQueue: aStringOrBlock level: 'CEF-DEBUG' ].</body>
+
+<body package="ChromiumEmbeddedFramework-UI">warnLog: aStringOrBlock 	logQueue nextPut: 'CEF-WARNING' -&gt; aStringOrBlock</body>
+</methods>
+
+<methods>
+<class-id>CEF.Log</class-id> <category>initialize-release</category>
+
+<body package="ChromiumEmbeddedFramework-UI">initialize	logQueue := SharedQueue new.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">start	logProcess :=		[				[ self showEntry: logQueue next ] repeat		] fork.	logProcess name: 'CEF log process'.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">stop	( logProcess notNil and: [ logProcess isTerminated not ]) 		ifTrue: 		[	logProcess terminate.			logProcess := nil		].</body>
+</methods>
+
+<methods>
+<class-id>CEF.Log class</class-id> <category>logging</category>
+
+<body package="ChromiumEmbeddedFramework-UI">debugLog: aStringOrBlock 	self current debugLog: aStringOrBlock.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">warnLog: aStringOrBlock 	self current warnLog: aStringOrBlock</body>
+</methods>
+
+<methods>
+<class-id>CEF.Log class</class-id> <category>instance creation</category>
+
+<body package="ChromiumEmbeddedFramework-UI">current	current isNil 		ifTrue: 		[	current := self new.			current start		].	^ current</body>
+
+<body package="ChromiumEmbeddedFramework-UI">new	^super new initialize</body>
+
+<body package="ChromiumEmbeddedFramework-UI">stop	current notNil 		ifTrue: 		[	current stop.			current := nil		].</body>
+</methods>
+
+<methods>
+<class-id>CEF.Callback class</class-id> <category>instance creation</category>
+
+<body package="ChromiumEmbeddedFramework-UI">typeName	^ #cef_callback_t</body>
+</methods>
+
+<methods>
+<class-id>CEF.Response class</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">typeName	^ #'cef_response_t'</body>
+</methods>
+
+<methods>
+<class-id>CEF.LifecycleBase</class-id> <category>lifecycle</category>
+
+<body package="ChromiumEmbeddedFramework-UI">ensureIsRunning	self isRunning 		ifFalse: [ self start ].</body>
+
+<body package="ChromiumEmbeddedFramework-UI">start	self isReleased 		ifTrue: [ self error: 'Already released' ].	self isRunning 		ifTrue: [ self error: 'Already running' ].	self doStart.	lifecycle := #running.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">stop	self isReleased 		ifFalse: 		[	self doStop.			self initializeExternals.			lifecycle := #released		].</body>
+</methods>
+
+<methods>
+<class-id>CEF.LifecycleBase</class-id> <category>testing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">isReleased		^ lifecycle = #released</body>
+
+<body package="ChromiumEmbeddedFramework-UI">isRunning		^ lifecycle = #running</body>
+</methods>
+
+<methods>
+<class-id>CEF.LifecycleBase</class-id> <category>initialize-release</category>
+
+<body package="ChromiumEmbeddedFramework-UI">initialize	super initialize.	lifecycle := #new.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">release	self stop.</body>
+</methods>
+
+<methods>
+<class-id>CEF.LifecycleBase</class-id> <category>lifecycle-private</category>
+
+<body package="ChromiumEmbeddedFramework-UI">doStart	self subclassResponsibility.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">doStop	self subclassResponsibility</body>
+</methods>
+
+<methods>
+<class-id>CEF.Browser</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-UI">browserRectangle	^ self client browserRectangle</body>
+
+<body package="ChromiumEmbeddedFramework-UI">client	^ client</body>
+
+<body package="ChromiumEmbeddedFramework-UI">client: aClient 	client := aClient.	lifecycle := #running.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">getBrowserWindowHandle	^ self host windowHandle</body>
+
+<body package="ChromiumEmbeddedFramework-UI">initializeBrowserWindowHandle	self externalAt: #browserWindowHandle put: self getBrowserWindowHandle.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">mainWindow	^ self client mainWindow</body>
+
+<body package="ChromiumEmbeddedFramework-UI">resizeBrowser	self lib resizeBrowser: self</body>
+</methods>
+
+<methods>
+<class-id>CEF.Browser</class-id> <category>events</category>
+
+<body package="ChromiumEmbeddedFramework-UI">resized	self isRunning 		ifTrue: [ self mainApp schedule: ( ResizeWork browser: self )].</body>
+</methods>
+
+<methods>
+<class-id>CEF.Browser</class-id> <category>externals</category>
+
+<body package="ChromiumEmbeddedFramework-UI">browserWindowHandle	^ self externalAt: #browserWindowHandle</body>
+</methods>
+
+<methods>
+<class-id>CEF.Browser</class-id> <category>lifecycle-private</category>
+
+<body package="ChromiumEmbeddedFramework-UI">doStart	" done by the client "</body>
+
+<body package="ChromiumEmbeddedFramework-UI">doStop	self isAlive		ifTrue: [ self host tryCloseBrowser ].	self browserWindowHandle ifNotNil: 		[: handle |			[ handle isValid ifTrue: [ self osLib destroyWindow: handle ]] on: Error do: [ :ex | ].			self removeExternalAt: #browserWindowHandle		].</body>
+</methods>
+
+<methods>
+<class-id>CEF.Browser</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">loadUrl: anUrl 	" convenience "		self mainFrame loadUrl: anUrl</body>
+</methods>
+
+<methods>
+<class-id>CEF.Browser class</class-id> <category>instance creation</category>
+
+<body package="ChromiumEmbeddedFramework-UI">client: aClient 	^ self new client: aClient; yourself</body>
+</methods>
+
+<methods>
+<class-id>CEF.Browser class</class-id> <category>private-events</category>
+
+<body package="ChromiumEmbeddedFramework-UI">constructEventsTriggered	^super constructEventsTriggered		add: #closing;		yourself</body>
+</methods>
+
+<methods>
+<class-id>CEF.Browser class</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">typeName	^ #cef_browser_t</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainApp</class-id> <category>message loop</category>
+
+<body package="ChromiumEmbeddedFramework-UI">messageLoop	^ messageLoop</body>
+
+<body package="ChromiumEmbeddedFramework-UI">restartMessageLoop	messageLoop notNil ifTrue: [ messageLoop stop ].	self initializeMessageLoop.	self runMessageLoop.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">runMessageLoop	self messageLoop start.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">stopMessageLoop	messageLoop notNil 		ifTrue: [ messageLoop stop ].</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainApp</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">baseDirectory	" base directory for resources / locales " 		^ (LibChromium directory ifNil: [ '.' asFilename ]) asAbsoluteFilename</body>
+
+<body package="ChromiumEmbeddedFramework-UI">customSchemeName	^ 'vw'</body>
+
+<body package="ChromiumEmbeddedFramework-UI">schedule: work	self messageLoop schedule: work.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">switches	^ #( 'no-proxy-server' )</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainApp</class-id> <category>lifecycle-private</category>
+
+<body package="ChromiumEmbeddedFramework-UI">doStart	self runMessageLoop.	self initializeApp.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">doStop	self lib cef_shutdown.	Log stop.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">initializeApp	| settings initialized application mainArgs |	self lib initializeSignals.	mainArgs := self mainArgs.	application := self cefObject.	settings := self settings.	initialized := self lib cef_initialize: mainArgs with: settings cefObject with: application with: nil.	self lib restoreSignals.	initialized = 0 		ifTrue: [ self error: 'cef_initialize failed' ].</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainApp</class-id> <category>initialize-release</category>
+
+<body package="ChromiumEmbeddedFramework-UI">initialize	super initialize.	self initializeMessageLoop.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">initializeMessageLoop	messageLoop := MainMessageLoop new.</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainApp</class-id> <category>logging</category>
+
+<body package="ChromiumEmbeddedFramework-UI">logFilename	^ nil	"^ 'cef.' , Time secondClock displayString , '.log'"</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainApp</class-id> <category>factory</category>
+
+<body package="ChromiumEmbeddedFramework-UI">createMainArgs	^ self lib createMainArgs</body>
+
+<body package="ChromiumEmbeddedFramework-UI">createSchemeHandlerFactory	^ SchemeHandlerFactory onNewObject</body>
+
+<body package="ChromiumEmbeddedFramework-UI">createSettings	| settings level baseDir |	baseDir := self baseDirectory.	self checkBaseDirectory: baseDir.	settings := Settings onNewObject.	Settings browserSubprocessPath 		ifNotNil: 		[: executable |			settings browserSubprocessPath: executable asFilename asAbsoluteFilename asString.			settings singleProcess: false		]		ifNil: [ settings singleProcess: true ].	settings noSandbox: true.	settings multiThreadedMessageLoop: self lib multiThreadedMessageLoop.	settings externalMessagePump: true.	settings userAgent: 'VW Chromium'.	settings resourcesDirPath: baseDir asString.	settings localesDirPath: ( baseDir construct: 'locales' ) asString.	self logFilename 		ifNotNil: [: filename | settings logFile: filename asFilename asAbsoluteFilename asString ].	level := self debug 			ifTrue: [ #'LOGSEVERITY_VERBOSE' ]			ifFalse: [ #'LOGSEVERITY_DEFAULT' ].	settings logSeverity: level.	^ settings</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainApp</class-id> <category>externals</category>
+
+<body package="ChromiumEmbeddedFramework-UI">mainArgs	^ self externalAt: #mainArgs ifAbsentPut: [ self createMainArgs ]</body>
+
+<body package="ChromiumEmbeddedFramework-UI">schemeHandlerFactory	^ self externalAt: #schemeHandlerFactory ifAbsentPut: [ self createSchemeHandlerFactory ]</body>
+
+<body package="ChromiumEmbeddedFramework-UI">settings	^ self externalAt: #settings ifAbsentPut: [ self createSettings ]</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainApp</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-UI">checkBaseDirectory: baseDir	#('cef.pak' 'natives_blob.bin' 'snapshot_blob.bin' 'locales' #('locales' 'en-US.pak'))		do: 			[:cefFile |			| requiredFile |			requiredFile := cefFile isCharacters						ifTrue: [baseDir construct: cefFile]						ifFalse: [cefFile inject: baseDir into: [ :f :comp | f construct: comp]].			requiredFile exists				ifFalse: [self error: 'File not found: ' , requiredFile asString]]</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainApp class</class-id> <category>instance creation</category>
+
+<body package="ChromiumEmbeddedFramework-UI">current	" CEF apps are initialized once per process, so we need a singleton "		current isNil 		ifTrue: [ current := self onNewObject ].	^ current</body>
+
+<body package="ChromiumEmbeddedFramework-UI">ensureIsRunning		self current ensureIsRunning</body>
+</methods>
+
+<methods>
+<class-id>CEF.MainApp class</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">flushCurrent	current := nil.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">stop	current notNil 		ifTrue: 		[	" does nto reset current, because CEF apps can only be initialize once per OS process "			current stop		].</body>
+
+<body package="ChromiumEmbeddedFramework-UI">typeName	^ #cef_app_t</body>
+</methods>
+
+<methods>
+<class-id>CEF.Client</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-UI">browserRectangle	^ self areaPart globalBounds</body>
+
+<body package="ChromiumEmbeddedFramework-UI">mainWindow	^ self areaPart topComponent</body>
+
+<body package="ChromiumEmbeddedFramework-UI">restoreFocus	" CEF got the keyboard focus, let's take it back "	| win |	win := self mainWindow.	[	self osLib restoreFocus: win	] uiEventFor: win.</body>
+</methods>
+
+<methods>
+<class-id>CEF.Client</class-id> <category>externals</category>
+
+<body package="ChromiumEmbeddedFramework-UI">browserSettings	^ self externalAt: #browserSettings ifAbsentPut: [ self createBrowserSettings ]</body>
+
+<body package="ChromiumEmbeddedFramework-UI">windowInfo	^ self externalAt: #windowInfo ifAbsentPut: [ self createWindowInfo ]</body>
+</methods>
+
+<methods>
+<class-id>CEF.Client</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">areaPart	^ areaPart</body>
+
+<body package="ChromiumEmbeddedFramework-UI">areaPart: aAreaPart 	areaPart := aAreaPart.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">browser	" this will be populated in #onAfterCreated, not immediately "		^ createdBrowser</body>
+</methods>
+
+<methods>
+<class-id>CEF.Client</class-id> <category>lifecycle-private</category>
+
+<body package="ChromiumEmbeddedFramework-UI">doStart	MainApp ensureIsRunning.	self startBrowser.</body>
+
+<body package="ChromiumEmbeddedFramework-UI">doStop	self browser ifNotNil: [ :b |b stop ].</body>
+
+<body package="ChromiumEmbeddedFramework-UI">startBrowser	| win client browserSettings |	win := self windowInfo.	client := self cefObject.	browserSettings := self browserSettings cefObject.	self lib cef_browser_host_create_browser: win with: client with: nil with: browserSettings with: nil.</body>
+</methods>
+
+<methods>
+<class-id>CEF.Client</class-id> <category>factory</category>
+
+<body package="ChromiumEmbeddedFramework-UI">createBrowserSettings	^ BrowserSettings onNewObject		localStorage: #STATE_DISABLED;		plugins: #STATE_DISABLED;		yourself</body>
+
+<body package="ChromiumEmbeddedFramework-UI">createWindowInfo	^ self lib createWindowInfoFor: self mainWindow bounds: self browserRectangle</body>
+</methods>
+
+<methods>
+<class-id>CEF.Client class</class-id> <category>instance creation</category>
+
+<body package="ChromiumEmbeddedFramework-UI">areaPart: aAreaPart 	^ self onNewObject areaPart: aAreaPart;		yourself</body>
+</methods>
+
+<methods>
+<class-id>CEF.Client class</class-id> <category>private-events</category>
+
+<body package="ChromiumEmbeddedFramework-UI">constructEventsTriggered	^super constructEventsTriggered		add: #createdBrowser;		add: #loading;		add: #loaded;		add: #loadError;		yourself</body>
+</methods>
+
+<methods>
+<class-id>CEF.Client class</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-UI">typeName	^ #cef_client_t</body>
 </methods>
 
 <methods>
@@ -1199,127 +1683,9 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>CEF.LifecycleBase</class-id> <category>lifecycle</category>
-
-<body package="ChromiumEmbeddedFramework-UI">ensureIsRunning	self isRunning 		ifFalse: [ self start ].</body>
-
-<body package="ChromiumEmbeddedFramework-UI">start	self isReleased 		ifTrue: [ self error: 'Already released' ].	self isRunning 		ifTrue: [ self error: 'Already running' ].	self doStart.	lifecycle := #running.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">stop	self isReleased 		ifFalse: 		[	self doStop.			self initializeExternals.			lifecycle := #released		].</body>
-</methods>
-
-<methods>
-<class-id>CEF.LifecycleBase</class-id> <category>testing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">isReleased		^ lifecycle = #released</body>
-
-<body package="ChromiumEmbeddedFramework-UI">isRunning		^ lifecycle = #running</body>
-</methods>
-
-<methods>
-<class-id>CEF.LifecycleBase</class-id> <category>initialize-release</category>
-
-<body package="ChromiumEmbeddedFramework-UI">initialize	super initialize.	lifecycle := #new.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">release	self stop.</body>
-</methods>
-
-<methods>
-<class-id>CEF.LifecycleBase</class-id> <category>lifecycle-private</category>
-
-<body package="ChromiumEmbeddedFramework-UI">doStart	self subclassResponsibility.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">doStop	self subclassResponsibility</body>
-</methods>
-
-<methods>
-<class-id>CEF.Browser</class-id> <category>externals</category>
-
-<body package="ChromiumEmbeddedFramework-UI">browserWindowHandle	^ self externalAt: #browserWindowHandle</body>
-</methods>
-
-<methods>
-<class-id>CEF.Browser</class-id> <category>events</category>
-
-<body package="ChromiumEmbeddedFramework-UI">resized	self isRunning 		ifTrue: [ self mainApp schedule: ( ResizeWork browser: self )].</body>
-</methods>
-
-<methods>
-<class-id>CEF.Browser</class-id> <category>lifecycle-private</category>
-
-<body package="ChromiumEmbeddedFramework-UI">doStart	" done by the client "</body>
-
-<body package="ChromiumEmbeddedFramework-UI">doStop	self isAlive		ifTrue: [ self host tryCloseBrowser ].	self browserWindowHandle ifNotNil: 		[: handle |			[ handle isValid ifTrue: [ self osLib destroyWindow: handle ]] on: Error do: [ :ex | ].			self removeExternalAt: #browserWindowHandle		].</body>
-</methods>
-
-<methods>
-<class-id>CEF.Browser</class-id> <category>private</category>
-
-<body package="ChromiumEmbeddedFramework-UI">browserRectangle	^ self client browserRectangle</body>
-
-<body package="ChromiumEmbeddedFramework-UI">client	^ client</body>
-
-<body package="ChromiumEmbeddedFramework-UI">client: aClient 	client := aClient.	lifecycle := #running.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">getBrowserWindowHandle	^ self host windowHandle</body>
-
-<body package="ChromiumEmbeddedFramework-UI">initializeBrowserWindowHandle	self externalAt: #browserWindowHandle put: self getBrowserWindowHandle.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">mainWindow	^ self client mainWindow</body>
-
-<body package="ChromiumEmbeddedFramework-UI">resizeBrowser	self lib resizeBrowser: self</body>
-</methods>
-
-<methods>
-<class-id>CEF.Browser</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">loadUrl: anUrl 	" convenience "		self mainFrame loadUrl: anUrl</body>
-</methods>
-
-<methods>
-<class-id>CEF.Browser class</class-id> <category>instance creation</category>
-
-<body package="ChromiumEmbeddedFramework-UI">client: aClient 	^ self new client: aClient; yourself</body>
-</methods>
-
-<methods>
-<class-id>CEF.Browser class</class-id> <category>private-events</category>
-
-<body package="ChromiumEmbeddedFramework-UI">constructEventsTriggered	^super constructEventsTriggered		add: #closing;		yourself</body>
-</methods>
-
-<methods>
-<class-id>CEF.Browser class</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">typeName	^ #cef_browser_t</body>
-</methods>
-
-<methods>
 <class-id>CEF.Request class</class-id> <category>accessing</category>
 
 <body package="ChromiumEmbeddedFramework-UI">typeName	^ #cef_request_t</body>
-</methods>
-
-<methods>
-<class-id>CEF.BrowserPart</class-id> <category>bounds accessing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">bounds: aRectangle	super bounds: aRectangle.	self triggerEvent: #resized</body>
-
-<body package="ChromiumEmbeddedFramework-UI">globalBounds	| translation |	translation := self localPointToGlobal: 0 @ 0.	^ self bounds translatedBy: translation</body>
-
-<body package="ChromiumEmbeddedFramework-UI">preferredExtent	^ Point zero</body>
-</methods>
-
-<methods>
-<class-id>CEF.BrowserPart</class-id> <category>initialize-release</category>
-
-<body package="ChromiumEmbeddedFramework-UI">release	self triggerEvent: #released.	super release.</body>
-</methods>
-
-<methods>
-<class-id>CEF.BrowserPart class</class-id> <category>private-events</category>
-
-<body package="ChromiumEmbeddedFramework-UI">constructEventsTriggered	^super constructEventsTriggered		add: #resized;		add: #released;		yourself</body>
 </methods>
 
 <methods>
@@ -1332,180 +1698,6 @@ Licensed under the MIT license (see Copyright) -->
 <class-id>CEF.SchemeRegistrar class</class-id> <category>accessing</category>
 
 <body package="ChromiumEmbeddedFramework-UI">typeName	^ #cef_scheme_registrar_t</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainMessageLoop</class-id> <category>initialize-release</category>
-
-<body package="ChromiumEmbeddedFramework-UI">initialize	loopSemaphore := Semaphore new.	scheduledWork := SortedCollection sortBlock: [: w1 : w2 | w1 targetTime &lt;= w2 targetTime ].	scheduleLock := RecursionLock new.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">start	" cef_run_message_loop wants to run on the main thread, which does not suit VW.	Thus use cef_do_message_loop_work here "	messageProcess :=		[				[ self doMessageLoopWork ] repeat.			messageProcess := nil		] forkAt: Processor userBackgroundPriority.	messageProcess name: 'CEF message loop'.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">stop	( messageProcess notNil and: [ messageProcess isTerminated not ]) 		ifTrue: 		[	messageProcess terminate.			messageProcess := nil		].</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainMessageLoop</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">minimalDelay	" do not set this value too low, which results in choppy updates or frequent crashes "		^ minimalDelay ifNil: [ 20 ]</body>
-
-<body package="ChromiumEmbeddedFramework-UI">minimalDelay: anInteger 	minimalDelay := anInteger.</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainMessageLoop</class-id> <category>scheduling</category>
-
-<body package="ChromiumEmbeddedFramework-UI">schedule: work 	" Schedule the work based on the delay.	Similar work is compressed to avoid unnecessary updates.	A minimal delay is enforced to avoid overload "	self schedule: work now: Time millisecondClockValue</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainMessageLoop</class-id> <category>private</category>
-
-<body package="ChromiumEmbeddedFramework-UI">doMessageLoopWork	| work |	loopSemaphore wait.	work := scheduleLock critical: 			[	scheduledWork notEmpty 					ifTrue: [ scheduledWork removeFirst ]					ifFalse: [ nil ]			].	work notNil 		ifTrue: 		[	work isScheduled: false.			work doWork		].</body>
-
-<body package="ChromiumEmbeddedFramework-UI">schedule: work now: now	" Schedule the work based on the delay.	Similar work is compressed to avoid unnecessary updates.	A minimal delay is enforced to avoid overload.		'now' is passed as an argument to make debugging test cases easier "	| targetTime timer minDelay |	targetTime := now + work delay.	minDelay := self minimalDelay.	" restrict update frequency "	targetTime := (targetTime / minDelay) ceiling * minDelay.	work targetTime: targetTime.	" avoid duplicate updates "	scheduleLock critical: 		[( scheduledWork includes: work ) 				ifFalse: 				[	scheduledWork add: work.					work isScheduled: true.					timer := Timer after: ( targetTime - now ) milliseconds signal: loopSemaphore.					work timer: timer				]		].</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainMessageLoop class</class-id> <category>instance creation</category>
-
-<body package="ChromiumEmbeddedFramework-UI">new	^ super new initialize</body>
-</methods>
-
-<methods>
-<class-id>CEF.Log</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">debug	^ debug ifNil: [ true ]</body>
-
-<body package="ChromiumEmbeddedFramework-UI">debug: aBoolean 	debug := aBoolean.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">debugLog: aStringOrBlock 	self debug 		ifTrue: [ self addToQueue: aStringOrBlock level: 'CEF-DEBUG' ].</body>
-
-<body package="ChromiumEmbeddedFramework-UI">warnLog: aStringOrBlock 	logQueue nextPut: 'CEF-WARNING' -&gt; aStringOrBlock</body>
-</methods>
-
-<methods>
-<class-id>CEF.Log</class-id> <category>initialize-release</category>
-
-<body package="ChromiumEmbeddedFramework-UI">initialize	logQueue := SharedQueue new.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">start	logProcess :=		[				[ self showEntry: logQueue next ] repeat		] fork.	logProcess name: 'CEF log process'.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">stop	( logProcess notNil and: [ logProcess isTerminated not ]) 		ifTrue: 		[	logProcess terminate.			logProcess := nil		].</body>
-</methods>
-
-<methods>
-<class-id>CEF.Log</class-id> <category>private</category>
-
-<body package="ChromiumEmbeddedFramework-UI">addToQueue: aStringOrBlock level: levelString 	| string |	string := aStringOrBlock isCharacters 			ifTrue: [ aStringOrBlock ]			ifFalse: [ aStringOrBlock value ].	logQueue nextPut: 'CEF-DEBUG' -&gt; string.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">logStringForEntry: entry 	| stream |	stream := String new writeStream.	stream		cr;		nextPutAll: '['; 		nextPutAll: entry key; 		nextPutAll: '] '; 		nextPutAll: Time now shortPrintString; 		nextPutAll: ' '; 		nextPutAll: entry value; 		cr.	^ stream contents</body>
-
-<body package="ChromiumEmbeddedFramework-UI">showEntry: entry 	| logString |	" write to Stdout as one entry, so create a temporary string first, then write to Sdtout "	logString := self logStringForEntry: entry.	Stdout nextPutAll: logString; flush.</body>
-</methods>
-
-<methods>
-<class-id>CEF.Log class</class-id> <category>instance creation</category>
-
-<body package="ChromiumEmbeddedFramework-UI">current	current isNil 		ifTrue: 		[	current := self new.			current start		].	^ current</body>
-
-<body package="ChromiumEmbeddedFramework-UI">new	^super new initialize</body>
-
-<body package="ChromiumEmbeddedFramework-UI">stop	current notNil 		ifTrue: 		[	current stop.			current := nil		].</body>
-</methods>
-
-<methods>
-<class-id>CEF.Log class</class-id> <category>logging</category>
-
-<body package="ChromiumEmbeddedFramework-UI">debugLog: aStringOrBlock 	self current debugLog: aStringOrBlock.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">warnLog: aStringOrBlock 	self current warnLog: aStringOrBlock</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainApp</class-id> <category>factory</category>
-
-<body package="ChromiumEmbeddedFramework-UI">createMainArgs	^ self lib createMainArgs</body>
-
-<body package="ChromiumEmbeddedFramework-UI">createSchemeHandlerFactory	^ SchemeHandlerFactory onNewObject</body>
-
-<body package="ChromiumEmbeddedFramework-UI">createSettings	| settings level baseDir |	baseDir := self baseDirectory.	settings := Settings onNewObject.	Settings browserSubprocessPath 		ifNotNil: 		[: executable |			settings browserSubprocessPath: executable asFilename asAbsoluteFilename asString.			settings singleProcess: false		]		ifNil: [ settings singleProcess: true ].	settings noSandbox: true.	settings multiThreadedMessageLoop: self lib multiThreadedMessageLoop.	settings externalMessagePump: true.	settings userAgent: 'VW Chromium'.	settings resourcesDirPath: baseDir asString.	settings localesDirPath: ( baseDir construct: 'locales' ) asString.	self logFilename 		ifNotNil: [: filename | settings logFile: filename asFilename asAbsoluteFilename asString ].	level := self debug 			ifTrue: [ #'LOGSEVERITY_VERBOSE' ]			ifFalse: [ #'LOGSEVERITY_DEFAULT' ].	settings logSeverity: level.	^ settings</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainApp</class-id> <category>logging</category>
-
-<body package="ChromiumEmbeddedFramework-UI">logFilename	^ nil	"^ 'cef.' , Time secondClock displayString , '.log'"</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainApp</class-id> <category>message loop</category>
-
-<body package="ChromiumEmbeddedFramework-UI">messageLoop	^ messageLoop</body>
-
-<body package="ChromiumEmbeddedFramework-UI">restartMessageLoop	messageLoop notNil ifTrue: [ messageLoop stop ].	self initializeMessageLoop.	self runMessageLoop.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">runMessageLoop	self messageLoop start.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">stopMessageLoop	messageLoop notNil 		ifTrue: [ messageLoop stop ].</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainApp</class-id> <category>initialize-release</category>
-
-<body package="ChromiumEmbeddedFramework-UI">initialize	super initialize.	self initializeMessageLoop.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">initializeMessageLoop	messageLoop := MainMessageLoop new.</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainApp</class-id> <category>lifecycle-private</category>
-
-<body package="ChromiumEmbeddedFramework-UI">doStart	self runMessageLoop.	self initializeApp.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">doStop	self lib cef_shutdown.	Log stop.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">initializeApp	| settings initialized application mainArgs |	self lib initializeSignals.	mainArgs := self mainArgs.	application := self cefObject.	settings := self settings.	initialized := self lib cef_initialize: mainArgs with: settings cefObject with: application with: nil.	self lib restoreSignals.	initialized = 0 		ifTrue: [ self error: 'cef_initialize failed' ].</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainApp</class-id> <category>externals</category>
-
-<body package="ChromiumEmbeddedFramework-UI">mainArgs	^ self externalAt: #mainArgs ifAbsentPut: [ self createMainArgs ]</body>
-
-<body package="ChromiumEmbeddedFramework-UI">schemeHandlerFactory	^ self externalAt: #schemeHandlerFactory ifAbsentPut: [ self createSchemeHandlerFactory ]</body>
-
-<body package="ChromiumEmbeddedFramework-UI">settings	^ self externalAt: #settings ifAbsentPut: [ self createSettings ]</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainApp</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">baseDirectory	" base directory for resources / locales " 		^ (LibChromium directory ifNil: [ '.' asFilename ]) asAbsoluteFilename</body>
-
-<body package="ChromiumEmbeddedFramework-UI">customSchemeName	^ 'vw'</body>
-
-<body package="ChromiumEmbeddedFramework-UI">schedule: work	self messageLoop schedule: work.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">switches	^ #( 'no-proxy-server' )</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainApp class</class-id> <category>instance creation</category>
-
-<body package="ChromiumEmbeddedFramework-UI">current	" CEF apps are initialized once per process, so we need a singleton "		current isNil 		ifTrue: [ current := self onNewObject ].	^ current</body>
-
-<body package="ChromiumEmbeddedFramework-UI">ensureIsRunning		self current ensureIsRunning</body>
-</methods>
-
-<methods>
-<class-id>CEF.MainApp class</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">flushCurrent	current := nil.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">stop	current notNil 		ifTrue: 		[	" does nto reset current, because CEF apps can only be initialize once per OS process "			current stop		].</body>
-
-<body package="ChromiumEmbeddedFramework-UI">typeName	^ #cef_app_t</body>
 </methods>
 
 <methods>
@@ -1543,177 +1735,21 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>CEF.ScheduledWork</class-id> <category>accessing</category>
+<class-id>External.CDatum</class-id> <category>private</category>
 
-<body package="ChromiumEmbeddedFramework-UI">delay	^ delay</body>
-
-<body package="ChromiumEmbeddedFramework-UI">delay: milliseconds 	delay := milliseconds.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">isScheduled	^ isScheduled ifNil: [ false ].</body>
-
-<body package="ChromiumEmbeddedFramework-UI">isScheduled: aIsScheduled 	isScheduled := aIsScheduled.</body>
+<body package="ChromiumEmbeddedFramework-UI">cefRefCountFor: owner	^ owner fakeRefCount: self</body>
 </methods>
 
 <methods>
-<class-id>CEF.ScheduledWork</class-id> <category>comparing</category>
+<class-id>CEF.LibChromium</class-id> <category>accessing</category>
 
-<body package="ChromiumEmbeddedFramework-UI">= anotherWork 	^ self class = anotherWork class and: [ self targetTime = anotherWork targetTime ]</body>
-
-<body package="ChromiumEmbeddedFramework-UI">hash	^ targetTime hash</body>
+<body package="ChromiumEmbeddedFramework-UI">resizeBrowser: browser</body>
 </methods>
 
 <methods>
-<class-id>CEF.ScheduledWork</class-id> <category>work</category>
+<class-id>CEF.LibChromiumWindows</class-id> <category>accessing</category>
 
-<body package="ChromiumEmbeddedFramework-UI">doWork	self subclassResponsibility</body>
-</methods>
-
-<methods>
-<class-id>CEF.ScheduledWork</class-id> <category>private</category>
-
-<body package="ChromiumEmbeddedFramework-UI">stopTimer	timer notNil 		ifTrue: 		[	timer stop.			timer := nil		].</body>
-
-<body package="ChromiumEmbeddedFramework-UI">targetTime	^ targetTime</body>
-
-<body package="ChromiumEmbeddedFramework-UI">targetTime: aTargetTime 	" set by the message loop "	targetTime := aTargetTime.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">timer	^ timer</body>
-
-<body package="ChromiumEmbeddedFramework-UI">timer: aTimer 	timer := aTimer.</body>
-</methods>
-
-<methods>
-<class-id>CEF.ScheduledWork class</class-id> <category>instance creation</category>
-
-<body package="ChromiumEmbeddedFramework-UI">delay: milliseconds 	^ self new delay: milliseconds;		yourself</body>
-
-<body package="ChromiumEmbeddedFramework-UI">fps: framesPerSecond	^ self delay: (1000 // framesPerSecond)</body>
-</methods>
-
-<methods>
-<class-id>CEF.PumpWork</class-id> <category>work</category>
-
-<body package="ChromiumEmbeddedFramework-UI">doWork	LibChromium current cef_do_message_loop_work</body>
-</methods>
-
-<methods>
-<class-id>CEF.ResizeWork</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">browser	^ browser</body>
-
-<body package="ChromiumEmbeddedFramework-UI">browser: aBrowser 	browser := aBrowser.</body>
-</methods>
-
-<methods>
-<class-id>CEF.ResizeWork</class-id> <category>work</category>
-
-<body package="ChromiumEmbeddedFramework-UI">doWork	self browser resizeBrowser</body>
-</methods>
-
-<methods>
-<class-id>CEF.ResizeWork</class-id> <category>comparing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">= anotherWork 	^ super = anotherWork and: [ self browser = anotherWork browser ]</body>
-</methods>
-
-<methods>
-<class-id>CEF.ResizeWork class</class-id> <category>instance creation</category>
-
-<body package="ChromiumEmbeddedFramework-UI">browser: aBrowser 	^ ( self fps: 30)		browser: aBrowser;		yourself</body>
-</methods>
-
-<methods>
-<class-id>CEF.SchemeHandlerFactory</class-id> <category>initialize-release</category>
-
-<body package="ChromiumEmbeddedFramework-UI">initialize	super initialize.	resourceHandlers := IdentitySet new.</body>
-</methods>
-
-<methods>
-<class-id>CEF.SchemeHandlerFactory</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">finishedHandler: aResourceHandler	resourceHandlers remove: aResourceHandler ifAbsent: [ nil ]</body>
-</methods>
-
-<methods>
-<class-id>CEF.SchemeHandlerFactory class</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">typeName	^ #cef_scheme_handler_factory_t</body>
-</methods>
-
-<methods>
-<class-id>CEF.Callback class</class-id> <category>instance creation</category>
-
-<body package="ChromiumEmbeddedFramework-UI">typeName	^ #cef_callback_t</body>
-</methods>
-
-<methods>
-<class-id>CEF.Client</class-id> <category>factory</category>
-
-<body package="ChromiumEmbeddedFramework-UI">createBrowserSettings	^ BrowserSettings onNewObject		localStorage: #STATE_DISABLED;		plugins: #STATE_DISABLED;		yourself</body>
-
-<body package="ChromiumEmbeddedFramework-UI">createWindowInfo	^ self lib createWindowInfoFor: self mainWindow bounds: self browserRectangle</body>
-</methods>
-
-<methods>
-<class-id>CEF.Client</class-id> <category>private</category>
-
-<body package="ChromiumEmbeddedFramework-UI">browserRectangle	^ self areaPart globalBounds</body>
-
-<body package="ChromiumEmbeddedFramework-UI">mainWindow	^ self areaPart topComponent</body>
-
-<body package="ChromiumEmbeddedFramework-UI">restoreFocus	" CEF got the keyboard focus, let's take it back "	| win |	win := self mainWindow.	[	self osLib restoreFocus: win	] uiEventFor: win.</body>
-</methods>
-
-<methods>
-<class-id>CEF.Client</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">areaPart	^ areaPart</body>
-
-<body package="ChromiumEmbeddedFramework-UI">areaPart: aAreaPart 	areaPart := aAreaPart.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">browser	" this will be populated in #onAfterCreated, not immediately "		^ createdBrowser</body>
-</methods>
-
-<methods>
-<class-id>CEF.Client</class-id> <category>externals</category>
-
-<body package="ChromiumEmbeddedFramework-UI">browserSettings	^ self externalAt: #browserSettings ifAbsentPut: [ self createBrowserSettings ]</body>
-
-<body package="ChromiumEmbeddedFramework-UI">windowInfo	^ self externalAt: #windowInfo ifAbsentPut: [ self createWindowInfo ]</body>
-</methods>
-
-<methods>
-<class-id>CEF.Client</class-id> <category>lifecycle-private</category>
-
-<body package="ChromiumEmbeddedFramework-UI">doStart	MainApp ensureIsRunning.	self startBrowser.</body>
-
-<body package="ChromiumEmbeddedFramework-UI">doStop	self browser ifNotNil: [ :b |b stop ].</body>
-
-<body package="ChromiumEmbeddedFramework-UI">startBrowser	| win client browserSettings |	win := self windowInfo.	client := self cefObject.	browserSettings := self browserSettings cefObject.	self lib cef_browser_host_create_browser: win with: client with: nil with: browserSettings with: nil.</body>
-</methods>
-
-<methods>
-<class-id>CEF.Client class</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">typeName	^ #cef_client_t</body>
-</methods>
-
-<methods>
-<class-id>CEF.Client class</class-id> <category>private-events</category>
-
-<body package="ChromiumEmbeddedFramework-UI">constructEventsTriggered	^super constructEventsTriggered		add: #createdBrowser;		add: #loading;		add: #loaded;		add: #loadError;		yourself</body>
-</methods>
-
-<methods>
-<class-id>CEF.Client class</class-id> <category>instance creation</category>
-
-<body package="ChromiumEmbeddedFramework-UI">areaPart: aAreaPart 	^ self onNewObject areaPart: aAreaPart;		yourself</body>
-</methods>
-
-<methods>
-<class-id>CEF.Response class</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-UI">typeName	^ #'cef_response_t'</body>
+<body package="ChromiumEmbeddedFramework-UI">resizeBrowser: browser 	| osLib rectangle |	rectangle := browser browserRectangle.	osLib := OSSupport current.	osLib 		setWindowPos: browser browserWindowHandle		insertAfter: nil		x: rectangle left		y: rectangle top		cx: rectangle width		cy: rectangle height		flags: osLib SWP_ASYNCWINDOWPOS + osLib SWP_NOREDRAW + osLib SWP_NOACTIVATE + osLib SWP_NOMOVE 				+ osLib SWP_NOZORDER.	browser host notifyMoveOrResizeStarted.</body>
 </methods>
 
 <methods>
@@ -1748,17 +1784,40 @@ Licensed under the MIT license (see Copyright) -->
 </class>
 
 <class>
-<name>VisualPart</name>
-<environment>Graphics</environment>
-<super>Graphics.VisualComponent</super>
+<name>LibChromium</name>
+<environment>CEF</environment>
+<super>External.ExternalInterface</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>container eventHandlers properties </inst-vars>
+<inst-vars></inst-vars>
+<class-inst-vars>directory </class-inst-vars>
+<imports>
+			private CEF.LibChromiumDictionary.*
+			</imports>
+<category>ExternalInterface-New</category>
+<attributes>
+<includeFiles><item>include/fixes.h</item></includeFiles>
+<includeDirectories><item>include/capi</item> <item>include/c</item> <item>.</item></includeDirectories>
+<libraryFiles></libraryFiles>
+<libraryDirectories></libraryDirectories>
+<beVirtual>false</beVirtual>
+<optimizationLevel>full</optimizationLevel>
+<package>ChromiumEmbeddedFramework-Base</package>
+</attributes>
+</class>
+
+<class>
+<name>CDatum</name>
+<environment>External</environment>
+<super>Core.Object</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>theDatum type </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
-<category>Graphics-Visual Objects</category>
+<category>External-Data</category>
 <attributes>
-<package>Graphics-Visual Objects</package>
+<package>External-Data</package>
 </attributes>
 </class>
 
@@ -1774,6 +1833,44 @@ Licensed under the MIT license (see Copyright) -->
 <category>External-Data</category>
 <attributes>
 <package>External-Data</package>
+</attributes>
+</class>
+
+<class>
+<name>VisualPart</name>
+<environment>Graphics</environment>
+<super>Graphics.VisualComponent</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>container eventHandlers properties </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>Graphics-Visual Objects</category>
+<attributes>
+<package>Graphics-Visual Objects</package>
+</attributes>
+</class>
+
+<class>
+<name>LibChromiumWindows</name>
+<environment>CEF</environment>
+<super>CEF.LibChromium</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports>
+			private CEF.LibChromiumWindowsDictionary.*
+			</imports>
+<category></category>
+<attributes>
+<includeFiles></includeFiles>
+<includeDirectories></includeDirectories>
+<libraryFiles></libraryFiles>
+<libraryDirectories></libraryDirectories>
+<beVirtual>false</beVirtual>
+<optimizationLevel>full</optimizationLevel>
+<package>ChromiumEmbeddedFramework-Base</package>
 </attributes>
 </class>
 

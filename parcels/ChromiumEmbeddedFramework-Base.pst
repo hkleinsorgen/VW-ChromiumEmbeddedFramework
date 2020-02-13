@@ -1,32 +1,48 @@
 <?xml version="1.0"?>
 
 <st-source>
-<!-- Chromium Embedded Framework (CEF) for VisualWorks.
-Base package containing the library and some base extensions.
+<!-- 
+Name: ChromiumEmbeddedFramework-Base
+Notice: Licensed under the MIT license
+
+Copyright (c) 2017 Holger Kleinsorgen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Comment: Chromium Embedded Framework (CEF) for VisualWorks.
 
 See 
 https://bitbucket.org/chromiumembedded/cef
+Github repo:
+https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
 
 Still at an very early stage. 
 
-Based on CEF 3.3112.1659.gfef43e0 (2017-09-06)
-
-OS specific information:
-
-Linux: 
-It is neccessary to put the following files from the CEF resources directory next to the VM (e.g. symlink):
-icudtl.dat
-natives_blob.bin
-snapshot_blob.bin
-
-macOS:
-Currently not supported
-
 Contact: h . kleinsorgen - at - gmail . com
-Github repo: https://github.com/hkleinsorgen/VW-ChromiumEmbeddedFramework
 
-Licensed under the MIT license (see Copyright) -->
+Licensed under the MIT license (see Copyright)
+DevelopmentPrerequisites: #(#(#any 'ExternalInterfaceBashing' '') #(#any 'DLLCC' '') #(#any 'Xtreams-Terminals' ''))
+DisregardedPrerequisites: #(#(#name 'Base VisualWorks' #componentType #bundle))
+PackageName: ChromiumEmbeddedFramework-Base
+Parcel: #('ChromiumEmbeddedFramework-Base')
+ParcelDirectory: ChromiumEmbeddedFramework-Base
+PrerequisiteDescriptions: #(#(#name 'ExternalInterfaceBashing' #componentType #package) #(#name 'DLLCC' #componentType #package) #(#name 'Xtreams-Terminals' #componentType #package))
+PrerequisiteParcels: #(#('ExternalInterfaceBashing' '') #('DLLCC' '') #('Xtreams-Terminals' ''))
+SkipSignature: true
+Version: 0.2.28
+Post-Load Block: 
+	[:package |
+	CEF.LibChromium withAllSubclasses do: [ : libClass | libClass  bashInterface ]
+]
+Date: 9:15:55 PM February 13, 2020
+ -->
+<time-stamp>From VisualWorks®, 8.1.1 of 10. März 2016 on 13. Februar 2020 at 21:15:55</time-stamp>
 
+
+<do-it>(Dialog confirm: 'You are filing-in a Parcel source file!\\While this is possible it will not have\the same effect as loading the parcel.\None of the Parcel''s prerequisites will\be loaded and none of its load actions\will be performed.\\Are you sure you want to file-in?' withCRs) ifFalse: [self error: 'Parcel file-in abandoned.  Choose terminate or close.']</do-it>
 
 <name-space>
 <name>CEF</name>
@@ -42,6 +58,52 @@ Licensed under the MIT license (see Copyright) -->
 <package>ChromiumEmbeddedFramework-Base</package>
 </attributes>
 </name-space>
+
+<class>
+<name>OSSupport</name>
+<environment>CEF</environment>
+<super>External.ExternalInterface</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports>
+			private CEF.OSSupportDictionary.*
+			</imports>
+<category></category>
+<attributes>
+<includeFiles></includeFiles>
+<includeDirectories></includeDirectories>
+<libraryFiles></libraryFiles>
+<libraryDirectories></libraryDirectories>
+<beVirtual>false</beVirtual>
+<optimizationLevel>full</optimizationLevel>
+<package>ChromiumEmbeddedFramework-Base</package>
+</attributes>
+</class>
+
+<class>
+<name>WindowsSupport</name>
+<environment>CEF</environment>
+<super>CEF.OSSupport</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports>
+			private CEF.WindowsSupportDictionary.*
+			</imports>
+<category></category>
+<attributes>
+<includeFiles></includeFiles>
+<includeDirectories></includeDirectories>
+<libraryFiles><item>kernel32.dll</item> <item>gdi32.dll</item> <item>advapi32.dll</item> <item>user32.dll</item></libraryFiles>
+<libraryDirectories></libraryDirectories>
+<beVirtual>false</beVirtual>
+<optimizationLevel>full</optimizationLevel>
+<package>ChromiumEmbeddedFramework-Base</package>
+</attributes>
+</class>
 
 <class>
 <name>LibChromium</name>
@@ -81,29 +143,6 @@ Licensed under the MIT license (see Copyright) -->
 <class-inst-vars></class-inst-vars>
 <imports>
 			private CEF.LibChromiumUnixDictionary.*
-			</imports>
-<category></category>
-<attributes>
-<includeFiles></includeFiles>
-<includeDirectories></includeDirectories>
-<libraryFiles></libraryFiles>
-<libraryDirectories></libraryDirectories>
-<beVirtual>false</beVirtual>
-<optimizationLevel>full</optimizationLevel>
-<package>ChromiumEmbeddedFramework-Base</package>
-</attributes>
-</class>
-
-<class>
-<name>OSSupport</name>
-<environment>CEF</environment>
-<super>External.ExternalInterface</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports>
-			private CEF.OSSupportDictionary.*
 			</imports>
 <category></category>
 <attributes>
@@ -163,43 +202,8 @@ Licensed under the MIT license (see Copyright) -->
 </attributes>
 </class>
 
-<class>
-<name>WindowsSupport</name>
-<environment>CEF</environment>
-<super>CEF.OSSupport</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports>
-			private CEF.WindowsSupportDictionary.*
-			</imports>
-<category></category>
-<attributes>
-<includeFiles></includeFiles>
-<includeDirectories></includeDirectories>
-<libraryFiles><item>kernel32.dll</item> <item>gdi32.dll</item> <item>advapi32.dll</item> <item>user32.dll</item></libraryFiles>
-<libraryDirectories></libraryDirectories>
-<beVirtual>false</beVirtual>
-<optimizationLevel>full</optimizationLevel>
-<package>ChromiumEmbeddedFramework-Base</package>
-</attributes>
-</class>
-
 <shared-variable>
-<name>Current</name>
-<environment>CEF.OSSupport</environment>
-<private>false</private>
-<constant>false</constant>
-<category>accessing</category>
-<initializer>nil</initializer>
-<attributes>
-<package>ChromiumEmbeddedFramework-Base</package>
-</attributes>
-</shared-variable>
-
-<shared-variable>
-<name>WindowsSupportDictionary</name>
+<name>LibChromiumDictionary</name>
 <environment>CEF</environment>
 <private>false</private>
 <constant>false</constant>
@@ -221,7 +225,7 @@ Licensed under the MIT license (see Copyright) -->
 </shared-variable>
 
 <shared-variable>
-<name>LibChromiumDictionary</name>
+<name>WindowsSupportDictionary</name>
 <environment>CEF</environment>
 <private>false</private>
 <constant>false</constant>
@@ -266,6 +270,18 @@ Licensed under the MIT license (see Copyright) -->
 
 <shared-variable>
 <name>Current</name>
+<environment>CEF.OSSupport</environment>
+<private>false</private>
+<constant>false</constant>
+<category>accessing</category>
+<initializer>nil</initializer>
+<attributes>
+<package>ChromiumEmbeddedFramework-Base</package>
+</attributes>
+</shared-variable>
+
+<shared-variable>
+<name>Current</name>
 <environment>CEF.LibChromium</environment>
 <private>false</private>
 <constant>false</constant>
@@ -277,11 +293,27 @@ Licensed under the MIT license (see Copyright) -->
 </shared-variable>
 
 <methods>
-<class-id>CEF.LibChromium class</class-id> <category>libraries</category>
+<class-id>CEF.LibChromiumUnix class</class-id> <category>libraries</category>
 
 <body package="ChromiumEmbeddedFramework-Base">libraryLinux	&lt;library: #linux&gt;		| lib |	lib := 'libcef.so'.	^ self directory ifNotNil: [: d | ( d construct: lib ) asString ] ifNil: [ lib ]</body>
+</methods>
+
+<methods>
+<class-id>CEF.LibChromiumWindows class</class-id> <category>libraries</category>
 
 <body package="ChromiumEmbeddedFramework-Base">libraryWindows	&lt;library: #win&gt;		| lib |	lib := 'libcef.dll'.	^ self directory ifNotNil: [: d | ( d construct: lib ) asString ] ifNil: [ lib ]</body>
+</methods>
+
+<methods>
+<class-id>CEF.WindowsSupport</class-id> <category>procedures</category>
+
+<body package="ChromiumEmbeddedFramework-Base">destroyWindow: hWnd 	&lt;C: BOOL DestroyWindow(void * hWnd )&gt;	^self externalAccessFailedWith: _errorCode</body>
+
+<body package="ChromiumEmbeddedFramework-Base">getModuleHandle: lpModuleName	&lt;C: HMODULE GetModuleHandleA(const char * lpModuleName)&gt;	^self externalAccessFailedWith: _errorCode</body>
+
+<body package="ChromiumEmbeddedFramework-Base">setFocus: hWnd 	&lt;C: HWND SetFocus(void * hWnd )&gt;	^self externalAccessFailedWith: _errorCode</body>
+
+<body package="ChromiumEmbeddedFramework-Base">setWindowPos: hWnd insertAfter: hWndInsertAfter x: X y: Y cx: cx cy: cy flags: uFlags	&lt;C: BOOL SetWindowPos(          void * hWnd,    void * hWndInsertAfter,    int X,    int Y,    int cx,    int cy,    unsigned int uFlags)&gt;	^self externalAccessFailedWith: _errorCode</body>
 </methods>
 
 <methods>
@@ -539,15 +571,553 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>CEF.WindowsSupport</class-id> <category>procedures</category>
+<class-id>CEF.OSSupport</class-id> <category>accessing</category>
 
-<body package="ChromiumEmbeddedFramework-Base">destroyWindow: hWnd 	&lt;C: BOOL DestroyWindow(void * hWnd )&gt;	^self externalAccessFailedWith: _errorCode</body>
+<body package="ChromiumEmbeddedFramework-Base">restoreFocus: aWindow</body>
+</methods>
 
-<body package="ChromiumEmbeddedFramework-Base">getModuleHandle: lpModuleName	&lt;C: HMODULE GetModuleHandleA(const char * lpModuleName)&gt;	^self externalAccessFailedWith: _errorCode</body>
+<methods>
+<class-id>CEF.OSSupport class</class-id> <category>private</category>
 
-<body package="ChromiumEmbeddedFramework-Base">setFocus: hWnd 	&lt;C: HWND SetFocus(void * hWnd )&gt;	^self externalAccessFailedWith: _errorCode</body>
+<body package="ChromiumEmbeddedFramework-Base">concreteClass	^ OSSystemSupport concreteClass cefSupportLibClass</body>
+</methods>
 
-<body package="ChromiumEmbeddedFramework-Base">setWindowPos: hWnd insertAfter: hWndInsertAfter x: X y: Y cx: cx cy: cy flags: uFlags	&lt;C: BOOL SetWindowPos(          void * hWnd,    void * hWndInsertAfter,    int X,    int Y,    int cx,    int cy,    unsigned int uFlags)&gt;	^self externalAccessFailedWith: _errorCode</body>
+<methods>
+<class-id>CEF.OSSupport class</class-id> <category>instance creation</category>
+
+<body package="ChromiumEmbeddedFramework-Base">current	" nil if no OS support library is needed "		Current isNil 		ifTrue: [ self concreteClass ifNotNil: [: osSupportClass | Current := osSupportClass new ]].	^ Current</body>
+
+<body package="ChromiumEmbeddedFramework-Base">flushCurrent	Current := nil.</body>
+</methods>
+
+<methods>
+<class-id>CEF.WindowsSupport</class-id> <category>defines</category>
+
+<body package="ChromiumEmbeddedFramework-Base">SWP_ASYNCWINDOWPOS	&lt;C: #define SWP_ASYNCWINDOWPOS 	0x4000	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">SWP_NOACTIVATE	&lt;C: #define SWP_NOACTIVATE 	0x0010	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">SWP_NOMOVE	&lt;C: #define SWP_NOMOVE 	0x0002	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">SWP_NOREDRAW	&lt;C: #define SWP_NOREDRAW 	0x0008	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">SWP_NOZORDER	&lt;C: #define SWP_NOZORDER 0x0004	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_BORDER	&lt;C: #define WS_BORDER 8388608	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_CAPTION	&lt;C: #define WS_CAPTION 12582912	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_CHILD	&lt;C: #define WS_CHILD 1073741824	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_CHILDWINDOW	&lt;C: #define WS_CHILDWINDOW 1073741824	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_CLIPCHILDREN	&lt;C: #define WS_CLIPCHILDREN 33554432	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_CLIPSIBLINGS	&lt;C: #define WS_CLIPSIBLINGS 67108864	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_DISABLED	&lt;C: #define WS_DISABLED 134217728	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_DLGFRAME	&lt;C: #define WS_DLGFRAME 4194304	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_GROUP	&lt;C: #define WS_GROUP 131072	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_HSCROLL	&lt;C: #define WS_HSCROLL 1048576	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_ICONIC	&lt;C: #define WS_ICONIC 536870912	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_MAXIMIZE	&lt;C: #define WS_MAXIMIZE 16777216	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_MAXIMIZEBOX	&lt;C: #define WS_MAXIMIZEBOX 65536	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_MINIMIZE	&lt;C: #define WS_MINIMIZE 536870912	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_MINIMIZEBOX	&lt;C: #define WS_MINIMIZEBOX 131072	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_OVERLAPPED	&lt;C: #define WS_OVERLAPPED 0	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_OVERLAPPEDWINDOW	&lt;C: #define WS_OVERLAPPEDWINDOW 13565952	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_POPUP	&lt;C: #define WS_POPUP 2147483648	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_POPUPWINDOW	&lt;C: #define WS_POPUPWINDOW 2156396544	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_SIZEBOX	&lt;C: #define WS_SIZEBOX 262144	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_SYSMENU	&lt;C: #define WS_SYSMENU 524288	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_TABSTOP	&lt;C: #define WS_TABSTOP 65536	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_THICKFRAME	&lt;C: #define WS_THICKFRAME 262144	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_TILED	&lt;C: #define WS_TILED 0	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_TILEDWINDOW	&lt;C: #define WS_TILEDWINDOW 13565952	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_VISIBLE	&lt;C: #define WS_VISIBLE 268435456	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WS_VSCROLL	&lt;C: #define WS_VSCROLL 2097152	&gt;</body>
+</methods>
+
+<methods>
+<class-id>CEF.WindowsSupport</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-Base">getHInstance	^ self getModuleHandle: 0</body>
+
+<body package="ChromiumEmbeddedFramework-Base">restoreFocus: aWindow	[	self setFocus: 0;			setFocus: aWindow windowHandle	] uiEventFor: aWindow</body>
+
+<body package="ChromiumEmbeddedFramework-Base">windowFlags	^ self WS_CHILD + self WS_CLIPCHILDREN + self WS_CLIPSIBLINGS + self WS_VISIBLE</body>
+</methods>
+
+<methods>
+<class-id>CEF.LibChromium</class-id> <category>types</category>
+
+<body package="ChromiumEmbeddedFramework-Base">DWORD	&lt;C: typedef unsigned long DWORD&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">HCURSOR	&lt;C: typedef void * HCURSOR&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">LONG	&lt;C: typedef long LONG&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">LPARAM	&lt;C: typedef LONG LPARAM&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">MSG	&lt;C: typedef struct tagMSG MSG&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">POINT	&lt;C: typedef struct tagPOINT POINT&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">UINT	&lt;C: typedef unsigned int UINT&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">ULONG	&lt;C: typedef DWORD ULONG&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WORD	&lt;C: typedef unsigned short WORD&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">WPARAM	&lt;C: typedef UINT WPARAM&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_accessibility_handler_t	&lt;C: typedef struct _cef_accessibility_handler_t cef_accessibility_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_alpha_type_t	&lt;C: typedef enum {			CEF_ALPHA_TYPE_OPAQUE, 			CEF_ALPHA_TYPE_PREMULTIPLIED, 			CEF_ALPHA_TYPE_POSTMULTIPLIED		} cef_alpha_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_app_t	&lt;C: typedef struct _cef_app_t cef_app_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_auth_callback_t	&lt;C: typedef struct _cef_auth_callback_t cef_auth_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_base_ref_counted_t	&lt;C: typedef struct _cef_base_ref_counted_t cef_base_ref_counted_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_base_scoped_t	&lt;C: typedef struct _cef_base_scoped_t cef_base_scoped_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_before_download_callback_t	&lt;C: typedef struct _cef_before_download_callback_t cef_before_download_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_binary_value_t	&lt;C: typedef struct _cef_binary_value_t cef_binary_value_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_box_layout_settings_t	&lt;C: typedef struct _cef_box_layout_settings_t cef_box_layout_settings_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_browser_host_t	&lt;C: typedef struct _cef_browser_host_t cef_browser_host_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_browser_process_handler_t	&lt;C: typedef struct _cef_browser_process_handler_t cef_browser_process_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_browser_settings_t	&lt;C: typedef struct _cef_browser_settings_t cef_browser_settings_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_browser_t	&lt;C: typedef struct _cef_browser_t cef_browser_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_button_state_t	&lt;C: typedef enum {			CEF_BUTTON_STATE_NORMAL, 			CEF_BUTTON_STATE_HOVERED, 			CEF_BUTTON_STATE_PRESSED, 			CEF_BUTTON_STATE_DISABLED		} cef_button_state_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_callback_t	&lt;C: typedef struct _cef_callback_t cef_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_cdm_registration_error_t	&lt;C: typedef enum {			CEF_CDM_REGISTRATION_ERROR_NONE, 			CEF_CDM_REGISTRATION_ERROR_INCORRECT_CONTENTS, 			CEF_CDM_REGISTRATION_ERROR_INCOMPATIBLE, 			CEF_CDM_REGISTRATION_ERROR_NOT_SUPPORTED		} cef_cdm_registration_error_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_cert_status_t	&lt;C: typedef enum {			CERT_STATUS_NONE, 			CERT_STATUS_COMMON_NAME_INVALID, 			CERT_STATUS_DATE_INVALID, 			CERT_STATUS_AUTHORITY_INVALID = 4, 			CERT_STATUS_NO_REVOCATION_MECHANISM = 16, 			CERT_STATUS_UNABLE_TO_CHECK_REVOCATION = 32, 			CERT_STATUS_REVOKED = 64, 			CERT_STATUS_INVALID = 128, 			CERT_STATUS_WEAK_SIGNATURE_ALGORITHM = 256, 			CERT_STATUS_NON_UNIQUE_NAME = 1024, 			CERT_STATUS_WEAK_KEY = 2048, 			CERT_STATUS_PINNED_KEY_MISSING = 8192, 			CERT_STATUS_NAME_CONSTRAINT_VIOLATION = 16384, 			CERT_STATUS_VALIDITY_TOO_LONG = 32768, 			CERT_STATUS_IS_EV = 65536, 			CERT_STATUS_REV_CHECKING_ENABLED = 131072, 			CERT_STATUS_SHA1_SIGNATURE_PRESENT = 524288, 			CERT_STATUS_CT_COMPLIANCE_FAILED = 1048576		} cef_cert_status_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_char_t	&lt;C: typedef char16 cef_char_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_client_t	&lt;C: typedef struct _cef_client_t cef_client_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_color_model_t	&lt;C: typedef enum {			COLOR_MODEL_UNKNOWN, 			COLOR_MODEL_GRAY, 			COLOR_MODEL_COLOR, 			COLOR_MODEL_CMYK, 			COLOR_MODEL_CMY, 			COLOR_MODEL_KCMY, 			COLOR_MODEL_CMY_K, 			COLOR_MODEL_BLACK, 			COLOR_MODEL_GRAYSCALE, 			COLOR_MODEL_RGB, 			COLOR_MODEL_RGB16, 			COLOR_MODEL_RGBA, 			COLOR_MODEL_COLORMODE_COLOR, 			COLOR_MODEL_COLORMODE_MONOCHROME, 			COLOR_MODEL_HP_COLOR_COLOR, 			COLOR_MODEL_HP_COLOR_BLACK, 			COLOR_MODEL_PRINTOUTMODE_NORMAL, 			COLOR_MODEL_PRINTOUTMODE_NORMAL_GRAY, 			COLOR_MODEL_PROCESSCOLORMODEL_CMYK, 			COLOR_MODEL_PROCESSCOLORMODEL_GREYSCALE, 			COLOR_MODEL_PROCESSCOLORMODEL_RGB		} cef_color_model_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_color_t	&lt;C: typedef uint32 cef_color_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_color_type_t	&lt;C: typedef enum {			CEF_COLOR_TYPE_RGBA_8888, 			CEF_COLOR_TYPE_BGRA_8888		} cef_color_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_com_init_mode_t	&lt;C: typedef enum {			COM_INIT_MODE_NONE, 			COM_INIT_MODE_STA, 			COM_INIT_MODE_MTA		} cef_com_init_mode_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_command_line_t	&lt;C: typedef struct _cef_command_line_t cef_command_line_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_completion_callback_t	&lt;C: typedef struct _cef_completion_callback_t cef_completion_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_composition_underline_t	&lt;C: typedef struct _cef_composition_underline_t cef_composition_underline_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_context_menu_edit_state_flags_t	&lt;C: typedef enum {			CM_EDITFLAG_NONE, 			CM_EDITFLAG_CAN_UNDO, 			CM_EDITFLAG_CAN_REDO, 			CM_EDITFLAG_CAN_CUT = 4, 			CM_EDITFLAG_CAN_COPY = 8, 			CM_EDITFLAG_CAN_PASTE = 16, 			CM_EDITFLAG_CAN_DELETE = 32, 			CM_EDITFLAG_CAN_SELECT_ALL = 64, 			CM_EDITFLAG_CAN_TRANSLATE = 128		} cef_context_menu_edit_state_flags_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_context_menu_handler_t	&lt;C: typedef struct _cef_context_menu_handler_t cef_context_menu_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_context_menu_media_state_flags_t	&lt;C: typedef enum {			CM_MEDIAFLAG_NONE, 			CM_MEDIAFLAG_ERROR, 			CM_MEDIAFLAG_PAUSED, 			CM_MEDIAFLAG_MUTED = 4, 			CM_MEDIAFLAG_LOOP = 8, 			CM_MEDIAFLAG_CAN_SAVE = 16, 			CM_MEDIAFLAG_HAS_AUDIO = 32, 			CM_MEDIAFLAG_HAS_VIDEO = 64, 			CM_MEDIAFLAG_CONTROL_ROOT_ELEMENT = 128, 			CM_MEDIAFLAG_CAN_PRINT = 256, 			CM_MEDIAFLAG_CAN_ROTATE = 512		} cef_context_menu_media_state_flags_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_context_menu_media_type_t	&lt;C: typedef enum {			CM_MEDIATYPE_NONE, 			CM_MEDIATYPE_IMAGE, 			CM_MEDIATYPE_VIDEO, 			CM_MEDIATYPE_AUDIO, 			CM_MEDIATYPE_FILE, 			CM_MEDIATYPE_PLUGIN		} cef_context_menu_media_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_context_menu_params_t	&lt;C: typedef struct _cef_context_menu_params_t cef_context_menu_params_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_context_menu_type_flags_t	&lt;C: typedef enum {			CM_TYPEFLAG_NONE, 			CM_TYPEFLAG_PAGE, 			CM_TYPEFLAG_FRAME, 			CM_TYPEFLAG_LINK = 4, 			CM_TYPEFLAG_MEDIA = 8, 			CM_TYPEFLAG_SELECTION = 16, 			CM_TYPEFLAG_EDITABLE = 32		} cef_context_menu_type_flags_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_cookie_manager_t	&lt;C: typedef struct _cef_cookie_manager_t cef_cookie_manager_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_cookie_t	&lt;C: typedef struct _cef_cookie_t cef_cookie_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_cookie_visitor_t	&lt;C: typedef struct _cef_cookie_visitor_t cef_cookie_visitor_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_cross_axis_alignment_t	&lt;C: typedef enum {			CEF_CROSS_AXIS_ALIGNMENT_STRETCH, 			CEF_CROSS_AXIS_ALIGNMENT_START, 			CEF_CROSS_AXIS_ALIGNMENT_CENTER, 			CEF_CROSS_AXIS_ALIGNMENT_END		} cef_cross_axis_alignment_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_cursor_info_t	&lt;C: typedef struct _cef_cursor_info_t cef_cursor_info_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_cursor_type_t	&lt;C: typedef enum {			CT_POINTER, 			CT_CROSS, 			CT_HAND, 			CT_IBEAM, 			CT_WAIT, 			CT_HELP, 			CT_EASTRESIZE, 			CT_NORTHRESIZE, 			CT_NORTHEASTRESIZE, 			CT_NORTHWESTRESIZE, 			CT_SOUTHRESIZE, 			CT_SOUTHEASTRESIZE, 			CT_SOUTHWESTRESIZE, 			CT_WESTRESIZE, 			CT_NORTHSOUTHRESIZE, 			CT_EASTWESTRESIZE, 			CT_NORTHEASTSOUTHWESTRESIZE, 			CT_NORTHWESTSOUTHEASTRESIZE, 			CT_COLUMNRESIZE, 			CT_ROWRESIZE, 			CT_MIDDLEPANNING, 			CT_EASTPANNING, 			CT_NORTHPANNING, 			CT_NORTHEASTPANNING, 			CT_NORTHWESTPANNING, 			CT_SOUTHPANNING, 			CT_SOUTHEASTPANNING, 			CT_SOUTHWESTPANNING, 			CT_WESTPANNING, 			CT_MOVE, 			CT_VERTICALTEXT, 			CT_CELL, 			CT_CONTEXTMENU, 			CT_ALIAS, 			CT_PROGRESS, 			CT_NODROP, 			CT_COPY, 			CT_NONE, 			CT_NOTALLOWED, 			CT_ZOOMIN, 			CT_ZOOMOUT, 			CT_GRAB, 			CT_GRABBING, 			CT_CUSTOM		} cef_cursor_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_delete_cookies_callback_t	&lt;C: typedef struct _cef_delete_cookies_callback_t cef_delete_cookies_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_dialog_handler_t	&lt;C: typedef struct _cef_dialog_handler_t cef_dialog_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_dictionary_value_t	&lt;C: typedef struct _cef_dictionary_value_t cef_dictionary_value_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_display_handler_t	&lt;C: typedef struct _cef_display_handler_t cef_display_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_dom_document_type_t	&lt;C: typedef enum {			DOM_DOCUMENT_TYPE_UNKNOWN, 			DOM_DOCUMENT_TYPE_HTML, 			DOM_DOCUMENT_TYPE_XHTML, 			DOM_DOCUMENT_TYPE_PLUGIN		} cef_dom_document_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_dom_event_category_t	&lt;C: typedef enum {			DOM_EVENT_CATEGORY_UNKNOWN, 			DOM_EVENT_CATEGORY_UI, 			DOM_EVENT_CATEGORY_MOUSE, 			DOM_EVENT_CATEGORY_MUTATION = 4, 			DOM_EVENT_CATEGORY_KEYBOARD = 8, 			DOM_EVENT_CATEGORY_TEXT = 16, 			DOM_EVENT_CATEGORY_COMPOSITION = 32, 			DOM_EVENT_CATEGORY_DRAG = 64, 			DOM_EVENT_CATEGORY_CLIPBOARD = 128, 			DOM_EVENT_CATEGORY_MESSAGE = 256, 			DOM_EVENT_CATEGORY_WHEEL = 512, 			DOM_EVENT_CATEGORY_BEFORE_TEXT_INSERTED = 1024, 			DOM_EVENT_CATEGORY_OVERFLOW = 2048, 			DOM_EVENT_CATEGORY_PAGE_TRANSITION = 4096, 			DOM_EVENT_CATEGORY_POPSTATE = 8192, 			DOM_EVENT_CATEGORY_PROGRESS = 16384, 			DOM_EVENT_CATEGORY_XMLHTTPREQUEST_PROGRESS = 32768		} cef_dom_event_category_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_dom_event_phase_t	&lt;C: typedef enum {			DOM_EVENT_PHASE_UNKNOWN, 			DOM_EVENT_PHASE_CAPTURING, 			DOM_EVENT_PHASE_AT_TARGET, 			DOM_EVENT_PHASE_BUBBLING		} cef_dom_event_phase_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_dom_node_type_t	&lt;C: typedef enum {			DOM_NODE_TYPE_UNSUPPORTED, 			DOM_NODE_TYPE_ELEMENT, 			DOM_NODE_TYPE_ATTRIBUTE, 			DOM_NODE_TYPE_TEXT, 			DOM_NODE_TYPE_CDATA_SECTION, 			DOM_NODE_TYPE_PROCESSING_INSTRUCTIONS, 			DOM_NODE_TYPE_COMMENT, 			DOM_NODE_TYPE_DOCUMENT, 			DOM_NODE_TYPE_DOCUMENT_TYPE, 			DOM_NODE_TYPE_DOCUMENT_FRAGMENT		} cef_dom_node_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_domdocument_t	&lt;C: typedef struct _cef_domdocument_t cef_domdocument_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_domnode_t	&lt;C: typedef struct _cef_domnode_t cef_domnode_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_domvisitor_t	&lt;C: typedef struct _cef_domvisitor_t cef_domvisitor_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_download_handler_t	&lt;C: typedef struct _cef_download_handler_t cef_download_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_download_image_callback_t	&lt;C: typedef struct _cef_download_image_callback_t cef_download_image_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_download_item_callback_t	&lt;C: typedef struct _cef_download_item_callback_t cef_download_item_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_download_item_t	&lt;C: typedef struct _cef_download_item_t cef_download_item_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_drag_data_t	&lt;C: typedef struct _cef_drag_data_t cef_drag_data_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_drag_handler_t	&lt;C: typedef struct _cef_drag_handler_t cef_drag_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_drag_operations_mask_t	&lt;C: typedef enum {			DRAG_OPERATION_NONE, 			DRAG_OPERATION_COPY, 			DRAG_OPERATION_LINK, 			DRAG_OPERATION_GENERIC = 4, 			DRAG_OPERATION_PRIVATE = 8, 			DRAG_OPERATION_MOVE = 16, 			DRAG_OPERATION_DELETE = 32, 			DRAG_OPERATION_EVERY = 1		} cef_drag_operations_mask_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_draggable_region_t	&lt;C: typedef struct _cef_draggable_region_t cef_draggable_region_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_duplex_mode_t	&lt;C: typedef enum {			DUPLEX_MODE_UNKNOWN = -1, 			DUPLEX_MODE_SIMPLEX, 			DUPLEX_MODE_LONG_EDGE, 			DUPLEX_MODE_SHORT_EDGE		} cef_duplex_mode_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_errorcode_t	&lt;C: typedef enum {			ERR_NONE, 			ERR_FAILED = -2, 			ERR_ABORTED = -3, 			ERR_INVALID_ARGUMENT = -4, 			ERR_INVALID_HANDLE = -5, 			ERR_FILE_NOT_FOUND = -6, 			ERR_TIMED_OUT = -7, 			ERR_FILE_TOO_BIG = -8, 			ERR_UNEXPECTED = -9, 			ERR_ACCESS_DENIED = -10, 			ERR_NOT_IMPLEMENTED = -11, 			ERR_CONNECTION_CLOSED = -100, 			ERR_CONNECTION_RESET = -101, 			ERR_CONNECTION_REFUSED = -102, 			ERR_CONNECTION_ABORTED = -103, 			ERR_CONNECTION_FAILED = -104, 			ERR_NAME_NOT_RESOLVED = -105, 			ERR_INTERNET_DISCONNECTED = -106, 			ERR_SSL_PROTOCOL_ERROR = -107, 			ERR_ADDRESS_INVALID = -108, 			ERR_ADDRESS_UNREACHABLE = -109, 			ERR_SSL_CLIENT_AUTH_CERT_NEEDED = -110, 			ERR_TUNNEL_CONNECTION_FAILED = -111, 			ERR_NO_SSL_VERSIONS_ENABLED = -112, 			ERR_SSL_VERSION_OR_CIPHER_MISMATCH = -113, 			ERR_SSL_RENEGOTIATION_REQUESTED = -114, 			ERR_CERT_COMMON_NAME_INVALID = -200, 			ERR_CERT_BEGIN = 0, 			ERR_CERT_DATE_INVALID = -201, 			ERR_CERT_AUTHORITY_INVALID = -202, 			ERR_CERT_CONTAINS_ERRORS = -203, 			ERR_CERT_NO_REVOCATION_MECHANISM = -204, 			ERR_CERT_UNABLE_TO_CHECK_REVOCATION = -205, 			ERR_CERT_REVOKED = -206, 			ERR_CERT_INVALID = -207, 			ERR_CERT_WEAK_SIGNATURE_ALGORITHM = -208, 			ERR_CERT_NON_UNIQUE_NAME = -210, 			ERR_CERT_WEAK_KEY = -211, 			ERR_CERT_NAME_CONSTRAINT_VIOLATION = -212, 			ERR_CERT_VALIDITY_TOO_LONG = -213, 			ERR_CERT_END = 0, 			ERR_INVALID_URL = -300, 			ERR_DISALLOWED_URL_SCHEME = -301, 			ERR_UNKNOWN_URL_SCHEME = -302, 			ERR_TOO_MANY_REDIRECTS = -310, 			ERR_UNSAFE_REDIRECT = -311, 			ERR_UNSAFE_PORT = -312, 			ERR_INVALID_RESPONSE = -320, 			ERR_INVALID_CHUNKED_ENCODING = -321, 			ERR_METHOD_NOT_SUPPORTED = -322, 			ERR_UNEXPECTED_PROXY_AUTH = -323, 			ERR_EMPTY_RESPONSE = -324, 			ERR_RESPONSE_HEADERS_TOO_BIG = -325, 			ERR_CACHE_MISS = -400, 			ERR_INSECURE_RESPONSE = -501		} cef_errorcode_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_event_flags_t	&lt;C: typedef enum {			EVENTFLAG_NONE, 			EVENTFLAG_CAPS_LOCK_ON, 			EVENTFLAG_SHIFT_DOWN, 			EVENTFLAG_CONTROL_DOWN = 4, 			EVENTFLAG_ALT_DOWN = 8, 			EVENTFLAG_LEFT_MOUSE_BUTTON = 16, 			EVENTFLAG_MIDDLE_MOUSE_BUTTON = 32, 			EVENTFLAG_RIGHT_MOUSE_BUTTON = 64, 			EVENTFLAG_COMMAND_DOWN = 128, 			EVENTFLAG_NUM_LOCK_ON = 256, 			EVENTFLAG_IS_KEY_PAD = 512, 			EVENTFLAG_IS_LEFT = 1024, 			EVENTFLAG_IS_RIGHT = 2048		} cef_event_flags_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_file_dialog_callback_t	&lt;C: typedef struct _cef_file_dialog_callback_t cef_file_dialog_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_file_dialog_mode_t	&lt;C: typedef enum {			FILE_DIALOG_OPEN, 			FILE_DIALOG_OPEN_MULTIPLE, 			FILE_DIALOG_OPEN_FOLDER, 			FILE_DIALOG_SAVE, 			FILE_DIALOG_TYPE_MASK = 255, 			FILE_DIALOG_OVERWRITEPROMPT_FLAG = 16777216, 			FILE_DIALOG_HIDEREADONLY_FLAG = 33554432		} cef_file_dialog_mode_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_find_handler_t	&lt;C: typedef struct _cef_find_handler_t cef_find_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_focus_handler_t	&lt;C: typedef struct _cef_focus_handler_t cef_focus_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_focus_source_t	&lt;C: typedef enum {			FOCUS_SOURCE_NAVIGATION, 			FOCUS_SOURCE_SYSTEM		} cef_focus_source_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_frame_t	&lt;C: typedef struct _cef_frame_t cef_frame_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_geolocation_callback_t	&lt;C: typedef struct _cef_geolocation_callback_t cef_geolocation_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_geolocation_handler_t	&lt;C: typedef struct _cef_geolocation_handler_t cef_geolocation_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_geoposition_error_code_t	&lt;C: typedef enum {			GEOPOSITON_ERROR_NONE, 			GEOPOSITON_ERROR_PERMISSION_DENIED, 			GEOPOSITON_ERROR_POSITION_UNAVAILABLE, 			GEOPOSITON_ERROR_TIMEOUT		} cef_geoposition_error_code_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_geoposition_t	&lt;C: typedef struct _cef_geoposition_t cef_geoposition_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_horizontal_alignment_t	&lt;C: typedef enum {			CEF_HORIZONTAL_ALIGNMENT_LEFT, 			CEF_HORIZONTAL_ALIGNMENT_CENTER, 			CEF_HORIZONTAL_ALIGNMENT_RIGHT		} cef_horizontal_alignment_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_image_t	&lt;C: typedef struct _cef_image_t cef_image_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_insets_t	&lt;C: typedef struct _cef_insets_t cef_insets_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_jsdialog_callback_t	&lt;C: typedef struct _cef_jsdialog_callback_t cef_jsdialog_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_jsdialog_handler_t	&lt;C: typedef struct _cef_jsdialog_handler_t cef_jsdialog_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_jsdialog_type_t	&lt;C: typedef enum {			JSDIALOGTYPE_ALERT, 			JSDIALOGTYPE_CONFIRM, 			JSDIALOGTYPE_PROMPT		} cef_jsdialog_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_json_parser_error_t	&lt;C: typedef enum {			JSON_NO_ERROR, 			JSON_INVALID_ESCAPE, 			JSON_SYNTAX_ERROR, 			JSON_UNEXPECTED_TOKEN, 			JSON_TRAILING_COMMA, 			JSON_TOO_MUCH_NESTING, 			JSON_UNEXPECTED_DATA_AFTER_ROOT, 			JSON_UNSUPPORTED_ENCODING, 			JSON_UNQUOTED_DICTIONARY_KEY, 			JSON_PARSE_ERROR_COUNT		} cef_json_parser_error_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_json_parser_options_t	&lt;C: typedef enum {			JSON_PARSER_RFC, 			JSON_PARSER_ALLOW_TRAILING_COMMAS		} cef_json_parser_options_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_json_writer_options_t	&lt;C: typedef enum {			JSON_WRITER_DEFAULT, 			JSON_WRITER_OMIT_BINARY_VALUES, 			JSON_WRITER_OMIT_DOUBLE_TYPE_PRESERVATION, 			JSON_WRITER_PRETTY_PRINT = 4		} cef_json_writer_options_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_key_event_t	&lt;C: typedef struct _cef_key_event_t cef_key_event_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_key_event_type_t	&lt;C: typedef enum {			KEYEVENT_RAWKEYDOWN, 			KEYEVENT_KEYDOWN, 			KEYEVENT_KEYUP, 			KEYEVENT_CHAR		} cef_key_event_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_keyboard_handler_t	&lt;C: typedef struct _cef_keyboard_handler_t cef_keyboard_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_life_span_handler_t	&lt;C: typedef struct _cef_life_span_handler_t cef_life_span_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_list_value_t	&lt;C: typedef struct _cef_list_value_t cef_list_value_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_load_handler_t	&lt;C: typedef struct _cef_load_handler_t cef_load_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_log_severity_t	&lt;C: typedef enum {			LOGSEVERITY_DEFAULT, 			LOGSEVERITY_VERBOSE, 			LOGSEVERITY_INFO, 			LOGSEVERITY_WARNING, 			LOGSEVERITY_ERROR, 			LOGSEVERITY_DISABLE = 99		} cef_log_severity_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_main_args_t	&lt;C: typedef void cef_main_args_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_main_axis_alignment_t	&lt;C: typedef enum {			CEF_MAIN_AXIS_ALIGNMENT_START, 			CEF_MAIN_AXIS_ALIGNMENT_CENTER, 			CEF_MAIN_AXIS_ALIGNMENT_END		} cef_main_axis_alignment_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_menu_anchor_position_t	&lt;C: typedef enum {			CEF_MENU_ANCHOR_TOPLEFT, 			CEF_MENU_ANCHOR_TOPRIGHT, 			CEF_MENU_ANCHOR_BOTTOMCENTER		} cef_menu_anchor_position_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_menu_color_type_t	&lt;C: typedef enum {			CEF_MENU_COLOR_TEXT, 			CEF_MENU_COLOR_TEXT_HOVERED, 			CEF_MENU_COLOR_TEXT_ACCELERATOR, 			CEF_MENU_COLOR_TEXT_ACCELERATOR_HOVERED, 			CEF_MENU_COLOR_BACKGROUND, 			CEF_MENU_COLOR_BACKGROUND_HOVERED, 			CEF_MENU_COLOR_COUNT		} cef_menu_color_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_menu_id_t	&lt;C: typedef enum {			MENU_ID_BACK = 100, 			MENU_ID_FORWARD, 			MENU_ID_RELOAD, 			MENU_ID_RELOAD_NOCACHE, 			MENU_ID_STOPLOAD, 			MENU_ID_UNDO = 110, 			MENU_ID_REDO, 			MENU_ID_CUT, 			MENU_ID_COPY, 			MENU_ID_PASTE, 			MENU_ID_DELETE, 			MENU_ID_SELECT_ALL, 			MENU_ID_FIND = 130, 			MENU_ID_PRINT, 			MENU_ID_VIEW_SOURCE, 			MENU_ID_SPELLCHECK_SUGGESTION_0 = 200, 			MENU_ID_SPELLCHECK_SUGGESTION_1, 			MENU_ID_SPELLCHECK_SUGGESTION_2, 			MENU_ID_SPELLCHECK_SUGGESTION_3, 			MENU_ID_SPELLCHECK_SUGGESTION_4, 			MENU_ID_SPELLCHECK_SUGGESTION_LAST = 204, 			MENU_ID_NO_SPELLING_SUGGESTIONS, 			MENU_ID_ADD_TO_DICTIONARY, 			MENU_ID_CUSTOM_FIRST = 220, 			MENU_ID_CUSTOM_LAST = 250, 			MENU_ID_USER_FIRST = 26500, 			MENU_ID_USER_LAST = 28500		} cef_menu_id_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_menu_item_type_t	&lt;C: typedef enum {			MENUITEMTYPE_NONE, 			MENUITEMTYPE_COMMAND, 			MENUITEMTYPE_CHECK, 			MENUITEMTYPE_RADIO, 			MENUITEMTYPE_SEPARATOR, 			MENUITEMTYPE_SUBMENU		} cef_menu_item_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_menu_model_delegate_t	&lt;C: typedef struct _cef_menu_model_delegate_t cef_menu_model_delegate_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_menu_model_t	&lt;C: typedef struct _cef_menu_model_t cef_menu_model_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_message_loop_type_t	&lt;C: typedef enum {			ML_TYPE_DEFAULT, 			ML_TYPE_UI, 			ML_TYPE_IO		} cef_message_loop_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_mouse_button_type_t	&lt;C: typedef enum {			MBT_LEFT, 			MBT_MIDDLE, 			MBT_RIGHT		} cef_mouse_button_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_mouse_event_t	&lt;C: typedef struct _cef_mouse_event_t cef_mouse_event_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_navigation_entry_t	&lt;C: typedef struct _cef_navigation_entry_t cef_navigation_entry_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_navigation_entry_visitor_t	&lt;C: typedef struct _cef_navigation_entry_visitor_t cef_navigation_entry_visitor_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_navigation_type_t	&lt;C: typedef enum {			NAVIGATION_LINK_CLICKED, 			NAVIGATION_FORM_SUBMITTED, 			NAVIGATION_BACK_FORWARD, 			NAVIGATION_RELOAD, 			NAVIGATION_FORM_RESUBMITTED, 			NAVIGATION_OTHER		} cef_navigation_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_paint_element_type_t	&lt;C: typedef enum {			PET_VIEW, 			PET_POPUP		} cef_paint_element_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_path_key_t	&lt;C: typedef enum {			PK_DIR_CURRENT, 			PK_DIR_EXE, 			PK_DIR_MODULE, 			PK_DIR_TEMP, 			PK_FILE_EXE, 			PK_FILE_MODULE, 			PK_LOCAL_APP_DATA, 			PK_USER_DATA		} cef_path_key_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_pdf_print_callback_t	&lt;C: typedef struct _cef_pdf_print_callback_t cef_pdf_print_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_pdf_print_margin_type_t	&lt;C: typedef enum {			PDF_PRINT_MARGIN_DEFAULT, 			PDF_PRINT_MARGIN_NONE, 			PDF_PRINT_MARGIN_MINIMUM, 			PDF_PRINT_MARGIN_CUSTOM		} cef_pdf_print_margin_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_pdf_print_settings_t	&lt;C: typedef struct _cef_pdf_print_settings_t cef_pdf_print_settings_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_plugin_policy_t	&lt;C: typedef enum {			PLUGIN_POLICY_ALLOW, 			PLUGIN_POLICY_DETECT_IMPORTANT, 			PLUGIN_POLICY_BLOCK, 			PLUGIN_POLICY_DISABLE		} cef_plugin_policy_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_point_t	&lt;C: typedef struct _cef_point_t cef_point_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_popup_features_t	&lt;C: typedef struct _cef_popup_features_t cef_popup_features_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_post_data_element_t	&lt;C: typedef struct _cef_post_data_element_t cef_post_data_element_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_post_data_t	&lt;C: typedef struct _cef_post_data_t cef_post_data_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_postdataelement_type_t	&lt;C: typedef enum {			PDE_TYPE_EMPTY, 			PDE_TYPE_BYTES, 			PDE_TYPE_FILE		} cef_postdataelement_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_print_dialog_callback_t	&lt;C: typedef struct _cef_print_dialog_callback_t cef_print_dialog_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_print_handler_t	&lt;C: typedef struct _cef_print_handler_t cef_print_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_print_job_callback_t	&lt;C: typedef struct _cef_print_job_callback_t cef_print_job_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_print_settings_t	&lt;C: typedef struct _cef_print_settings_t cef_print_settings_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_process_id_t	&lt;C: typedef enum {			PID_BROWSER, 			PID_RENDERER		} cef_process_id_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_process_message_t	&lt;C: typedef struct _cef_process_message_t cef_process_message_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_range_t	&lt;C: typedef struct _cef_range_t cef_range_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_read_handler_t	&lt;C: typedef struct _cef_read_handler_t cef_read_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_rect_t	&lt;C: typedef struct _cef_rect_t cef_rect_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_referrer_policy_t	&lt;C: typedef enum {			REFERRER_POLICY_ALWAYS, 			REFERRER_POLICY_DEFAULT, 			REFERRER_POLICY_NO_REFERRER_WHEN_DOWNGRADE, 			REFERRER_POLICY_NEVER, 			REFERRER_POLICY_ORIGIN, 			REFERRER_POLICY_ORIGIN_WHEN_CROSS_ORIGIN		} cef_referrer_policy_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_register_cdm_callback_t	&lt;C: typedef struct _cef_register_cdm_callback_t cef_register_cdm_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_render_handler_t	&lt;C: typedef struct _cef_render_handler_t cef_render_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_render_process_handler_t	&lt;C: typedef struct _cef_render_process_handler_t cef_render_process_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_request_callback_t	&lt;C: typedef struct _cef_request_callback_t cef_request_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_request_context_handler_t	&lt;C: typedef struct _cef_request_context_handler_t cef_request_context_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_request_context_settings_t	&lt;C: typedef struct _cef_request_context_settings_t cef_request_context_settings_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_request_context_t	&lt;C: typedef struct _cef_request_context_t cef_request_context_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_request_handler_t	&lt;C: typedef struct _cef_request_handler_t cef_request_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_request_t	&lt;C: typedef struct _cef_request_t cef_request_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_resolve_callback_t	&lt;C: typedef struct _cef_resolve_callback_t cef_resolve_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_resource_bundle_handler_t	&lt;C: typedef struct _cef_resource_bundle_handler_t cef_resource_bundle_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_resource_handler_t	&lt;C: typedef struct _cef_resource_handler_t cef_resource_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_resource_type_t	&lt;C: typedef enum {			RT_MAIN_FRAME, 			RT_SUB_FRAME, 			RT_STYLESHEET, 			RT_SCRIPT, 			RT_IMAGE, 			RT_FONT_RESOURCE, 			RT_SUB_RESOURCE, 			RT_OBJECT, 			RT_MEDIA, 			RT_WORKER, 			RT_SHARED_WORKER, 			RT_PREFETCH, 			RT_FAVICON, 			RT_XHR, 			RT_PING, 			RT_SERVICE_WORKER, 			RT_CSP_REPORT, 			RT_PLUGIN_RESOURCE		} cef_resource_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_response_filter_status_t	&lt;C: typedef enum {			RESPONSE_FILTER_NEED_MORE_DATA, 			RESPONSE_FILTER_DONE, 			RESPONSE_FILTER_ERROR		} cef_response_filter_status_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_response_filter_t	&lt;C: typedef struct _cef_response_filter_t cef_response_filter_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_response_t	&lt;C: typedef struct _cef_response_t cef_response_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_return_value_t	&lt;C: typedef enum {			RV_CANCEL, 			RV_CONTINUE, 			RV_CONTINUE_ASYNC		} cef_return_value_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_run_context_menu_callback_t	&lt;C: typedef struct _cef_run_context_menu_callback_t cef_run_context_menu_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_run_file_dialog_callback_t	&lt;C: typedef struct _cef_run_file_dialog_callback_t cef_run_file_dialog_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_scale_factor_t	&lt;C: typedef enum {			SCALE_FACTOR_NONE, 			SCALE_FACTOR_100P, 			SCALE_FACTOR_125P, 			SCALE_FACTOR_133P, 			SCALE_FACTOR_140P, 			SCALE_FACTOR_150P, 			SCALE_FACTOR_180P, 			SCALE_FACTOR_200P, 			SCALE_FACTOR_250P, 			SCALE_FACTOR_300P		} cef_scale_factor_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_scheme_handler_factory_t	&lt;C: typedef struct _cef_scheme_handler_factory_t cef_scheme_handler_factory_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_scheme_registrar_t	&lt;C: typedef struct _cef_scheme_registrar_t cef_scheme_registrar_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_screen_info_t	&lt;C: typedef struct _cef_screen_info_t cef_screen_info_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_select_client_certificate_callback_t	&lt;C: typedef struct _cef_select_client_certificate_callback_t cef_select_client_certificate_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_set_cookie_callback_t	&lt;C: typedef struct _cef_set_cookie_callback_t cef_set_cookie_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_settings_t	&lt;C: typedef struct _cef_settings_t cef_settings_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_size_t	&lt;C: typedef struct _cef_size_t cef_size_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_ssl_content_status_t	&lt;C: typedef enum {			SSL_CONTENT_NORMAL_CONTENT, 			SSL_CONTENT_DISPLAYED_INSECURE_CONTENT, 			SSL_CONTENT_RAN_INSECURE_CONTENT		} cef_ssl_content_status_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_ssl_version_t	&lt;C: typedef enum {			SSL_CONNECTION_VERSION_UNKNOWN, 			SSL_CONNECTION_VERSION_SSL2, 			SSL_CONNECTION_VERSION_SSL3, 			SSL_CONNECTION_VERSION_TLS1, 			SSL_CONNECTION_VERSION_TLS1_1, 			SSL_CONNECTION_VERSION_TLS1_2, 			SSL_CONNECTION_VERSION_QUIC = 7		} cef_ssl_version_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_sslinfo_t	&lt;C: typedef struct _cef_sslinfo_t cef_sslinfo_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_sslstatus_t	&lt;C: typedef struct _cef_sslstatus_t cef_sslstatus_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_state_t	&lt;C: typedef enum {			STATE_DEFAULT, 			STATE_ENABLED, 			STATE_DISABLED		} cef_state_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_storage_type_t	&lt;C: typedef enum {			ST_LOCALSTORAGE, 			ST_SESSIONSTORAGE		} cef_storage_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_stream_reader_t	&lt;C: typedef struct _cef_stream_reader_t cef_stream_reader_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_stream_writer_t	&lt;C: typedef struct _cef_stream_writer_t cef_stream_writer_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_string_list_t	&lt;C: typedef void * cef_string_list_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_string_map_t	&lt;C: typedef void * cef_string_map_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_string_multimap_t	&lt;C: typedef void * cef_string_multimap_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_string_t	&lt;C: typedef cef_string_utf16_t cef_string_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_string_userfree_t	&lt;C: typedef cef_string_userfree_utf16_t cef_string_userfree_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_string_userfree_utf16_t	&lt;C: typedef cef_string_utf16_t * cef_string_userfree_utf16_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_string_userfree_utf8_t	&lt;C: typedef cef_string_utf8_t * cef_string_userfree_utf8_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_string_userfree_wide_t	&lt;C: typedef cef_string_wide_t * cef_string_userfree_wide_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_string_utf16_t	&lt;C: typedef struct _cef_string_utf16_t cef_string_utf16_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_string_utf8_t	&lt;C: typedef struct _cef_string_utf8_t cef_string_utf8_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_string_visitor_t	&lt;C: typedef struct _cef_string_visitor_t cef_string_visitor_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_string_wide_t	&lt;C: typedef struct _cef_string_wide_t cef_string_wide_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_task_runner_t	&lt;C: typedef struct _cef_task_runner_t cef_task_runner_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_task_t	&lt;C: typedef struct _cef_task_t cef_task_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_termination_status_t	&lt;C: typedef enum {			TS_ABNORMAL_TERMINATION, 			TS_PROCESS_WAS_KILLED, 			TS_PROCESS_CRASHED		} cef_termination_status_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_text_style_t	&lt;C: typedef enum {			CEF_TEXT_STYLE_BOLD, 			CEF_TEXT_STYLE_ITALIC, 			CEF_TEXT_STYLE_STRIKE, 			CEF_TEXT_STYLE_DIAGONAL_STRIKE, 			CEF_TEXT_STYLE_UNDERLINE		} cef_text_style_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_thread_id_t	&lt;C: typedef enum {			TID_UI, 			TID_DB, 			TID_FILE, 			TID_FILE_USER_BLOCKING, 			TID_PROCESS_LAUNCHER, 			TID_CACHE, 			TID_IO, 			TID_RENDERER		} cef_thread_id_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_thread_priority_t	&lt;C: typedef enum {			TP_BACKGROUND, 			TP_NORMAL, 			TP_DISPLAY, 			TP_REALTIME_AUDIO		} cef_thread_priority_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_time_t	&lt;C: typedef struct _cef_time_t cef_time_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_transition_type_t	&lt;C: typedef enum {			TT_LINK, 			TT_EXPLICIT, 			TT_AUTO_SUBFRAME = 3, 			TT_MANUAL_SUBFRAME, 			TT_FORM_SUBMIT = 7, 			TT_RELOAD, 			TT_SOURCE_MASK = 255, 			TT_BLOCKED_FLAG = 8388608, 			TT_FORWARD_BACK_FLAG = 16777216, 			TT_CHAIN_START_FLAG = 268435456, 			TT_CHAIN_END_FLAG = 536870912, 			TT_CLIENT_REDIRECT_FLAG = 1073741824, 			TT_SERVER_REDIRECT_FLAG = 2147483648, 			TT_IS_REDIRECT_MASK = 3221225472, 			TT_QUALIFIER_MASK = 4294967040		} cef_transition_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_uri_unescape_rule_t	&lt;C: typedef enum {			UU_NONE, 			UU_NORMAL, 			UU_SPACES, 			UU_PATH_SEPARATORS = 4, 			UU_URL_SPECIAL_CHARS_EXCEPT_PATH_SEPARATORS = 8, 			UU_SPOOFING_AND_CONTROL_CHARS = 16, 			UU_REPLACE_PLUS_WITH_SPACE = 32		} cef_uri_unescape_rule_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_urlparts_t	&lt;C: typedef struct _cef_urlparts_t cef_urlparts_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_urlrequest_flags_t	&lt;C: typedef enum {			UR_FLAG_NONE, 			UR_FLAG_SKIP_CACHE, 			UR_FLAG_ALLOW_CACHED_CREDENTIALS, 			UR_FLAG_REPORT_UPLOAD_PROGRESS = 8, 			UR_FLAG_NO_DOWNLOAD_DATA = 64, 			UR_FLAG_NO_RETRY_ON_5XX = 128		} cef_urlrequest_flags_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_urlrequest_status_t	&lt;C: typedef enum {			UR_UNKNOWN, 			UR_SUCCESS, 			UR_IO_PENDING, 			UR_CANCELED, 			UR_FAILED		} cef_urlrequest_status_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_v8_accesscontrol_t	&lt;C: typedef enum {			V8_ACCESS_CONTROL_DEFAULT, 			V8_ACCESS_CONTROL_ALL_CAN_READ, 			V8_ACCESS_CONTROL_ALL_CAN_WRITE, 			V8_ACCESS_CONTROL_PROHIBITS_OVERWRITING = 4		} cef_v8_accesscontrol_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_v8_propertyattribute_t	&lt;C: typedef enum {			V8_PROPERTY_ATTRIBUTE_NONE, 			V8_PROPERTY_ATTRIBUTE_READONLY, 			V8_PROPERTY_ATTRIBUTE_DONTENUM, 			V8_PROPERTY_ATTRIBUTE_DONTDELETE = 4		} cef_v8_propertyattribute_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_v8accessor_t	&lt;C: typedef struct _cef_v8accessor_t cef_v8accessor_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_v8context_t	&lt;C: typedef struct _cef_v8context_t cef_v8context_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_v8exception_t	&lt;C: typedef struct _cef_v8exception_t cef_v8exception_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_v8handler_t	&lt;C: typedef struct _cef_v8handler_t cef_v8handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_v8interceptor_t	&lt;C: typedef struct _cef_v8interceptor_t cef_v8interceptor_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_v8stack_frame_t	&lt;C: typedef struct _cef_v8stack_frame_t cef_v8stack_frame_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_v8stack_trace_t	&lt;C: typedef struct _cef_v8stack_trace_t cef_v8stack_trace_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_v8value_t	&lt;C: typedef struct _cef_v8value_t cef_v8value_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_value_t	&lt;C: typedef struct _cef_value_t cef_value_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_value_type_t	&lt;C: typedef enum {			VTYPE_INVALID, 			VTYPE_NULL, 			VTYPE_BOOL, 			VTYPE_INT, 			VTYPE_DOUBLE, 			VTYPE_STRING, 			VTYPE_BINARY, 			VTYPE_DICTIONARY, 			VTYPE_LIST		} cef_value_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_web_plugin_info_t	&lt;C: typedef struct _cef_web_plugin_info_t cef_web_plugin_info_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_web_plugin_info_visitor_t	&lt;C: typedef struct _cef_web_plugin_info_visitor_t cef_web_plugin_info_visitor_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_web_plugin_unstable_callback_t	&lt;C: typedef struct _cef_web_plugin_unstable_callback_t cef_web_plugin_unstable_callback_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_window_handle_t	&lt;C: typedef unsigned long  cef_window_handle_t 	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_window_info_t	&lt;C: typedef void cef_window_info_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_window_open_disposition_t	&lt;C: typedef enum {			WOD_UNKNOWN, 			WOD_CURRENT_TAB, 			WOD_SINGLETON_TAB, 			WOD_NEW_FOREGROUND_TAB, 			WOD_NEW_BACKGROUND_TAB, 			WOD_NEW_POPUP, 			WOD_NEW_WINDOW, 			WOD_SAVE_TO_DISK, 			WOD_OFF_THE_RECORD, 			WOD_IGNORE_ACTION		} cef_window_open_disposition_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_write_handler_t	&lt;C: typedef struct _cef_write_handler_t cef_write_handler_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_x509cert_principal_t	&lt;C: typedef struct _cef_x509cert_principal_t cef_x509cert_principal_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_x509certificate_t	&lt;C: typedef struct _cef_x509certificate_t cef_x509certificate_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_xml_encoding_type_t	&lt;C: typedef enum {			XML_ENCODING_NONE, 			XML_ENCODING_UTF8, 			XML_ENCODING_UTF16LE, 			XML_ENCODING_UTF16BE, 			XML_ENCODING_ASCII		} cef_xml_encoding_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_xml_node_type_t	&lt;C: typedef enum {			XML_NODE_UNSUPPORTED, 			XML_NODE_PROCESSING_INSTRUCTION, 			XML_NODE_DOCUMENT_TYPE, 			XML_NODE_ELEMENT_START, 			XML_NODE_ELEMENT_END, 			XML_NODE_ATTRIBUTE, 			XML_NODE_TEXT, 			XML_NODE_CDATA, 			XML_NODE_ENTITY_REFERENCE, 			XML_NODE_WHITESPACE, 			XML_NODE_COMMENT		} cef_xml_node_type_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">char16	&lt;C: typedef wchar_t char16&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">clock_t	&lt;C: typedef long clock_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">int32	&lt;C: typedef int int32&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">int64	&lt;C: typedef long long int64&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">ptrdiff_t	&lt;C: typedef long ptrdiff_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">size_t	&lt;C: typedef unsigned long long size_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">template	&lt;C: typedef void * template&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">time_t	&lt;C: typedef void * time_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">uint32	&lt;C: typedef unsigned int uint32&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">uint64	&lt;C: typedef unsigned long long uint64&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">wchar_t	&lt;C: typedef int wchar_t&gt;</body>
 </methods>
 
 <methods>
@@ -1021,461 +1591,19 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-Base">prepareCallbackType: aCallbackPointerType	aCallbackPointerType beCdecl</body>
 
-<body package="ChromiumEmbeddedFramework-Base">resizeBrowser: browser </body>
-
 <body package="ChromiumEmbeddedFramework-Base">restoreSignals</body>
 </methods>
 
 <methods>
-<class-id>CEF.LibChromium</class-id> <category>types</category>
+<class-id>CEF.LibChromium class</class-id> <category>private</category>
 
-<body package="ChromiumEmbeddedFramework-Base">DWORD	&lt;C: typedef unsigned long DWORD&gt;</body>
+<body package="ChromiumEmbeddedFramework-Base">concreteClass	^ OSSystemSupport concreteClass cefLibClass</body>
 
-<body package="ChromiumEmbeddedFramework-Base">HCURSOR	&lt;C: typedef void * HCURSOR&gt;</body>
+<body package="ChromiumEmbeddedFramework-Base">getDirectory	^ directory</body>
 
-<body package="ChromiumEmbeddedFramework-Base">LONG	&lt;C: typedef long LONG&gt;</body>
+<body package="ChromiumEmbeddedFramework-Base">libraryFilesSearchSignals	^ExternalLibraryHolder libraryNotFoundSignal , ExternalLibrary libraryNotLoadedSignal</body>
 
-<body package="ChromiumEmbeddedFramework-Base">LPARAM	&lt;C: typedef LONG LPARAM&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">MSG	&lt;C: typedef struct tagMSG MSG&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">POINT	&lt;C: typedef struct tagPOINT POINT&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">UINT	&lt;C: typedef unsigned int UINT&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">ULONG	&lt;C: typedef DWORD ULONG&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WORD	&lt;C: typedef unsigned short WORD&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WPARAM	&lt;C: typedef UINT WPARAM&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_accessibility_handler_t	&lt;C: typedef struct _cef_accessibility_handler_t cef_accessibility_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_alpha_type_t	&lt;C: typedef enum {			CEF_ALPHA_TYPE_OPAQUE, 			CEF_ALPHA_TYPE_PREMULTIPLIED, 			CEF_ALPHA_TYPE_POSTMULTIPLIED		} cef_alpha_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_app_t	&lt;C: typedef struct _cef_app_t cef_app_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_auth_callback_t	&lt;C: typedef struct _cef_auth_callback_t cef_auth_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_base_ref_counted_t	&lt;C: typedef struct _cef_base_ref_counted_t cef_base_ref_counted_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_base_scoped_t	&lt;C: typedef struct _cef_base_scoped_t cef_base_scoped_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_before_download_callback_t	&lt;C: typedef struct _cef_before_download_callback_t cef_before_download_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_binary_value_t	&lt;C: typedef struct _cef_binary_value_t cef_binary_value_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_box_layout_settings_t	&lt;C: typedef struct _cef_box_layout_settings_t cef_box_layout_settings_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_browser_host_t	&lt;C: typedef struct _cef_browser_host_t cef_browser_host_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_browser_process_handler_t	&lt;C: typedef struct _cef_browser_process_handler_t cef_browser_process_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_browser_settings_t	&lt;C: typedef struct _cef_browser_settings_t cef_browser_settings_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_browser_t	&lt;C: typedef struct _cef_browser_t cef_browser_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_button_state_t	&lt;C: typedef enum {			CEF_BUTTON_STATE_NORMAL, 			CEF_BUTTON_STATE_HOVERED, 			CEF_BUTTON_STATE_PRESSED, 			CEF_BUTTON_STATE_DISABLED		} cef_button_state_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_callback_t	&lt;C: typedef struct _cef_callback_t cef_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_cdm_registration_error_t	&lt;C: typedef enum {			CEF_CDM_REGISTRATION_ERROR_NONE, 			CEF_CDM_REGISTRATION_ERROR_INCORRECT_CONTENTS, 			CEF_CDM_REGISTRATION_ERROR_INCOMPATIBLE, 			CEF_CDM_REGISTRATION_ERROR_NOT_SUPPORTED		} cef_cdm_registration_error_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_cert_status_t	&lt;C: typedef enum {			CERT_STATUS_NONE, 			CERT_STATUS_COMMON_NAME_INVALID, 			CERT_STATUS_DATE_INVALID, 			CERT_STATUS_AUTHORITY_INVALID = 4, 			CERT_STATUS_NO_REVOCATION_MECHANISM = 16, 			CERT_STATUS_UNABLE_TO_CHECK_REVOCATION = 32, 			CERT_STATUS_REVOKED = 64, 			CERT_STATUS_INVALID = 128, 			CERT_STATUS_WEAK_SIGNATURE_ALGORITHM = 256, 			CERT_STATUS_NON_UNIQUE_NAME = 1024, 			CERT_STATUS_WEAK_KEY = 2048, 			CERT_STATUS_PINNED_KEY_MISSING = 8192, 			CERT_STATUS_NAME_CONSTRAINT_VIOLATION = 16384, 			CERT_STATUS_VALIDITY_TOO_LONG = 32768, 			CERT_STATUS_IS_EV = 65536, 			CERT_STATUS_REV_CHECKING_ENABLED = 131072, 			CERT_STATUS_SHA1_SIGNATURE_PRESENT = 524288, 			CERT_STATUS_CT_COMPLIANCE_FAILED = 1048576		} cef_cert_status_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_char_t	&lt;C: typedef char16 cef_char_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_client_t	&lt;C: typedef struct _cef_client_t cef_client_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_color_model_t	&lt;C: typedef enum {			COLOR_MODEL_UNKNOWN, 			COLOR_MODEL_GRAY, 			COLOR_MODEL_COLOR, 			COLOR_MODEL_CMYK, 			COLOR_MODEL_CMY, 			COLOR_MODEL_KCMY, 			COLOR_MODEL_CMY_K, 			COLOR_MODEL_BLACK, 			COLOR_MODEL_GRAYSCALE, 			COLOR_MODEL_RGB, 			COLOR_MODEL_RGB16, 			COLOR_MODEL_RGBA, 			COLOR_MODEL_COLORMODE_COLOR, 			COLOR_MODEL_COLORMODE_MONOCHROME, 			COLOR_MODEL_HP_COLOR_COLOR, 			COLOR_MODEL_HP_COLOR_BLACK, 			COLOR_MODEL_PRINTOUTMODE_NORMAL, 			COLOR_MODEL_PRINTOUTMODE_NORMAL_GRAY, 			COLOR_MODEL_PROCESSCOLORMODEL_CMYK, 			COLOR_MODEL_PROCESSCOLORMODEL_GREYSCALE, 			COLOR_MODEL_PROCESSCOLORMODEL_RGB		} cef_color_model_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_color_t	&lt;C: typedef uint32 cef_color_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_color_type_t	&lt;C: typedef enum {			CEF_COLOR_TYPE_RGBA_8888, 			CEF_COLOR_TYPE_BGRA_8888		} cef_color_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_com_init_mode_t	&lt;C: typedef enum {			COM_INIT_MODE_NONE, 			COM_INIT_MODE_STA, 			COM_INIT_MODE_MTA		} cef_com_init_mode_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_command_line_t	&lt;C: typedef struct _cef_command_line_t cef_command_line_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_completion_callback_t	&lt;C: typedef struct _cef_completion_callback_t cef_completion_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_composition_underline_t	&lt;C: typedef struct _cef_composition_underline_t cef_composition_underline_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_context_menu_edit_state_flags_t	&lt;C: typedef enum {			CM_EDITFLAG_NONE, 			CM_EDITFLAG_CAN_UNDO, 			CM_EDITFLAG_CAN_REDO, 			CM_EDITFLAG_CAN_CUT = 4, 			CM_EDITFLAG_CAN_COPY = 8, 			CM_EDITFLAG_CAN_PASTE = 16, 			CM_EDITFLAG_CAN_DELETE = 32, 			CM_EDITFLAG_CAN_SELECT_ALL = 64, 			CM_EDITFLAG_CAN_TRANSLATE = 128		} cef_context_menu_edit_state_flags_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_context_menu_handler_t	&lt;C: typedef struct _cef_context_menu_handler_t cef_context_menu_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_context_menu_media_state_flags_t	&lt;C: typedef enum {			CM_MEDIAFLAG_NONE, 			CM_MEDIAFLAG_ERROR, 			CM_MEDIAFLAG_PAUSED, 			CM_MEDIAFLAG_MUTED = 4, 			CM_MEDIAFLAG_LOOP = 8, 			CM_MEDIAFLAG_CAN_SAVE = 16, 			CM_MEDIAFLAG_HAS_AUDIO = 32, 			CM_MEDIAFLAG_HAS_VIDEO = 64, 			CM_MEDIAFLAG_CONTROL_ROOT_ELEMENT = 128, 			CM_MEDIAFLAG_CAN_PRINT = 256, 			CM_MEDIAFLAG_CAN_ROTATE = 512		} cef_context_menu_media_state_flags_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_context_menu_media_type_t	&lt;C: typedef enum {			CM_MEDIATYPE_NONE, 			CM_MEDIATYPE_IMAGE, 			CM_MEDIATYPE_VIDEO, 			CM_MEDIATYPE_AUDIO, 			CM_MEDIATYPE_FILE, 			CM_MEDIATYPE_PLUGIN		} cef_context_menu_media_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_context_menu_params_t	&lt;C: typedef struct _cef_context_menu_params_t cef_context_menu_params_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_context_menu_type_flags_t	&lt;C: typedef enum {			CM_TYPEFLAG_NONE, 			CM_TYPEFLAG_PAGE, 			CM_TYPEFLAG_FRAME, 			CM_TYPEFLAG_LINK = 4, 			CM_TYPEFLAG_MEDIA = 8, 			CM_TYPEFLAG_SELECTION = 16, 			CM_TYPEFLAG_EDITABLE = 32		} cef_context_menu_type_flags_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_cookie_manager_t	&lt;C: typedef struct _cef_cookie_manager_t cef_cookie_manager_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_cookie_t	&lt;C: typedef struct _cef_cookie_t cef_cookie_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_cookie_visitor_t	&lt;C: typedef struct _cef_cookie_visitor_t cef_cookie_visitor_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_cross_axis_alignment_t	&lt;C: typedef enum {			CEF_CROSS_AXIS_ALIGNMENT_STRETCH, 			CEF_CROSS_AXIS_ALIGNMENT_START, 			CEF_CROSS_AXIS_ALIGNMENT_CENTER, 			CEF_CROSS_AXIS_ALIGNMENT_END		} cef_cross_axis_alignment_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_cursor_info_t	&lt;C: typedef struct _cef_cursor_info_t cef_cursor_info_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_cursor_type_t	&lt;C: typedef enum {			CT_POINTER, 			CT_CROSS, 			CT_HAND, 			CT_IBEAM, 			CT_WAIT, 			CT_HELP, 			CT_EASTRESIZE, 			CT_NORTHRESIZE, 			CT_NORTHEASTRESIZE, 			CT_NORTHWESTRESIZE, 			CT_SOUTHRESIZE, 			CT_SOUTHEASTRESIZE, 			CT_SOUTHWESTRESIZE, 			CT_WESTRESIZE, 			CT_NORTHSOUTHRESIZE, 			CT_EASTWESTRESIZE, 			CT_NORTHEASTSOUTHWESTRESIZE, 			CT_NORTHWESTSOUTHEASTRESIZE, 			CT_COLUMNRESIZE, 			CT_ROWRESIZE, 			CT_MIDDLEPANNING, 			CT_EASTPANNING, 			CT_NORTHPANNING, 			CT_NORTHEASTPANNING, 			CT_NORTHWESTPANNING, 			CT_SOUTHPANNING, 			CT_SOUTHEASTPANNING, 			CT_SOUTHWESTPANNING, 			CT_WESTPANNING, 			CT_MOVE, 			CT_VERTICALTEXT, 			CT_CELL, 			CT_CONTEXTMENU, 			CT_ALIAS, 			CT_PROGRESS, 			CT_NODROP, 			CT_COPY, 			CT_NONE, 			CT_NOTALLOWED, 			CT_ZOOMIN, 			CT_ZOOMOUT, 			CT_GRAB, 			CT_GRABBING, 			CT_CUSTOM		} cef_cursor_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_delete_cookies_callback_t	&lt;C: typedef struct _cef_delete_cookies_callback_t cef_delete_cookies_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_dialog_handler_t	&lt;C: typedef struct _cef_dialog_handler_t cef_dialog_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_dictionary_value_t	&lt;C: typedef struct _cef_dictionary_value_t cef_dictionary_value_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_display_handler_t	&lt;C: typedef struct _cef_display_handler_t cef_display_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_dom_document_type_t	&lt;C: typedef enum {			DOM_DOCUMENT_TYPE_UNKNOWN, 			DOM_DOCUMENT_TYPE_HTML, 			DOM_DOCUMENT_TYPE_XHTML, 			DOM_DOCUMENT_TYPE_PLUGIN		} cef_dom_document_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_dom_event_category_t	&lt;C: typedef enum {			DOM_EVENT_CATEGORY_UNKNOWN, 			DOM_EVENT_CATEGORY_UI, 			DOM_EVENT_CATEGORY_MOUSE, 			DOM_EVENT_CATEGORY_MUTATION = 4, 			DOM_EVENT_CATEGORY_KEYBOARD = 8, 			DOM_EVENT_CATEGORY_TEXT = 16, 			DOM_EVENT_CATEGORY_COMPOSITION = 32, 			DOM_EVENT_CATEGORY_DRAG = 64, 			DOM_EVENT_CATEGORY_CLIPBOARD = 128, 			DOM_EVENT_CATEGORY_MESSAGE = 256, 			DOM_EVENT_CATEGORY_WHEEL = 512, 			DOM_EVENT_CATEGORY_BEFORE_TEXT_INSERTED = 1024, 			DOM_EVENT_CATEGORY_OVERFLOW = 2048, 			DOM_EVENT_CATEGORY_PAGE_TRANSITION = 4096, 			DOM_EVENT_CATEGORY_POPSTATE = 8192, 			DOM_EVENT_CATEGORY_PROGRESS = 16384, 			DOM_EVENT_CATEGORY_XMLHTTPREQUEST_PROGRESS = 32768		} cef_dom_event_category_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_dom_event_phase_t	&lt;C: typedef enum {			DOM_EVENT_PHASE_UNKNOWN, 			DOM_EVENT_PHASE_CAPTURING, 			DOM_EVENT_PHASE_AT_TARGET, 			DOM_EVENT_PHASE_BUBBLING		} cef_dom_event_phase_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_dom_node_type_t	&lt;C: typedef enum {			DOM_NODE_TYPE_UNSUPPORTED, 			DOM_NODE_TYPE_ELEMENT, 			DOM_NODE_TYPE_ATTRIBUTE, 			DOM_NODE_TYPE_TEXT, 			DOM_NODE_TYPE_CDATA_SECTION, 			DOM_NODE_TYPE_PROCESSING_INSTRUCTIONS, 			DOM_NODE_TYPE_COMMENT, 			DOM_NODE_TYPE_DOCUMENT, 			DOM_NODE_TYPE_DOCUMENT_TYPE, 			DOM_NODE_TYPE_DOCUMENT_FRAGMENT		} cef_dom_node_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_domdocument_t	&lt;C: typedef struct _cef_domdocument_t cef_domdocument_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_domnode_t	&lt;C: typedef struct _cef_domnode_t cef_domnode_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_domvisitor_t	&lt;C: typedef struct _cef_domvisitor_t cef_domvisitor_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_download_handler_t	&lt;C: typedef struct _cef_download_handler_t cef_download_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_download_image_callback_t	&lt;C: typedef struct _cef_download_image_callback_t cef_download_image_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_download_item_callback_t	&lt;C: typedef struct _cef_download_item_callback_t cef_download_item_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_download_item_t	&lt;C: typedef struct _cef_download_item_t cef_download_item_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_drag_data_t	&lt;C: typedef struct _cef_drag_data_t cef_drag_data_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_drag_handler_t	&lt;C: typedef struct _cef_drag_handler_t cef_drag_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_drag_operations_mask_t	&lt;C: typedef enum {			DRAG_OPERATION_NONE, 			DRAG_OPERATION_COPY, 			DRAG_OPERATION_LINK, 			DRAG_OPERATION_GENERIC = 4, 			DRAG_OPERATION_PRIVATE = 8, 			DRAG_OPERATION_MOVE = 16, 			DRAG_OPERATION_DELETE = 32, 			DRAG_OPERATION_EVERY = 1		} cef_drag_operations_mask_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_draggable_region_t	&lt;C: typedef struct _cef_draggable_region_t cef_draggable_region_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_duplex_mode_t	&lt;C: typedef enum {			DUPLEX_MODE_UNKNOWN = -1, 			DUPLEX_MODE_SIMPLEX, 			DUPLEX_MODE_LONG_EDGE, 			DUPLEX_MODE_SHORT_EDGE		} cef_duplex_mode_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_errorcode_t	&lt;C: typedef enum {			ERR_NONE, 			ERR_FAILED = -2, 			ERR_ABORTED = -3, 			ERR_INVALID_ARGUMENT = -4, 			ERR_INVALID_HANDLE = -5, 			ERR_FILE_NOT_FOUND = -6, 			ERR_TIMED_OUT = -7, 			ERR_FILE_TOO_BIG = -8, 			ERR_UNEXPECTED = -9, 			ERR_ACCESS_DENIED = -10, 			ERR_NOT_IMPLEMENTED = -11, 			ERR_CONNECTION_CLOSED = -100, 			ERR_CONNECTION_RESET = -101, 			ERR_CONNECTION_REFUSED = -102, 			ERR_CONNECTION_ABORTED = -103, 			ERR_CONNECTION_FAILED = -104, 			ERR_NAME_NOT_RESOLVED = -105, 			ERR_INTERNET_DISCONNECTED = -106, 			ERR_SSL_PROTOCOL_ERROR = -107, 			ERR_ADDRESS_INVALID = -108, 			ERR_ADDRESS_UNREACHABLE = -109, 			ERR_SSL_CLIENT_AUTH_CERT_NEEDED = -110, 			ERR_TUNNEL_CONNECTION_FAILED = -111, 			ERR_NO_SSL_VERSIONS_ENABLED = -112, 			ERR_SSL_VERSION_OR_CIPHER_MISMATCH = -113, 			ERR_SSL_RENEGOTIATION_REQUESTED = -114, 			ERR_CERT_COMMON_NAME_INVALID = -200, 			ERR_CERT_BEGIN = 0, 			ERR_CERT_DATE_INVALID = -201, 			ERR_CERT_AUTHORITY_INVALID = -202, 			ERR_CERT_CONTAINS_ERRORS = -203, 			ERR_CERT_NO_REVOCATION_MECHANISM = -204, 			ERR_CERT_UNABLE_TO_CHECK_REVOCATION = -205, 			ERR_CERT_REVOKED = -206, 			ERR_CERT_INVALID = -207, 			ERR_CERT_WEAK_SIGNATURE_ALGORITHM = -208, 			ERR_CERT_NON_UNIQUE_NAME = -210, 			ERR_CERT_WEAK_KEY = -211, 			ERR_CERT_NAME_CONSTRAINT_VIOLATION = -212, 			ERR_CERT_VALIDITY_TOO_LONG = -213, 			ERR_CERT_END = 0, 			ERR_INVALID_URL = -300, 			ERR_DISALLOWED_URL_SCHEME = -301, 			ERR_UNKNOWN_URL_SCHEME = -302, 			ERR_TOO_MANY_REDIRECTS = -310, 			ERR_UNSAFE_REDIRECT = -311, 			ERR_UNSAFE_PORT = -312, 			ERR_INVALID_RESPONSE = -320, 			ERR_INVALID_CHUNKED_ENCODING = -321, 			ERR_METHOD_NOT_SUPPORTED = -322, 			ERR_UNEXPECTED_PROXY_AUTH = -323, 			ERR_EMPTY_RESPONSE = -324, 			ERR_RESPONSE_HEADERS_TOO_BIG = -325, 			ERR_CACHE_MISS = -400, 			ERR_INSECURE_RESPONSE = -501		} cef_errorcode_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_event_flags_t	&lt;C: typedef enum {			EVENTFLAG_NONE, 			EVENTFLAG_CAPS_LOCK_ON, 			EVENTFLAG_SHIFT_DOWN, 			EVENTFLAG_CONTROL_DOWN = 4, 			EVENTFLAG_ALT_DOWN = 8, 			EVENTFLAG_LEFT_MOUSE_BUTTON = 16, 			EVENTFLAG_MIDDLE_MOUSE_BUTTON = 32, 			EVENTFLAG_RIGHT_MOUSE_BUTTON = 64, 			EVENTFLAG_COMMAND_DOWN = 128, 			EVENTFLAG_NUM_LOCK_ON = 256, 			EVENTFLAG_IS_KEY_PAD = 512, 			EVENTFLAG_IS_LEFT = 1024, 			EVENTFLAG_IS_RIGHT = 2048		} cef_event_flags_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_file_dialog_callback_t	&lt;C: typedef struct _cef_file_dialog_callback_t cef_file_dialog_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_file_dialog_mode_t	&lt;C: typedef enum {			FILE_DIALOG_OPEN, 			FILE_DIALOG_OPEN_MULTIPLE, 			FILE_DIALOG_OPEN_FOLDER, 			FILE_DIALOG_SAVE, 			FILE_DIALOG_TYPE_MASK = 255, 			FILE_DIALOG_OVERWRITEPROMPT_FLAG = 16777216, 			FILE_DIALOG_HIDEREADONLY_FLAG = 33554432		} cef_file_dialog_mode_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_find_handler_t	&lt;C: typedef struct _cef_find_handler_t cef_find_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_focus_handler_t	&lt;C: typedef struct _cef_focus_handler_t cef_focus_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_focus_source_t	&lt;C: typedef enum {			FOCUS_SOURCE_NAVIGATION, 			FOCUS_SOURCE_SYSTEM		} cef_focus_source_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_frame_t	&lt;C: typedef struct _cef_frame_t cef_frame_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_geolocation_callback_t	&lt;C: typedef struct _cef_geolocation_callback_t cef_geolocation_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_geolocation_handler_t	&lt;C: typedef struct _cef_geolocation_handler_t cef_geolocation_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_geoposition_error_code_t	&lt;C: typedef enum {			GEOPOSITON_ERROR_NONE, 			GEOPOSITON_ERROR_PERMISSION_DENIED, 			GEOPOSITON_ERROR_POSITION_UNAVAILABLE, 			GEOPOSITON_ERROR_TIMEOUT		} cef_geoposition_error_code_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_geoposition_t	&lt;C: typedef struct _cef_geoposition_t cef_geoposition_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_horizontal_alignment_t	&lt;C: typedef enum {			CEF_HORIZONTAL_ALIGNMENT_LEFT, 			CEF_HORIZONTAL_ALIGNMENT_CENTER, 			CEF_HORIZONTAL_ALIGNMENT_RIGHT		} cef_horizontal_alignment_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_image_t	&lt;C: typedef struct _cef_image_t cef_image_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_insets_t	&lt;C: typedef struct _cef_insets_t cef_insets_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_jsdialog_callback_t	&lt;C: typedef struct _cef_jsdialog_callback_t cef_jsdialog_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_jsdialog_handler_t	&lt;C: typedef struct _cef_jsdialog_handler_t cef_jsdialog_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_jsdialog_type_t	&lt;C: typedef enum {			JSDIALOGTYPE_ALERT, 			JSDIALOGTYPE_CONFIRM, 			JSDIALOGTYPE_PROMPT		} cef_jsdialog_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_json_parser_error_t	&lt;C: typedef enum {			JSON_NO_ERROR, 			JSON_INVALID_ESCAPE, 			JSON_SYNTAX_ERROR, 			JSON_UNEXPECTED_TOKEN, 			JSON_TRAILING_COMMA, 			JSON_TOO_MUCH_NESTING, 			JSON_UNEXPECTED_DATA_AFTER_ROOT, 			JSON_UNSUPPORTED_ENCODING, 			JSON_UNQUOTED_DICTIONARY_KEY, 			JSON_PARSE_ERROR_COUNT		} cef_json_parser_error_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_json_parser_options_t	&lt;C: typedef enum {			JSON_PARSER_RFC, 			JSON_PARSER_ALLOW_TRAILING_COMMAS		} cef_json_parser_options_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_json_writer_options_t	&lt;C: typedef enum {			JSON_WRITER_DEFAULT, 			JSON_WRITER_OMIT_BINARY_VALUES, 			JSON_WRITER_OMIT_DOUBLE_TYPE_PRESERVATION, 			JSON_WRITER_PRETTY_PRINT = 4		} cef_json_writer_options_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_key_event_t	&lt;C: typedef struct _cef_key_event_t cef_key_event_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_key_event_type_t	&lt;C: typedef enum {			KEYEVENT_RAWKEYDOWN, 			KEYEVENT_KEYDOWN, 			KEYEVENT_KEYUP, 			KEYEVENT_CHAR		} cef_key_event_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_keyboard_handler_t	&lt;C: typedef struct _cef_keyboard_handler_t cef_keyboard_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_life_span_handler_t	&lt;C: typedef struct _cef_life_span_handler_t cef_life_span_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_list_value_t	&lt;C: typedef struct _cef_list_value_t cef_list_value_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_load_handler_t	&lt;C: typedef struct _cef_load_handler_t cef_load_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_log_severity_t	&lt;C: typedef enum {			LOGSEVERITY_DEFAULT, 			LOGSEVERITY_VERBOSE, 			LOGSEVERITY_INFO, 			LOGSEVERITY_WARNING, 			LOGSEVERITY_ERROR, 			LOGSEVERITY_DISABLE = 99		} cef_log_severity_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_main_args_t	&lt;C: typedef void cef_main_args_t&gt; </body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_main_axis_alignment_t	&lt;C: typedef enum {			CEF_MAIN_AXIS_ALIGNMENT_START, 			CEF_MAIN_AXIS_ALIGNMENT_CENTER, 			CEF_MAIN_AXIS_ALIGNMENT_END		} cef_main_axis_alignment_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_menu_anchor_position_t	&lt;C: typedef enum {			CEF_MENU_ANCHOR_TOPLEFT, 			CEF_MENU_ANCHOR_TOPRIGHT, 			CEF_MENU_ANCHOR_BOTTOMCENTER		} cef_menu_anchor_position_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_menu_color_type_t	&lt;C: typedef enum {			CEF_MENU_COLOR_TEXT, 			CEF_MENU_COLOR_TEXT_HOVERED, 			CEF_MENU_COLOR_TEXT_ACCELERATOR, 			CEF_MENU_COLOR_TEXT_ACCELERATOR_HOVERED, 			CEF_MENU_COLOR_BACKGROUND, 			CEF_MENU_COLOR_BACKGROUND_HOVERED, 			CEF_MENU_COLOR_COUNT		} cef_menu_color_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_menu_id_t	&lt;C: typedef enum {			MENU_ID_BACK = 100, 			MENU_ID_FORWARD, 			MENU_ID_RELOAD, 			MENU_ID_RELOAD_NOCACHE, 			MENU_ID_STOPLOAD, 			MENU_ID_UNDO = 110, 			MENU_ID_REDO, 			MENU_ID_CUT, 			MENU_ID_COPY, 			MENU_ID_PASTE, 			MENU_ID_DELETE, 			MENU_ID_SELECT_ALL, 			MENU_ID_FIND = 130, 			MENU_ID_PRINT, 			MENU_ID_VIEW_SOURCE, 			MENU_ID_SPELLCHECK_SUGGESTION_0 = 200, 			MENU_ID_SPELLCHECK_SUGGESTION_1, 			MENU_ID_SPELLCHECK_SUGGESTION_2, 			MENU_ID_SPELLCHECK_SUGGESTION_3, 			MENU_ID_SPELLCHECK_SUGGESTION_4, 			MENU_ID_SPELLCHECK_SUGGESTION_LAST = 204, 			MENU_ID_NO_SPELLING_SUGGESTIONS, 			MENU_ID_ADD_TO_DICTIONARY, 			MENU_ID_CUSTOM_FIRST = 220, 			MENU_ID_CUSTOM_LAST = 250, 			MENU_ID_USER_FIRST = 26500, 			MENU_ID_USER_LAST = 28500		} cef_menu_id_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_menu_item_type_t	&lt;C: typedef enum {			MENUITEMTYPE_NONE, 			MENUITEMTYPE_COMMAND, 			MENUITEMTYPE_CHECK, 			MENUITEMTYPE_RADIO, 			MENUITEMTYPE_SEPARATOR, 			MENUITEMTYPE_SUBMENU		} cef_menu_item_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_menu_model_delegate_t	&lt;C: typedef struct _cef_menu_model_delegate_t cef_menu_model_delegate_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_menu_model_t	&lt;C: typedef struct _cef_menu_model_t cef_menu_model_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_message_loop_type_t	&lt;C: typedef enum {			ML_TYPE_DEFAULT, 			ML_TYPE_UI, 			ML_TYPE_IO		} cef_message_loop_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_mouse_button_type_t	&lt;C: typedef enum {			MBT_LEFT, 			MBT_MIDDLE, 			MBT_RIGHT		} cef_mouse_button_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_mouse_event_t	&lt;C: typedef struct _cef_mouse_event_t cef_mouse_event_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_navigation_entry_t	&lt;C: typedef struct _cef_navigation_entry_t cef_navigation_entry_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_navigation_entry_visitor_t	&lt;C: typedef struct _cef_navigation_entry_visitor_t cef_navigation_entry_visitor_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_navigation_type_t	&lt;C: typedef enum {			NAVIGATION_LINK_CLICKED, 			NAVIGATION_FORM_SUBMITTED, 			NAVIGATION_BACK_FORWARD, 			NAVIGATION_RELOAD, 			NAVIGATION_FORM_RESUBMITTED, 			NAVIGATION_OTHER		} cef_navigation_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_paint_element_type_t	&lt;C: typedef enum {			PET_VIEW, 			PET_POPUP		} cef_paint_element_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_path_key_t	&lt;C: typedef enum {			PK_DIR_CURRENT, 			PK_DIR_EXE, 			PK_DIR_MODULE, 			PK_DIR_TEMP, 			PK_FILE_EXE, 			PK_FILE_MODULE, 			PK_LOCAL_APP_DATA, 			PK_USER_DATA		} cef_path_key_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_pdf_print_callback_t	&lt;C: typedef struct _cef_pdf_print_callback_t cef_pdf_print_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_pdf_print_margin_type_t	&lt;C: typedef enum {			PDF_PRINT_MARGIN_DEFAULT, 			PDF_PRINT_MARGIN_NONE, 			PDF_PRINT_MARGIN_MINIMUM, 			PDF_PRINT_MARGIN_CUSTOM		} cef_pdf_print_margin_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_pdf_print_settings_t	&lt;C: typedef struct _cef_pdf_print_settings_t cef_pdf_print_settings_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_plugin_policy_t	&lt;C: typedef enum {			PLUGIN_POLICY_ALLOW, 			PLUGIN_POLICY_DETECT_IMPORTANT, 			PLUGIN_POLICY_BLOCK, 			PLUGIN_POLICY_DISABLE		} cef_plugin_policy_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_point_t	&lt;C: typedef struct _cef_point_t cef_point_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_popup_features_t	&lt;C: typedef struct _cef_popup_features_t cef_popup_features_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_post_data_element_t	&lt;C: typedef struct _cef_post_data_element_t cef_post_data_element_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_post_data_t	&lt;C: typedef struct _cef_post_data_t cef_post_data_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_postdataelement_type_t	&lt;C: typedef enum {			PDE_TYPE_EMPTY, 			PDE_TYPE_BYTES, 			PDE_TYPE_FILE		} cef_postdataelement_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_print_dialog_callback_t	&lt;C: typedef struct _cef_print_dialog_callback_t cef_print_dialog_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_print_handler_t	&lt;C: typedef struct _cef_print_handler_t cef_print_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_print_job_callback_t	&lt;C: typedef struct _cef_print_job_callback_t cef_print_job_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_print_settings_t	&lt;C: typedef struct _cef_print_settings_t cef_print_settings_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_process_id_t	&lt;C: typedef enum {			PID_BROWSER, 			PID_RENDERER		} cef_process_id_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_process_message_t	&lt;C: typedef struct _cef_process_message_t cef_process_message_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_range_t	&lt;C: typedef struct _cef_range_t cef_range_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_read_handler_t	&lt;C: typedef struct _cef_read_handler_t cef_read_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_rect_t	&lt;C: typedef struct _cef_rect_t cef_rect_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_referrer_policy_t	&lt;C: typedef enum {			REFERRER_POLICY_ALWAYS, 			REFERRER_POLICY_DEFAULT, 			REFERRER_POLICY_NO_REFERRER_WHEN_DOWNGRADE, 			REFERRER_POLICY_NEVER, 			REFERRER_POLICY_ORIGIN, 			REFERRER_POLICY_ORIGIN_WHEN_CROSS_ORIGIN		} cef_referrer_policy_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_register_cdm_callback_t	&lt;C: typedef struct _cef_register_cdm_callback_t cef_register_cdm_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_render_handler_t	&lt;C: typedef struct _cef_render_handler_t cef_render_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_render_process_handler_t	&lt;C: typedef struct _cef_render_process_handler_t cef_render_process_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_request_callback_t	&lt;C: typedef struct _cef_request_callback_t cef_request_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_request_context_handler_t	&lt;C: typedef struct _cef_request_context_handler_t cef_request_context_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_request_context_settings_t	&lt;C: typedef struct _cef_request_context_settings_t cef_request_context_settings_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_request_context_t	&lt;C: typedef struct _cef_request_context_t cef_request_context_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_request_handler_t	&lt;C: typedef struct _cef_request_handler_t cef_request_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_request_t	&lt;C: typedef struct _cef_request_t cef_request_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_resolve_callback_t	&lt;C: typedef struct _cef_resolve_callback_t cef_resolve_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_resource_bundle_handler_t	&lt;C: typedef struct _cef_resource_bundle_handler_t cef_resource_bundle_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_resource_handler_t	&lt;C: typedef struct _cef_resource_handler_t cef_resource_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_resource_type_t	&lt;C: typedef enum {			RT_MAIN_FRAME, 			RT_SUB_FRAME, 			RT_STYLESHEET, 			RT_SCRIPT, 			RT_IMAGE, 			RT_FONT_RESOURCE, 			RT_SUB_RESOURCE, 			RT_OBJECT, 			RT_MEDIA, 			RT_WORKER, 			RT_SHARED_WORKER, 			RT_PREFETCH, 			RT_FAVICON, 			RT_XHR, 			RT_PING, 			RT_SERVICE_WORKER, 			RT_CSP_REPORT, 			RT_PLUGIN_RESOURCE		} cef_resource_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_response_filter_status_t	&lt;C: typedef enum {			RESPONSE_FILTER_NEED_MORE_DATA, 			RESPONSE_FILTER_DONE, 			RESPONSE_FILTER_ERROR		} cef_response_filter_status_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_response_filter_t	&lt;C: typedef struct _cef_response_filter_t cef_response_filter_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_response_t	&lt;C: typedef struct _cef_response_t cef_response_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_return_value_t	&lt;C: typedef enum {			RV_CANCEL, 			RV_CONTINUE, 			RV_CONTINUE_ASYNC		} cef_return_value_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_run_context_menu_callback_t	&lt;C: typedef struct _cef_run_context_menu_callback_t cef_run_context_menu_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_run_file_dialog_callback_t	&lt;C: typedef struct _cef_run_file_dialog_callback_t cef_run_file_dialog_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_scale_factor_t	&lt;C: typedef enum {			SCALE_FACTOR_NONE, 			SCALE_FACTOR_100P, 			SCALE_FACTOR_125P, 			SCALE_FACTOR_133P, 			SCALE_FACTOR_140P, 			SCALE_FACTOR_150P, 			SCALE_FACTOR_180P, 			SCALE_FACTOR_200P, 			SCALE_FACTOR_250P, 			SCALE_FACTOR_300P		} cef_scale_factor_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_scheme_handler_factory_t	&lt;C: typedef struct _cef_scheme_handler_factory_t cef_scheme_handler_factory_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_scheme_registrar_t	&lt;C: typedef struct _cef_scheme_registrar_t cef_scheme_registrar_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_screen_info_t	&lt;C: typedef struct _cef_screen_info_t cef_screen_info_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_select_client_certificate_callback_t	&lt;C: typedef struct _cef_select_client_certificate_callback_t cef_select_client_certificate_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_set_cookie_callback_t	&lt;C: typedef struct _cef_set_cookie_callback_t cef_set_cookie_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_settings_t	&lt;C: typedef struct _cef_settings_t cef_settings_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_size_t	&lt;C: typedef struct _cef_size_t cef_size_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_ssl_content_status_t	&lt;C: typedef enum {			SSL_CONTENT_NORMAL_CONTENT, 			SSL_CONTENT_DISPLAYED_INSECURE_CONTENT, 			SSL_CONTENT_RAN_INSECURE_CONTENT		} cef_ssl_content_status_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_ssl_version_t	&lt;C: typedef enum {			SSL_CONNECTION_VERSION_UNKNOWN, 			SSL_CONNECTION_VERSION_SSL2, 			SSL_CONNECTION_VERSION_SSL3, 			SSL_CONNECTION_VERSION_TLS1, 			SSL_CONNECTION_VERSION_TLS1_1, 			SSL_CONNECTION_VERSION_TLS1_2, 			SSL_CONNECTION_VERSION_QUIC = 7		} cef_ssl_version_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_sslinfo_t	&lt;C: typedef struct _cef_sslinfo_t cef_sslinfo_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_sslstatus_t	&lt;C: typedef struct _cef_sslstatus_t cef_sslstatus_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_state_t	&lt;C: typedef enum {			STATE_DEFAULT, 			STATE_ENABLED, 			STATE_DISABLED		} cef_state_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_storage_type_t	&lt;C: typedef enum {			ST_LOCALSTORAGE, 			ST_SESSIONSTORAGE		} cef_storage_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_stream_reader_t	&lt;C: typedef struct _cef_stream_reader_t cef_stream_reader_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_stream_writer_t	&lt;C: typedef struct _cef_stream_writer_t cef_stream_writer_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_string_list_t	&lt;C: typedef void * cef_string_list_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_string_map_t	&lt;C: typedef void * cef_string_map_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_string_multimap_t	&lt;C: typedef void * cef_string_multimap_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_string_t	&lt;C: typedef cef_string_utf16_t cef_string_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_string_userfree_t	&lt;C: typedef cef_string_userfree_utf16_t cef_string_userfree_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_string_userfree_utf16_t	&lt;C: typedef cef_string_utf16_t * cef_string_userfree_utf16_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_string_userfree_utf8_t	&lt;C: typedef cef_string_utf8_t * cef_string_userfree_utf8_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_string_userfree_wide_t	&lt;C: typedef cef_string_wide_t * cef_string_userfree_wide_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_string_utf16_t	&lt;C: typedef struct _cef_string_utf16_t cef_string_utf16_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_string_utf8_t	&lt;C: typedef struct _cef_string_utf8_t cef_string_utf8_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_string_visitor_t	&lt;C: typedef struct _cef_string_visitor_t cef_string_visitor_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_string_wide_t	&lt;C: typedef struct _cef_string_wide_t cef_string_wide_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_task_runner_t	&lt;C: typedef struct _cef_task_runner_t cef_task_runner_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_task_t	&lt;C: typedef struct _cef_task_t cef_task_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_termination_status_t	&lt;C: typedef enum {			TS_ABNORMAL_TERMINATION, 			TS_PROCESS_WAS_KILLED, 			TS_PROCESS_CRASHED		} cef_termination_status_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_text_style_t	&lt;C: typedef enum {			CEF_TEXT_STYLE_BOLD, 			CEF_TEXT_STYLE_ITALIC, 			CEF_TEXT_STYLE_STRIKE, 			CEF_TEXT_STYLE_DIAGONAL_STRIKE, 			CEF_TEXT_STYLE_UNDERLINE		} cef_text_style_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_thread_id_t	&lt;C: typedef enum {			TID_UI, 			TID_DB, 			TID_FILE, 			TID_FILE_USER_BLOCKING, 			TID_PROCESS_LAUNCHER, 			TID_CACHE, 			TID_IO, 			TID_RENDERER		} cef_thread_id_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_thread_priority_t	&lt;C: typedef enum {			TP_BACKGROUND, 			TP_NORMAL, 			TP_DISPLAY, 			TP_REALTIME_AUDIO		} cef_thread_priority_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_time_t	&lt;C: typedef struct _cef_time_t cef_time_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_transition_type_t	&lt;C: typedef enum {			TT_LINK, 			TT_EXPLICIT, 			TT_AUTO_SUBFRAME = 3, 			TT_MANUAL_SUBFRAME, 			TT_FORM_SUBMIT = 7, 			TT_RELOAD, 			TT_SOURCE_MASK = 255, 			TT_BLOCKED_FLAG = 8388608, 			TT_FORWARD_BACK_FLAG = 16777216, 			TT_CHAIN_START_FLAG = 268435456, 			TT_CHAIN_END_FLAG = 536870912, 			TT_CLIENT_REDIRECT_FLAG = 1073741824, 			TT_SERVER_REDIRECT_FLAG = 2147483648, 			TT_IS_REDIRECT_MASK = 3221225472, 			TT_QUALIFIER_MASK = 4294967040		} cef_transition_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_uri_unescape_rule_t	&lt;C: typedef enum {			UU_NONE, 			UU_NORMAL, 			UU_SPACES, 			UU_PATH_SEPARATORS = 4, 			UU_URL_SPECIAL_CHARS_EXCEPT_PATH_SEPARATORS = 8, 			UU_SPOOFING_AND_CONTROL_CHARS = 16, 			UU_REPLACE_PLUS_WITH_SPACE = 32		} cef_uri_unescape_rule_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_urlparts_t	&lt;C: typedef struct _cef_urlparts_t cef_urlparts_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_urlrequest_flags_t	&lt;C: typedef enum {			UR_FLAG_NONE, 			UR_FLAG_SKIP_CACHE, 			UR_FLAG_ALLOW_CACHED_CREDENTIALS, 			UR_FLAG_REPORT_UPLOAD_PROGRESS = 8, 			UR_FLAG_NO_DOWNLOAD_DATA = 64, 			UR_FLAG_NO_RETRY_ON_5XX = 128		} cef_urlrequest_flags_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_urlrequest_status_t	&lt;C: typedef enum {			UR_UNKNOWN, 			UR_SUCCESS, 			UR_IO_PENDING, 			UR_CANCELED, 			UR_FAILED		} cef_urlrequest_status_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_v8_accesscontrol_t	&lt;C: typedef enum {			V8_ACCESS_CONTROL_DEFAULT, 			V8_ACCESS_CONTROL_ALL_CAN_READ, 			V8_ACCESS_CONTROL_ALL_CAN_WRITE, 			V8_ACCESS_CONTROL_PROHIBITS_OVERWRITING = 4		} cef_v8_accesscontrol_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_v8_propertyattribute_t	&lt;C: typedef enum {			V8_PROPERTY_ATTRIBUTE_NONE, 			V8_PROPERTY_ATTRIBUTE_READONLY, 			V8_PROPERTY_ATTRIBUTE_DONTENUM, 			V8_PROPERTY_ATTRIBUTE_DONTDELETE = 4		} cef_v8_propertyattribute_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_v8accessor_t	&lt;C: typedef struct _cef_v8accessor_t cef_v8accessor_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_v8context_t	&lt;C: typedef struct _cef_v8context_t cef_v8context_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_v8exception_t	&lt;C: typedef struct _cef_v8exception_t cef_v8exception_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_v8handler_t	&lt;C: typedef struct _cef_v8handler_t cef_v8handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_v8interceptor_t	&lt;C: typedef struct _cef_v8interceptor_t cef_v8interceptor_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_v8stack_frame_t	&lt;C: typedef struct _cef_v8stack_frame_t cef_v8stack_frame_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_v8stack_trace_t	&lt;C: typedef struct _cef_v8stack_trace_t cef_v8stack_trace_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_v8value_t	&lt;C: typedef struct _cef_v8value_t cef_v8value_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_value_t	&lt;C: typedef struct _cef_value_t cef_value_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_value_type_t	&lt;C: typedef enum {			VTYPE_INVALID, 			VTYPE_NULL, 			VTYPE_BOOL, 			VTYPE_INT, 			VTYPE_DOUBLE, 			VTYPE_STRING, 			VTYPE_BINARY, 			VTYPE_DICTIONARY, 			VTYPE_LIST		} cef_value_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_web_plugin_info_t	&lt;C: typedef struct _cef_web_plugin_info_t cef_web_plugin_info_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_web_plugin_info_visitor_t	&lt;C: typedef struct _cef_web_plugin_info_visitor_t cef_web_plugin_info_visitor_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_web_plugin_unstable_callback_t	&lt;C: typedef struct _cef_web_plugin_unstable_callback_t cef_web_plugin_unstable_callback_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_window_handle_t	&lt;C: typedef unsigned long  cef_window_handle_t 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_window_info_t	&lt;C: typedef void cef_window_info_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_window_open_disposition_t	&lt;C: typedef enum {			WOD_UNKNOWN, 			WOD_CURRENT_TAB, 			WOD_SINGLETON_TAB, 			WOD_NEW_FOREGROUND_TAB, 			WOD_NEW_BACKGROUND_TAB, 			WOD_NEW_POPUP, 			WOD_NEW_WINDOW, 			WOD_SAVE_TO_DISK, 			WOD_OFF_THE_RECORD, 			WOD_IGNORE_ACTION		} cef_window_open_disposition_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_write_handler_t	&lt;C: typedef struct _cef_write_handler_t cef_write_handler_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_x509cert_principal_t	&lt;C: typedef struct _cef_x509cert_principal_t cef_x509cert_principal_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_x509certificate_t	&lt;C: typedef struct _cef_x509certificate_t cef_x509certificate_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_xml_encoding_type_t	&lt;C: typedef enum {			XML_ENCODING_NONE, 			XML_ENCODING_UTF8, 			XML_ENCODING_UTF16LE, 			XML_ENCODING_UTF16BE, 			XML_ENCODING_ASCII		} cef_xml_encoding_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_xml_node_type_t	&lt;C: typedef enum {			XML_NODE_UNSUPPORTED, 			XML_NODE_PROCESSING_INSTRUCTION, 			XML_NODE_DOCUMENT_TYPE, 			XML_NODE_ELEMENT_START, 			XML_NODE_ELEMENT_END, 			XML_NODE_ATTRIBUTE, 			XML_NODE_TEXT, 			XML_NODE_CDATA, 			XML_NODE_ENTITY_REFERENCE, 			XML_NODE_WHITESPACE, 			XML_NODE_COMMENT		} cef_xml_node_type_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">char16	&lt;C: typedef wchar_t char16&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">clock_t	&lt;C: typedef long clock_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">int32	&lt;C: typedef int int32&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">int64	&lt;C: typedef long long int64&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">ptrdiff_t	&lt;C: typedef long ptrdiff_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">size_t	&lt;C: typedef unsigned long long size_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">template	&lt;C: typedef void * template&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">time_t	&lt;C: typedef void * time_t&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">uint32	&lt;C: typedef unsigned int uint32&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">uint64	&lt;C: typedef unsigned long long uint64&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">wchar_t	&lt;C: typedef int wchar_t&gt;</body>
+<body package="ChromiumEmbeddedFramework-Base">setDirectory: aStringOrFilename 	" Directory containing the libraries, reources and locales.	Avoid modifiying the 'source' of the lib by using an alternative classInstVar "	directory := aStringOrFilename notNil 		ifTrue: [ aStringOrFilename asFilename asAbsoluteFilename ]		ifFalse: [ nil ].	self rebuildTaggedLibraries.</body>
 </methods>
 
 <methods>
@@ -1489,19 +1617,11 @@ Licensed under the MIT license (see Copyright) -->
 <methods>
 <class-id>CEF.LibChromium class</class-id> <category>accessing</category>
 
-<body package="ChromiumEmbeddedFramework-Base">directory	" directory containing the libraries, reources and locales "		^ directory</body>
+<body package="ChromiumEmbeddedFramework-Base">directory	" directory containing the libraries, reources and locales "		^ self concreteClass getDirectory</body>
 
-<body package="ChromiumEmbeddedFramework-Base">directory: aStringOrFilename 	" directory containing the libraries, reources and locales.	Avoid modifiying the 'source' of the lib by using an alternative classInstVar "	directory := aStringOrFilename notNil 		ifTrue: [ aStringOrFilename asFilename asAbsoluteFilename ]		ifFalse: [ nil ].	self rebuildTaggedLibraries.</body>
-</methods>
+<body package="ChromiumEmbeddedFramework-Base">directory: aStringOrFilename 	" Directory containing the libraries, reources and locales "	self concreteClass setDirectory: aStringOrFilename</body>
 
-<methods>
-<class-id>CEF.LibChromium class</class-id> <category>private</category>
-
-<body package="ChromiumEmbeddedFramework-Base">concreteClass	^ OSSystemSupport concreteClass cefLibClass</body>
-
-<body package="ChromiumEmbeddedFramework-Base">libraryFilesSearchSignals	^ExternalLibraryHolder libraryNotFoundSignal , ExternalLibrary libraryNotLoadedSignal</body>
-
-<body package="ChromiumEmbeddedFramework-Base">libraryPath		| lib |	lib := 'libcef.dll'.	^ self directory ifNotNil: [: d | ( d construct: lib ) asString ] ifNil: [ lib ]</body>
+<body package="ChromiumEmbeddedFramework-Base">libraryFiles	^self = self concreteClass		ifTrue: [super libraryFiles]		ifFalse: [self concreteClass libraryFiles]</body>
 </methods>
 
 <methods>
@@ -1541,26 +1661,6 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>CEF.OSSupport</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-Base">restoreFocus: aWindow</body>
-</methods>
-
-<methods>
-<class-id>CEF.OSSupport class</class-id> <category>private</category>
-
-<body package="ChromiumEmbeddedFramework-Base">concreteClass	^ OSSystemSupport concreteClass cefSupportLibClass</body>
-</methods>
-
-<methods>
-<class-id>CEF.OSSupport class</class-id> <category>instance creation</category>
-
-<body package="ChromiumEmbeddedFramework-Base">current	" nil if no OS support library is needed "		Current isNil 		ifTrue: [ self concreteClass ifNotNil: [: osSupportClass | Current := osSupportClass new ]].	^ Current</body>
-
-<body package="ChromiumEmbeddedFramework-Base">flushCurrent	Current := nil.</body>
-</methods>
-
-<methods>
 <class-id>CEF.LinuxSupport</class-id> <category>types</category>
 
 <body package="ChromiumEmbeddedFramework-Base">sigaction_t	&lt;C: typedef struct _sigaction_t sigaction_t&gt;</body>
@@ -1587,6 +1687,22 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
+<class-id>CEF.LibChromiumWindows</class-id> <category>types</category>
+
+<body package="ChromiumEmbeddedFramework-Base">HINSTANCE	&lt;C: typedef void * HINSTANCE&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">HMENU	&lt;C: typedef void * HMENU&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">HWND	&lt;C: typedef void * HWND&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_main_args_t	&lt;C: typedef struct _cef_main_args_t cef_main_args_t&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_window_handle_t	&lt;C: typedef HWND cef_window_handle_t 	&gt;</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cef_window_info_t	&lt;C: typedef struct _cef_window_info_t cef_window_info_t&gt;</body>
+</methods>
+
+<methods>
 <class-id>CEF.LibChromiumWindows</class-id> <category>accessing</category>
 
 <body package="ChromiumEmbeddedFramework-Base">createMainArgs	| mainArgs hinstance |	hinstance := OSSupport current getHInstance.	hinstance isValid 		ifFalse: [ self error: 'Could not get HINSTANCE' ].	mainArgs := self cef_main_args_t malloc.	mainArgs memberAt: #instance put: hinstance.	^ mainArgs</body>
@@ -1596,102 +1712,6 @@ Licensed under the MIT license (see Copyright) -->
 <body package="ChromiumEmbeddedFramework-Base">multiThreadedMessageLoop	^ true</body>
 
 <body package="ChromiumEmbeddedFramework-Base">prepareCallbackType: aCallbackPointerType	aCallbackPointerType beStdcall</body>
-
-<body package="ChromiumEmbeddedFramework-Base">resizeBrowser: browser 	| osLib rectangle |	rectangle := browser browserRectangle.	osLib := OSSupport current.	osLib 		setWindowPos: browser browserWindowHandle		insertAfter: nil		x: rectangle left		y: rectangle top		cx: rectangle width		cy: rectangle height		flags: osLib SWP_ASYNCWINDOWPOS + osLib SWP_NOREDRAW + osLib SWP_NOACTIVATE + osLib SWP_NOMOVE 				+ osLib SWP_NOZORDER.	browser host notifyMoveOrResizeStarted.</body>
-</methods>
-
-<methods>
-<class-id>CEF.LibChromiumWindows</class-id> <category>types</category>
-
-<body package="ChromiumEmbeddedFramework-Base">HINSTANCE	&lt;C: typedef void * HINSTANCE&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">HMENU	&lt;C: typedef void * HMENU&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">HWND	&lt;C: typedef void * HWND&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_main_args_t	&lt;C: typedef struct _cef_main_args_t cef_main_args_t&gt; </body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_window_handle_t	&lt;C: typedef HWND cef_window_handle_t 	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cef_window_info_t	&lt;C: typedef struct _cef_window_info_t cef_window_info_t&gt;</body>
-</methods>
-
-<methods>
-<class-id>CEF.WindowsSupport</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-Base">getHInstance	^ self getModuleHandle: 0</body>
-
-<body package="ChromiumEmbeddedFramework-Base">restoreFocus: aWindow	[	self setFocus: 0;			setFocus: aWindow windowHandle	] uiEventFor: aWindow</body>
-
-<body package="ChromiumEmbeddedFramework-Base">windowFlags	^ self WS_CHILD + self WS_CLIPCHILDREN + self WS_CLIPSIBLINGS + self WS_VISIBLE</body>
-</methods>
-
-<methods>
-<class-id>CEF.WindowsSupport</class-id> <category>defines</category>
-
-<body package="ChromiumEmbeddedFramework-Base">SWP_ASYNCWINDOWPOS	&lt;C: #define SWP_ASYNCWINDOWPOS 	0x4000	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">SWP_NOACTIVATE	&lt;C: #define SWP_NOACTIVATE 	0x0010	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">SWP_NOMOVE	&lt;C: #define SWP_NOMOVE 	0x0002	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">SWP_NOREDRAW	&lt;C: #define SWP_NOREDRAW 	0x0008	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">SWP_NOZORDER	&lt;C: #define SWP_NOZORDER 0x0004	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_BORDER	&lt;C: #define WS_BORDER 8388608	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_CAPTION	&lt;C: #define WS_CAPTION 12582912	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_CHILD	&lt;C: #define WS_CHILD 1073741824	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_CHILDWINDOW	&lt;C: #define WS_CHILDWINDOW 1073741824	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_CLIPCHILDREN	&lt;C: #define WS_CLIPCHILDREN 33554432	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_CLIPSIBLINGS	&lt;C: #define WS_CLIPSIBLINGS 67108864	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_DISABLED	&lt;C: #define WS_DISABLED 134217728	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_DLGFRAME	&lt;C: #define WS_DLGFRAME 4194304	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_GROUP	&lt;C: #define WS_GROUP 131072	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_HSCROLL	&lt;C: #define WS_HSCROLL 1048576	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_ICONIC	&lt;C: #define WS_ICONIC 536870912	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_MAXIMIZE	&lt;C: #define WS_MAXIMIZE 16777216	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_MAXIMIZEBOX	&lt;C: #define WS_MAXIMIZEBOX 65536	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_MINIMIZE	&lt;C: #define WS_MINIMIZE 536870912	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_MINIMIZEBOX	&lt;C: #define WS_MINIMIZEBOX 131072	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_OVERLAPPED	&lt;C: #define WS_OVERLAPPED 0	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_OVERLAPPEDWINDOW	&lt;C: #define WS_OVERLAPPEDWINDOW 13565952	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_POPUP	&lt;C: #define WS_POPUP 2147483648	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_POPUPWINDOW	&lt;C: #define WS_POPUPWINDOW 2156396544	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_SIZEBOX	&lt;C: #define WS_SIZEBOX 262144	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_SYSMENU	&lt;C: #define WS_SYSMENU 524288	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_TABSTOP	&lt;C: #define WS_TABSTOP 65536	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_THICKFRAME	&lt;C: #define WS_THICKFRAME 262144	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_TILED	&lt;C: #define WS_TILED 0	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_TILEDWINDOW	&lt;C: #define WS_TILEDWINDOW 13565952	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_VISIBLE	&lt;C: #define WS_VISIBLE 268435456	&gt;</body>
-
-<body package="ChromiumEmbeddedFramework-Base">WS_VSCROLL	&lt;C: #define WS_VSCROLL 2097152	&gt;</body>
 </methods>
 
 <methods>
@@ -1701,17 +1721,11 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>Core.String</class-id> <category>converting</category>
-
-<body package="ChromiumEmbeddedFramework-Base">asCefDatum	| wideString cefString lib ok |	wideString := self gcCopyToHeapEncoding: #utf_16.	lib := CEF.LibChromium current.	cefString := lib cef_string_utf16_t gcMalloc.	cefString zeroFill.	ok := lib cef_string_utf16_set: wideString with: self size with: cefString with: 1.	ok = 0 ifTrue: [ self error: 'String conversion failed' ].	^ cefString contents</body>
-</methods>
-
-<methods>
 <class-id>External.CPointer</class-id> <category>accessing</category>
 
 <body package="ChromiumEmbeddedFramework-Base">cefCall: memberFunctionName 	^ self cefCall: memberFunctionName arguments: #()</body>
 
-<body package="ChromiumEmbeddedFramework-Base">cefCall: memberFunctionName arguments: arguments 	| function cefArguments |	function := self cefMemberAt: memberFunctionName.	cefArguments := Array new: arguments size + 1.	cefArguments at: 1 put: self.	arguments keysAndValuesDo: [: i : arg | cefArguments at: i + 1 put: arg asCefDatum ].	^ function call: cefArguments</body>
+<body package="ChromiumEmbeddedFramework-Base">cefCall: memberFunctionName arguments: arguments 	| function cefArguments functionType |	function := self cefMemberAt: memberFunctionName.	cefArguments := Array new: arguments size + 1.	cefArguments at: 1 put: self.	functionType := function  type baseReferentType.	arguments keysAndValuesDo: [: i : arg | | argType  |		argType := functionType argumentTypeAt: i + 1.		cefArguments at: i + 1 put: (arg asCefDatumIsPointer: argType isPointer).	].	^ function call: cefArguments</body>
 
 <body package="ChromiumEmbeddedFramework-Base">cefCall: memberFunctionName with: anArgument	^ self cefCall: memberFunctionName arguments: (Array with: anArgument)</body>
 
@@ -1725,6 +1739,18 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
+<class-id>Core.String</class-id> <category>converting</category>
+
+<body package="ChromiumEmbeddedFramework-Base">asCefDatum	^ self asCefString</body>
+
+<body package="ChromiumEmbeddedFramework-Base">asCefDatumIsPointer: isPointer	^isPointer ifTrue: [self asCefPointer] ifFalse: [self asCefDatum]</body>
+
+<body package="ChromiumEmbeddedFramework-Base">asCefPointer	| wideString cefStringPointer lib ok |	wideString := self gcCopyToHeapEncoding: #utf_16.	lib := CEF.LibChromium current.	cefStringPointer := lib cef_string_utf16_t gcMalloc.	cefStringPointer zeroFill.	ok := lib cef_string_utf16_set: wideString with: self size with: cefStringPointer with: 1.	ok = 0 ifTrue: [ self error: 'String conversion failed' ].	^ cefStringPointer</body>
+
+<body package="ChromiumEmbeddedFramework-Base">asCefString	| wideString lib ok cefString |	wideString := self gcCopyToHeapEncoding: #utf_16.	lib := CEF.LibChromium current.	cefString := lib cef_string_utf16_t newInFixedSpace.	ok := lib cef_string_utf16_set: wideString with: self size with: cefString with: 1.	ok = 0 ifTrue: [ self error: 'String conversion failed' ].	^ cefString</body>
+</methods>
+
+<methods>
 <class-id>Core.False</class-id> <category>converting</category>
 
 <body package="ChromiumEmbeddedFramework-Base">asCefDatum	^ 0</body>
@@ -1735,7 +1761,37 @@ Licensed under the MIT license (see Copyright) -->
 
 <body package="ChromiumEmbeddedFramework-Base">asCefDatum	^ self</body>
 
+<body package="ChromiumEmbeddedFramework-Base">asCefDatumIsPointer: isPointer	^ self asCefDatum</body>
+
 <body package="ChromiumEmbeddedFramework-Base">cefAsSmalltalkArg	" try to wrap / convert this object into a Smalltalk object "		^ self</body>
+</methods>
+
+<methods>
+<class-id>External.CComposite</class-id> <category>converting</category>
+
+<body package="ChromiumEmbeddedFramework-Base">cefAsSmalltalkArg	self cefIsString		ifTrue: [ ^ self cefAsString ].	^ super cefAsSmalltalkArg</body>
+</methods>
+
+<methods>
+<class-id>External.CComposite</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-Base">cefCallbackNamed: memberName set: callbackBlock 	" don't forget that this is most likely a copy of some struct "		^ CCallback cefNamed: memberName of: self set: callbackBlock</body>
+</methods>
+
+<methods>
+<class-id>External.CComposite</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-Base">cefIsString	^ self type cefIsString</body>
+</methods>
+
+<methods>
+<class-id>External.CComposite</class-id> <category>accessing</category>
+
+<body package="ChromiumEmbeddedFramework-Base">cefMemberAt: key	^ self memberAt: key</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cefMemberAt: key ifAbsent: absentBlock	^ [ self memberAt: key ] on: MemberNotFoundError do: absentBlock</body>
+
+<body package="ChromiumEmbeddedFramework-Base">cefMemberAt: key put: value	self memberAt: key put: value</body>
 </methods>
 
 <methods>
@@ -1770,18 +1826,14 @@ Licensed under the MIT license (see Copyright) -->
 <body package="ChromiumEmbeddedFramework-Base">cefMemberAt: key ifAbsent: absentBlock	^ absentBlock value</body>
 
 <body package="ChromiumEmbeddedFramework-Base">cefMemberAt: key put: value	MemberNotFoundError raiseSignal: self printString, ' has no members'</body>
-</methods>
-
-<methods>
-<class-id>External.CDatum</class-id> <category>private</category>
-
-<body package="ChromiumEmbeddedFramework-Base">cefRefCountFor: owner	^ owner fakeRefCount: self</body>
-</methods>
-
-<methods>
-<class-id>External.CDatum</class-id> <category>accessing</category>
 
 <body package="ChromiumEmbeddedFramework-Base">cefRemoveRef	" hook for generic reference counting "</body>
+</methods>
+
+<methods>
+<class-id>External.CType</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-Base">cefIsString	| lib |	lib := CEF.LibChromium current.	self type = lib cef_string_t 		ifTrue: [ ^ true ].	self type = lib cef_string_utf16_t 		ifTrue: [ ^ true ].	self type = lib _cef_string_utf16_t 		ifTrue: [ ^ true ].	self type = lib cef_string_userfree_t 		ifTrue: [ ^ true ].	self type = lib cef_string_userfree_utf16_t 		ifTrue: [ ^ true ].	^ false</body>
 </methods>
 
 <methods>
@@ -1791,9 +1843,9 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>External.CType</class-id> <category>private</category>
+<class-id>External.CProcedurePointer</class-id> <category>accessing</category>
 
-<body package="ChromiumEmbeddedFramework-Base">cefIsString	| lib |	lib := CEF.LibChromium current.	self type = lib cef_string_t 		ifTrue: [ ^ true ].	self type = lib cef_string_utf16_t 		ifTrue: [ ^ true ].	self type = lib _cef_string_utf16_t 		ifTrue: [ ^ true ].	self type = lib cef_string_userfree_t 		ifTrue: [ ^ true ].	self type = lib cef_string_userfree_utf16_t 		ifTrue: [ ^ true ].	^ false</body>
+<body package="ChromiumEmbeddedFramework-Base">cefResultType	^type baseReferentType cefResultType</body>
 </methods>
 
 <methods>
@@ -1811,9 +1863,23 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
+<class-id>External.CPointerType</class-id> <category>private</category>
+
+<body package="ChromiumEmbeddedFramework-Base">cefIsString	^ self referentType cefIsString</body>
+</methods>
+
+<methods>
 <class-id>External.CEnumerationType</class-id> <category>accessing</category>
 
 <body package="ChromiumEmbeddedFramework-Base">cefNameOf: aValue	self keysAndValuesDo: [ : key : enumValue |		enumValue = aValue ifTrue: [ ^ key ].		].	^ nil</body>
+</methods>
+
+<methods>
+<class-id>Core.True</class-id> <category>converting</category>
+
+<body package="ChromiumEmbeddedFramework-Base">asCefDatum	^ 1</body>
+
+<body package="ChromiumEmbeddedFramework-Base">bullshit</body>
 </methods>
 
 <methods>
@@ -1835,20 +1901,6 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>Core.True</class-id> <category>converting</category>
-
-<body package="ChromiumEmbeddedFramework-Base">asCefDatum	^ 1</body>
-
-<body package="ChromiumEmbeddedFramework-Base">bullshit</body>
-</methods>
-
-<methods>
-<class-id>External.CPointerType</class-id> <category>private</category>
-
-<body package="ChromiumEmbeddedFramework-Base">cefIsString	^ self referentType cefIsString</body>
-</methods>
-
-<methods>
 <class-id>OS.Win32SystemSupport class</class-id> <category>accessing</category>
 
 <body package="ChromiumEmbeddedFramework-Base">cefLibClass	^ CEF.LibChromiumWindows</body>
@@ -1863,31 +1915,9 @@ Licensed under the MIT license (see Copyright) -->
 </methods>
 
 <methods>
-<class-id>External.CComposite</class-id> <category>converting</category>
+<class-id>External.CProcedureType</class-id> <category>accessing</category>
 
-<body package="ChromiumEmbeddedFramework-Base">cefAsSmalltalkArg	self cefIsString		ifTrue: [ ^ self cefAsString ].	^ super cefAsSmalltalkArg</body>
-</methods>
-
-<methods>
-<class-id>External.CComposite</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-Base">cefCallbackNamed: memberName set: callbackBlock 	" don't forget that this is most likely a copy of some struct "		^ CCallback cefNamed: memberName of: self set: callbackBlock</body>
-</methods>
-
-<methods>
-<class-id>External.CComposite</class-id> <category>private</category>
-
-<body package="ChromiumEmbeddedFramework-Base">cefIsString	^ self type cefIsString</body>
-</methods>
-
-<methods>
-<class-id>External.CComposite</class-id> <category>accessing</category>
-
-<body package="ChromiumEmbeddedFramework-Base">cefMemberAt: key	^ self memberAt: key</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cefMemberAt: key ifAbsent: absentBlock	^ [ self memberAt: key ] on: MemberNotFoundError do: absentBlock</body>
-
-<body package="ChromiumEmbeddedFramework-Base">cefMemberAt: key put: value	self memberAt: key put: value</body>
+<body package="ChromiumEmbeddedFramework-Base">cefResultType	^ self resultType</body>
 </methods>
 
 <methods>
@@ -1937,51 +1967,6 @@ Licensed under the MIT license (see Copyright) -->
 </class>
 
 <class>
-<name>CType</name>
-<environment>External</environment>
-<super>Core.Object</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars>specifierFlags </inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category>External-Types</category>
-<attributes>
-<package>External-Types</package>
-</attributes>
-</class>
-
-<class>
-<name>CPointerType</name>
-<environment>External</environment>
-<super>External.CType</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars>referentType </inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category>External-Types</category>
-<attributes>
-<package>External-Types</package>
-</attributes>
-</class>
-
-<class>
-<name>String</name>
-<environment>Core</environment>
-<super>Core.CharacterArray</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category>Collections-Text</category>
-<attributes>
-<package>Collections-Text</package>
-</attributes>
-</class>
-
-<class>
 <name>True</name>
 <environment>Core</environment>
 <super>Core.Boolean</super>
@@ -1997,32 +1982,17 @@ Licensed under the MIT license (see Copyright) -->
 </class>
 
 <class>
-<name>CEnumerationType</name>
-<environment>External</environment>
-<super>External.CCompoundType</super>
-<private>false</private>
-<indexed-type>objects</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category>External-Types</category>
-<attributes>
-<package>External-Types</package>
-</attributes>
-</class>
-
-<class>
-<name>False</name>
+<name>String</name>
 <environment>Core</environment>
-<super>Core.Boolean</super>
+<super>Core.CharacterArray</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
 <inst-vars></inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
-<category>Kernel-Objects</category>
+<category>Collections-Text</category>
 <attributes>
-<package>Kernel-Objects</package>
+<package>Collections-Text</package>
 </attributes>
 </class>
 
@@ -2057,21 +2027,6 @@ Licensed under the MIT license (see Copyright) -->
 </class>
 
 <class>
-<name>Integer</name>
-<environment>Core</environment>
-<super>Core.Number</super>
-<private>false</private>
-<indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
-<imports></imports>
-<category>Magnitude-Numbers</category>
-<attributes>
-<package>Magnitude-Numbers</package>
-</attributes>
-</class>
-
-<class>
 <name>CComposite</name>
 <environment>External</environment>
 <super>External.CDatum</super>
@@ -2102,17 +2057,17 @@ Licensed under the MIT license (see Copyright) -->
 </class>
 
 <class>
-<name>Rectangle</name>
-<environment>Graphics</environment>
-<super>Graphics.Geometric</super>
+<name>CType</name>
+<environment>External</environment>
+<super>Core.Object</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>origin corner </inst-vars>
+<inst-vars>specifierFlags </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
-<category>Graphics-Geometry</category>
+<category>External-Types</category>
 <attributes>
-<package>Graphics-Geometry</package>
+<package>External-Types</package>
 </attributes>
 </class>
 
@@ -2128,6 +2083,96 @@ Licensed under the MIT license (see Copyright) -->
 <category>External-Data</category>
 <attributes>
 <package>External-Data</package>
+</attributes>
+</class>
+
+<class>
+<name>Integer</name>
+<environment>Core</environment>
+<super>Core.Number</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>Magnitude-Numbers</category>
+<attributes>
+<package>Magnitude-Numbers</package>
+</attributes>
+</class>
+
+<class>
+<name>CPointerType</name>
+<environment>External</environment>
+<super>External.CType</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>referentType </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>External-Types</category>
+<attributes>
+<package>External-Types</package>
+</attributes>
+</class>
+
+<class>
+<name>False</name>
+<environment>Core</environment>
+<super>Core.Boolean</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>Kernel-Objects</category>
+<attributes>
+<package>Kernel-Objects</package>
+</attributes>
+</class>
+
+<class>
+<name>Rectangle</name>
+<environment>Graphics</environment>
+<super>Graphics.Geometric</super>
+<private>false</private>
+<indexed-type>none</indexed-type>
+<inst-vars>origin corner </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>Graphics-Geometry</category>
+<attributes>
+<package>Graphics-Geometry</package>
+</attributes>
+</class>
+
+<class>
+<name>CEnumerationType</name>
+<environment>External</environment>
+<super>External.CCompoundType</super>
+<private>false</private>
+<indexed-type>objects</indexed-type>
+<inst-vars></inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>External-Types</category>
+<attributes>
+<package>External-Types</package>
+</attributes>
+</class>
+
+<class>
+<name>CProcedureType</name>
+<environment>External</environment>
+<super>External.CType</super>
+<private>false</private>
+<indexed-type>objects</indexed-type>
+<inst-vars>argumentNames </inst-vars>
+<class-inst-vars></class-inst-vars>
+<imports></imports>
+<category>External-Types</category>
+<attributes>
+<package>External-Types</package>
 </attributes>
 </class>
 
