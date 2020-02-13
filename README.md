@@ -8,7 +8,7 @@ Still at an very early stage.
 
 Based on
 - CEF 3.3112.1659.gfef43e0 (2017-09-06)
-- VisualWorks 8.1.1
+- VisualWorks 8.1.1 / 8.3.2
 
 Licensed under the MIT license (see Copyright)
 
@@ -22,7 +22,7 @@ Licensed under the MIT license (see Copyright)
 
 # Debugging
 
-Chromium write debug message to a file named `debug.log` (in the VM directory)
+Chromium write debug messages to a file named `debug.log` (located in the VM directory)
 
 ## Linux
 The Linux version is very unstable currently and crashes at startup a lot.
