@@ -4,7 +4,7 @@ Chromium Embedded Framework (CEF) for VisualWorks.
 See 
 https://bitbucket.org/chromiumembedded/cef
 
-Still at an very early stage. 
+Still at an early development stage. 
 
 Based on
 - CEF 3.3112.1659.gfef43e0 (2017-09-06)
@@ -14,18 +14,18 @@ Licensed under the MIT license (see Copyright)
 
 # Quickstart
 
-- Download Chromium, e.g. the matching Windows version: http://opensource.spotify.com/cefbuilds/cef_binary_3.3112.1657.g2c22842_windows64.tar.bz2
+- Download Chromium, e.g. the Windows version: http://opensource.spotify.com/cefbuilds/cef_binary_3.3112.1657.g2c22842_windows64.tar.bz2
 - Create a new directory (e.g. c:\cef)
 - Copy all .dll/.bin files from the `Release` directory and all files from `Resources` to this directory
 - Set this directory in the image: `LibChromium directory: 'c:\cef'`
-- Open the browser with `CEF.BrowserUI open`
+- Open the browser: `CEF.BrowserUI open`
 
 # Debugging
 
-Chromium write debug messages to a file named `debug.log` (located in the VM directory)
+Chromium writes debug messages to a file named `debug.log` (located in the VM directory) and also to `stdout`
 
 ## Linux
-The Linux version is very unstable currently and crashes at startup a lot.
+The Linux version is very unstable.
 
 It is neccessary to put the following files from the CEF resources directory next to the VM (e.g. symlink):
 ```
